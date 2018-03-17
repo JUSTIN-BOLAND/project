@@ -1,0 +1,89 @@
+[INFO com.secray.utils.JDBC.JDBC] : connect : jdbc:mysql://192.168.12.12:3306/G01Test?useUnicode=true&characterEncoding=utf-8
+ root
+ 123456
+[INFO com.secray.utils.JDBC.JDBC] : queryForInt[after query] : select count(1) from tbc_dic_url_count where flag_num=0 and flag_mark=1
+[INFO com.secray.utils.JDBC.JDBC] : queryForInt[ok] : select count(1) from tbc_dic_url_count where flag_num=0 and flag_mark=1 : 1
+[INFO com.secray.G01.catDeptArea.SpiderIPC] : [1] 【大于】零，【不】删除数据! 
+[INFO com.secray.G01.catDeptArea.SpiderIPC] : querysql : SELECT REPLACE(REPLACE(REPLACE(a.url,'http://',''),'admin.',''),'2012.','') furl,a.url srcUrl,a.url id  FROM tbc_dic_url_count a where flag_num=0 and flag_mark=0
+[INFO com.secray.utils.JDBC.JDBC] : connect : jdbc:mysql://192.168.12.12:3306/G01Test?useUnicode=true&characterEncoding=utf-8
+ root
+ 123456
+[INFO com.secray.G01.catDeptArea.SpiderIPC] : 0376.cc -> 0376.cc
+[INFO com.secray.G01.catDeptArea.SpiderIPC] : genUrl: http://www.beianbeian.com/s?keytype=0&q=0376.cc
+[INFO com.secray.G01.catDeptArea.SpiderIPC] : getUrl: http://www.beianbeian.com/search/0376.cc
+[INFO com.secray.G01.catDeptArea.SpiderIPC] : result : insert into tb_dic_ipc values('李盼盼','个人','苏ICP备13040051号-4','零三七六信息网','详细信息','0376.cc')
+[INFO com.secray.utils.JDBC.JDBC] : connect : jdbc:mysql://192.168.12.12:3306/G01Test?useUnicode=true&characterEncoding=utf-8
+ root
+ 123456
+[INFO com.secray.utils.JDBC.JDBC] : queryForInt[after query] : select count(1) from tbc_dic_url_count where flag_num=0 and flag_mark=1
+[INFO com.secray.utils.JDBC.JDBC] : queryForInt[ok] : select count(1) from tbc_dic_url_count where flag_num=0 and flag_mark=1 : 2
+[INFO com.secray.G01.catDeptArea.SpiderIPC] : [2] 【大于】零，【不】删除数据! 
+[INFO com.secray.utils.JDBC.JDBC] : connect : jdbc:mysql://192.168.12.12:3306/G01Test?useUnicode=true&characterEncoding=utf-8
+ root
+ 123456
+[INFO com.secray.utils.JDBC.JDBC] : queryForInt[after query] : select count(1) from tbc_dic_url_count where flag_num=0 and flag_mark=1
+[INFO com.secray.utils.JDBC.JDBC] : queryForInt[ok] : select count(1) from tbc_dic_url_count where flag_num=0 and flag_mark=1 : 2
+[INFO com.secray.G01.catDeptArea.SpiderIPC] : [2] 【大于】零，【不】删除数据! 
+[INFO com.secray.G01.catDeptArea.SpiderIPC] : querysql : SELECT REPLACE(REPLACE(REPLACE(a.url,'http://',''),'admin.',''),'2012.','') furl,a.url srcUrl,a.url id  FROM tbc_dic_url_count a where flag_num=0 and flag_mark=0
+[INFO com.secray.utils.JDBC.JDBC] : connect : jdbc:mysql://192.168.12.12:3306/G01Test?useUnicode=true&characterEncoding=utf-8
+ root
+ 123456
+[INFO com.secray.G01.catDeptArea.SpiderIPC] : 0379jia.com -> 0379jia.com
+[INFO com.secray.G01.catDeptArea.SpiderIPC] : genUrl: http://www.beianbeian.com/s?keytype=0&q=0379jia.com
+[INFO com.secray.G01.catDeptArea.SpiderIPC] : getUrl: http://www.beianbeian.com/search/0379jia.com
+[INFO com.secray.G01.catDeptArea.SpiderIPC] : result : insert into tb_dic_ipc values('丹方方','个人','豫ICP备14000740号-1','家庭装修小技巧','详细信息','0379jia.com')
+[INFO com.secray.utils.JDBC.JDBC] : connect : jdbc:mysql://192.168.12.12:3306/G01Test?useUnicode=true&characterEncoding=utf-8
+ root
+ 123456
+[INFO com.secray.utils.JDBC.JDBC] : queryForInt[after query] : select count(1) from tbc_dic_url_count where flag_num=0 and flag_mark=1
+[INFO com.secray.utils.JDBC.JDBC] : queryForInt[ok] : select count(1) from tbc_dic_url_count where flag_num=0 and flag_mark=1 : 3
+[INFO com.secray.G01.catDeptArea.SpiderIPC] : [3] 【大于】零，【不】删除数据! 
+[INFO com.secray.G01.catDeptArea.SpiderIPC] : querysql : SELECT REPLACE(REPLACE(REPLACE(a.url,'http://',''),'admin.',''),'2012.','') furl,a.url srcUrl,a.url id  FROM tbc_dic_url_count a where flag_num=0 and flag_mark=0
+[INFO com.secray.utils.JDBC.JDBC] : connect : jdbc:mysql://192.168.12.12:3306/G01Test?useUnicode=true&characterEncoding=utf-8
+ root
+ 123456
+[INFO com.secray.G01.catDeptArea.SpiderIPC] : 1.190.175.86 -> 1.190.175.86
+[INFO com.secray.G01.catDeptArea.SpiderIPC] : genUrl: http://www.beianbeian.com/s?keytype=0&q=ad1.secray.cn
+[INFO com.secray.G01.catDeptArea.SpiderIPC] : getUrl: http://www.beianbeian.com/search/ad1.secray.cn
+[INFO com.secray.utils.JDBC.JDBC] : connect : jdbc:mysql://192.168.12.12:3306/G01Test?useUnicode=true&characterEncoding=utf-8
+ root
+ 123456
+[INFO com.secray.utils.JDBC.JDBC] : queryForInt[after query] : select count(1) from tbc_dic_url_count where flag_num=0 and flag_mark=1
+[INFO com.secray.utils.JDBC.JDBC] : queryForInt[ok] : select count(1) from tbc_dic_url_count where flag_num=0 and flag_mark=1 : 3
+[INFO com.secray.G01.catDeptArea.SpiderIPC] : [3] 【大于】零，【不】删除数据! 
+[INFO com.secray.G01.catDeptArea.SpiderIPC] : querysql : SELECT REPLACE(REPLACE(REPLACE(a.url,'http://',''),'admin.',''),'2012.','') furl,a.url srcUrl,a.url id  FROM tbc_dic_url_count a where flag_num=0 and flag_mark=0
+[INFO com.secray.utils.JDBC.JDBC] : connect : jdbc:mysql://192.168.12.12:3306/G01Test?useUnicode=true&characterEncoding=utf-8
+ root
+ 123456
+[INFO com.secray.G01.catDeptArea.SpiderIPC] : 1.190.175.86 -> 1.190.175.86
+[INFO com.secray.G01.catDeptArea.SpiderIPC] : genUrl: http://www.beianbeian.com/s?keytype=0&q=ad1.secray.cn
+[INFO com.secray.G01.catDeptArea.SpiderIPC] : getUrl: http://www.beianbeian.com/search/ad1.secray.cn
+[INFO com.secray.G01.catDeptArea.SpiderIPC] : 1.190.175.88 -> 1.190.175.88
+[INFO com.secray.G01.catDeptArea.SpiderIPC] : genUrl: http://www.beianbeian.com/s?keytype=0&q=ad1.secray.cn
+[INFO com.secray.G01.catDeptArea.SpiderIPC] : getUrl: http://www.beianbeian.com/search/ad1.secray.cn
+[INFO com.secray.G01.catDeptArea.SpiderIPC] : 1.192.156.102 -> 1.192.156.102
+[INFO com.secray.utils.JDBC.JDBC] : connect : jdbc:mysql://192.168.12.12:3306/G01Test?useUnicode=true&characterEncoding=utf-8
+ root
+ 123456
+[INFO com.secray.utils.JDBC.JDBC] : queryForInt[after query] : select count(1) from tbc_dic_url_count where flag_num=0 and flag_mark=1
+[INFO com.secray.utils.JDBC.JDBC] : queryForInt[ok] : select count(1) from tbc_dic_url_count where flag_num=0 and flag_mark=1 : 0
+[INFO com.secray.G01.catDeptArea.SpiderIPC] : [0] 【等于】零，【删除】数据! 
+[INFO com.secray.G01.catDeptArea.SpiderIPC] : querysql : SELECT REPLACE(REPLACE(REPLACE(a.url,'http://',''),'admin.',''),'2012.','') furl,a.url srcUrl,a.url id  FROM tbc_dic_url_count a where flag_num=0 and flag_mark=0
+[INFO com.secray.utils.JDBC.JDBC] : connect : jdbc:mysql://192.168.12.12:3306/G01Test?useUnicode=true&characterEncoding=utf-8
+ root
+ 123456
+[INFO com.secray.G01.catDeptArea.SpiderIPC] :  -> 
+[INFO com.secray.utils.JDBC.JDBC] : connect : jdbc:mysql://192.168.12.12:3306/G01Test?useUnicode=true&characterEncoding=utf-8
+ root
+ 123456
+[INFO com.secray.utils.JDBC.JDBC] : queryForInt[after query] : select count(1) from tbc_dic_url_count where flag_num=0 and flag_mark=1
+[INFO com.secray.utils.JDBC.JDBC] : queryForInt[ok] : select count(1) from tbc_dic_url_count where flag_num=0 and flag_mark=1 : 0
+[INFO com.secray.G01.catDeptArea.SpiderIPC] : [0] 【等于】零，【删除】数据! 
+[INFO com.secray.G01.catDeptArea.SpiderIPC] : querysql : SELECT REPLACE(REPLACE(REPLACE(a.url,'http://',''),'admin.',''),'2012.','') furl,a.url srcUrl,a.url id  FROM tbc_dic_url_count a where flag_num=0 and flag_mark=0
+[INFO com.secray.utils.JDBC.JDBC] : connect : jdbc:mysql://192.168.12.12:3306/G01Test?useUnicode=true&characterEncoding=utf-8
+ root
+ 123456
+[INFO com.secray.G01.catDeptArea.SpiderIPC] : 021bpo.com -> 021bpo.com
+[INFO com.secray.G01.catDeptArea.SpiderIPC] : genUrl: http://www.beianbeian.com/s?keytype=0&q=021bpo.com
+[INFO com.secray.G01.catDeptArea.SpiderIPC] : getUrl: http://www.beianbeian.com/search/021bpo.com
+[INFO com.secray.G01.catDeptArea.SpiderIPC] : result : insert into tb_dic_ipc values('','未知','沪ICP备12035414号-2','上海燕达企业管理有限公司','-1','021bpo.com')

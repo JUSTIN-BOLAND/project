@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="pdfWE:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/pdfWE_jar</output-path>
+    <root id="archive" name="pdfWE.jar">
+      <element id="module-output" name="pdfWE" />
+    </root>
+  </artifact>
+</component>
