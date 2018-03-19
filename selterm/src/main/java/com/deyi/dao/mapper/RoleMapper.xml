@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.deyi.dao.RoleMapper" >
+	<cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
+
+  <resultMap id="BaseResultMap" type="com.deyi.entity.Role" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="roleName" property="rolename" jdbcType="VARCHAR" />
+    <result column="roleType" property="roletype" jdbcType="CHAR" />
+    <result column="roleDesc" property="roledesc" jdbcType="VARCHAR" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="creatorName" property="creatorname" jdbcType="VARCHAR" />
+    <result column="roleStatus" property="rolestatus" jdbcType="CHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="orgMerId" property="orgMerId" jdbcType="VARCHAR" />
+    <result column="usertype" property="usertype" jdbcType="CHAR" />
+    <result column="orgId" property="orgId" jdbcType="VARCHAR" />
+    
+    
+    
+    <association property="parentRole" column="orgMerId" select="selectByPrimaryKey"></association>
+    
+    <collection property="children" column="id" select="getChildrenRole"></collection>
+    
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, roleName, roleType, roleDesc, createTime, creator, creatorName, roleStatus,remark,orgMerId,usertype,orgid
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_role
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+    <select id="selectByOrgId" resultType="com.deyi.entity.Role" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_role
+    
+    where orgId = #{orgId,jdbcType=VARCHAR}
+    
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from sys_role
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.deyi.entity.Role" useGeneratedKeys="true" keyProperty="id">
+    insert into sys_role (id, roleName, roleType, 
+      roleDesc, createTime, creator, 
+      creatorName, roleStatus,orgMerId,usertype)
+    values (#{id,jdbcType=BIGINT}, #{rolename,jdbcType=VARCHAR}, #{roletype,jdbcType=CHAR}, 
+      #{roledesc,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{creator,jdbcType=VARCHAR}, 
+      #{creatorname,jdbcType=VARCHAR}, #{rolestatus,jdbcType=CHAR},#{orgMerId,jdbcType=BIGINT}, #{usertype,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.deyi.entity.Role" useGeneratedKeys="true" keyProperty="id">
+    insert into sys_role
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null and id != '' " >
+        id,
+      </if>
+      <if test="rolename != null and rolename != '' " >
+        roleName,
+      </if>
+      <if test="roletype != null and roletype != '' " >
+        roleType,
+      </if>
+      <if test="roledesc != null and roledesc != '' " >
+        roleDesc,
+      </if>
+      <if test="createtime != null and createtime != '' " >
+        createTime,
+      </if>
+      <if test="creator != null and creator != '' " >
+        creator,
+      </if>
+      <if test="creatorname != null  and creatorname != '' " >
+        creatorName,
+      </if>
+      <if test="rolestatus != null and rolestatus != '' " >
+        roleStatus,
+      </if>
+      <if test="remark != null and remark != '' " >
+        remark,
+      </if>
+      <if test="orgMerId != null and orgMerId != '' " >
+        orgMerId,
+      </if>
+      <if test="usertype != null and usertype != '' " >
+        usertype,
+      </if>
+      <if test="orgId != null and orgId != '' " >
+        orgId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null and id != '' " >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="rolename != null and rolename != '' " >
+        #{rolename,jdbcType=VARCHAR},
+      </if>
+      <if test="roletype != null and roletype != '' " >
+        #{roletype,jdbcType=CHAR},
+      </if>
+      <if test="roledesc != null and roledesc != '' " >
+        #{roledesc,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null and createtime != ''" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null and creator != ''" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorname != null and creatorname != '' " >
+        #{creatorname,jdbcType=VARCHAR},
+      </if>
+      <if test="rolestatus != null and rolestatus != ''  " >
+        #{rolestatus,jdbcType=CHAR},
+      </if>
+       
+       <if test="remark != null and remark != ''" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+        <if test="orgMerId != null and orgMerId != ''" >
+        #{orgMerId,jdbcType=VARCHAR},
+      </if>
+        <if test="usertype != null and usertype != ''" >
+        #{usertype,jdbcType=CHAR},
+      </if>
+      <if test="orgId != null and orgId != ''" >
+        #{orgId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.deyi.entity.Role" >
+    update sys_role
+    <set >
+      <if test="rolename != null and rolename != '' " >
+        roleName = #{rolename,jdbcType=VARCHAR},
+      </if>
+      <if test="roletype != null and roletype != ''" >
+        roleType = #{roletype,jdbcType=CHAR},
+      </if>
+      <if test="roledesc != null and roletype != '' " >
+        roleDesc = #{roledesc,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null and createtime != '' " >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null and creator != '' " >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorname != null and creatorname != '' " >
+        creatorName = #{creatorname,jdbcType=VARCHAR},
+      </if>
+      <if test="rolestatus != null and rolestatus != '' " >
+        roleStatus = #{rolestatus,jdbcType=CHAR},
+      </if>
+       <if test="remark != null and remark != ''" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+       <if test="orgMerId != null and orgMerId != ''" >
+        orgMerId = #{orgMerId,jdbcType=VARCHAR},
+      </if>
+       <if test="usertype != null and usertype != ''" >
+        usertype = #{usertype,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.deyi.entity.Role" >
+    update sys_role
+    set roleName = #{rolename,jdbcType=VARCHAR},
+      roleType = #{roletype,jdbcType=CHAR},
+      roleDesc = #{roledesc,jdbcType=VARCHAR},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      creator = #{creator,jdbcType=VARCHAR},
+      creatorName = #{creatorname,jdbcType=VARCHAR},
+      roleStatus = #{rolestatus,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+    <select id="getRoleList" parameterType="com.deyi.util.Page" resultType="com.deyi.entity.Role" useCache="false">
+  		SELECT a.* ,b.name AS orgName FROM sys_role a LEFT JOIN dis_org b ON a.orgid = b.id 
+  		<where>
+  			1=1 
+  			<if test="params.roleids != null">
+  				and a.id in (${params.roleids}) 
+  			</if>
+  			<if test="params.orgMerId != null and params.orgMerId !=''">
+  				and a.orgMerId = #{params.orgMerId}
+  			</if>
+  			<if test="params.rolename != null and params.rolename !=''">
+  				and a.roleName like CONCAT('%','${params.rolename}','%')
+  			</if>
+  			<if test="params.orgName != null and params.orgName !=''">
+  				and b.name like CONCAT('%','${params.orgName}','%')
+  			</if>
+  				and a.id != '1'
+  		</where>
+  		order by a.id desc
+  	</select>
+  	
+  	<select id="getChildrenRole" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+  		select <include refid="Base_Column_List"/> from sys_role where orgMerId = #{orgMerId}
+  	</select>
+  	
+  	
+  	<select id="selectManerchatRoleIdByOrgRoleid" parameterType="string" resultType="com.deyi.entity.Role">
+  		SELECT <include refid="Base_Column_List"/> FROM sys_role  WHERE orgId = #{0} AND usertype = #{1};
+  	</select>
+  	<select id="selectRoleByroleids" parameterType="string" resultType="com.deyi.entity.Role">
+  		SELECT <include refid="Base_Column_List"/> FROM sys_role  WHERE id in (${ids}) 
+  	</select>
+  	
+  	
+  	<select id="selectById" resultType="com.deyi.entity.Role" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_role
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  	
+</mapper>

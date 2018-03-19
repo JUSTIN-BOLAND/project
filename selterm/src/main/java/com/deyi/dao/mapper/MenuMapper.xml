@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deyi.dao.MenuDao">
+
+<cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
+
+	<select id="getAllMenus" resultType="com.deyi.entity.Menu"  >
+    	select * from sys_menu where menuStatus='1'
+  	</select>
+  	<select id="getMenusByUser" resultType="com.deyi.entity.Menu" parameterType="string" >
+		select distinct * from sys_menu where menuId in(
+			select menuId from sys_role_menu where roleId in (select roleId from sys_user where id=#{0})
+		) and  menuStatus='1'
+		order by menuId
+  	</select>
+   
+  	<select id="getMenuById" resultType="com.deyi.entity.Menu" parameterType="string" >
+    select *
+    from sys_menu
+    where menuId = #{0}
+    </select>
+</mapper>

@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deyi.dao.OrgCollectDayMapper">
+<!-- 	<cache type="org.mybatis.caches.ehcache.LoggingEhcache"/> -->
+
+	<resultMap id="BaseResultMap" type="com.deyi.entity.OrgCollectDay">
+		<id column="id" jdbcType="INTEGER" property="id" />
+		<result column="orgid" jdbcType="BIGINT" property="orgid" />
+		<result column="orgname" jdbcType="VARCHAR" property="orgname" />
+		<result column="wxcount" jdbcType="INTEGER" property="wxcount" />
+		<result column="alicount" jdbcType="INTEGER" property="alicount" />
+		<result column="unioncount" jdbcType="INTEGER" property="unioncount" />
+		<result column="alipaymoney" jdbcType="DECIMAL" property="alipaymoney" />
+		<result column="wxpaymoney" jdbcType="DECIMAL" property="wxpaymoney" />
+		<result column="unionpaymoney" jdbcType="DECIMAL" property="unionpaymoney" />
+		<result column="summoney" jdbcType="DECIMAL" property="summoney" />
+		<result column="sumrefundmoney" jdbcType="DECIMAL" property="sumrefundmoney" />
+		<result column="ratemoney" jdbcType="DECIMAL" property="ratemoney" />
+		<result column="starttime" jdbcType="TIMESTAMP" property="starttime" />
+		<result column="endtime" jdbcType="TIMESTAMP" property="endtime" />
+		<result column="creattime" jdbcType="TIMESTAMP" property="creattime" />
+
+		<result column="alirefundMoney" property="alirefundMoney"
+			jdbcType="DECIMAL" />
+		<result column="wxrefundMoney" property="wxrefundMoney"
+			jdbcType="DECIMAL" />
+		<result column="unionrefundMoney" property="unionrefundMoney"
+			jdbcType="DECIMAL" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, orgid, orgname, wxcount, alicount, unioncount, alipaymoney, wxpaymoney,unionpaymoney, summoney,
+		sumrefundmoney,
+		starttime, endtime, creattime,alirefundMoney,wxrefundMoney,unionrefundMoney, ratemoney
+	</sql>
+	<select id="selectByPrimaryKey" parameterType="java.lang.Integer"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from sta_org_collectday
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from sta_org_collectday
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.deyi.entity.OrgCollectDay">
+		insert into sta_org_collectday (id, orgid, orgname,
+		wxcount, alicount, alipaymoney,
+		wxpaymoney, summoney, sumrefundmoney,
+		starttime, endtime, creattime,alirefundMoney,wxrefundMoney
+		)
+		values (#{id,jdbcType=INTEGER}, #{orgid,jdbcType=BIGINT},
+		#{orgname,jdbcType=VARCHAR},
+		#{wxcount,jdbcType=INTEGER}, #{alicount,jdbcType=INTEGER}, #{alipaymoney,jdbcType=DECIMAL},
+		#{wxpaymoney,jdbcType=DECIMAL}, #{summoney,jdbcType=DECIMAL},
+		#{sumrefundmoney,jdbcType=DECIMAL},
+		#{starttime,jdbcType=TIMESTAMP}, #{endtime,jdbcType=TIMESTAMP}, #{creattime,jdbcType=TIMESTAMP},
+		#{alirefundMoney,jdbcType=DECIMAL},#{wxrefundMoney,jdbcType=DECIMAL}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.deyi.entity.OrgCollectDay">
+		insert into sta_org_collectday
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="orgid != null">
+				orgid,
+			</if>
+			<if test="orgname != null">
+				orgname,
+			</if>
+			<if test="wxcount != null">
+				wxcount,
+			</if>
+			<if test="alicount != null">
+				alicount,
+			</if>
+			<if test="unioncount != null">
+				unioncount,
+			</if>
+			<if test="alipaymoney != null">
+				alipaymoney,
+			</if>
+			<if test="wxpaymoney != null">
+				wxpaymoney,
+			</if>
+			<if test="unionpaymoney != null">
+				unionpaymoney,
+			</if>
+			<if test="summoney != null">
+				summoney,
+			</if>
+			<if test="sumrefundmoney != null">
+				sumrefundmoney,
+			</if>
+			<if test="ratemoney != null">
+				ratemoney,
+			</if>
+			<if test="starttime != null">
+				starttime,
+			</if>
+			<if test="endtime != null">
+				endtime,
+			</if>
+			<if test="creattime != null">
+				creattime,
+			</if>
+			<if test="alirefundMoney != null">
+				alirefundMoney,
+			</if>
+			<if test="wxrefundMoney != null">
+				wxrefundMoney,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="orgid != null">
+				#{orgid,jdbcType=BIGINT},
+			</if>
+			<if test="orgname != null">
+				#{orgname,jdbcType=VARCHAR},
+			</if>
+			<if test="wxcount != null">
+				#{wxcount,jdbcType=INTEGER},
+			</if>
+			<if test="alicount != null">
+				#{alicount,jdbcType=INTEGER},
+			</if>
+			<if test="unioncount != null">
+				#{unioncount,jdbcType=INTEGER},
+			</if>
+			<if test="alipaymoney != null">
+				#{alipaymoney,jdbcType=DECIMAL},
+			</if>
+			<if test="wxpaymoney != null">
+				#{wxpaymoney,jdbcType=DECIMAL},
+			</if>
+			<if test="unionpaymoney != null">
+				#{unionpaymoney,jdbcType=DECIMAL},
+			</if>
+			<if test="summoney != null">
+				#{summoney,jdbcType=DECIMAL},
+			</if>
+			<if test="sumrefundmoney != null">
+				#{sumrefundmoney,jdbcType=DECIMAL},
+			</if>
+			<if test="ratemoney != null">
+				#{ratemoney,jdbcType=DECIMAL},
+			</if>
+			<if test="starttime != null">
+				#{starttime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="endtime != null">
+				#{endtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="creattime != null">
+				#{creattime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="alirefundMoney != null">
+				#{alirefundMoney,jdbcType=DECIMAL},
+			</if>
+			<if test="wxrefundMoney != null">
+				#{wxrefundMoney,jdbcType=DECIMAL},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.deyi.entity.OrgCollectDay">
+		update sta_org_collectday
+		<set>
+			<if test="orgid != null">
+				orgid = #{orgid,jdbcType=BIGINT},
+			</if>
+			<if test="orgname != null">
+				orgname = #{orgname,jdbcType=VARCHAR},
+			</if>
+			<if test="wxcount != null">
+				wxcount = #{wxcount,jdbcType=INTEGER},
+			</if>
+			<if test="alicount != null">
+				alicount = #{alicount,jdbcType=INTEGER},
+			</if>
+			<if test="alipaymoney != null">
+				alipaymoney = #{alipaymoney,jdbcType=DECIMAL},
+			</if>
+			<if test="wxpaymoney != null">
+				wxpaymoney = #{wxpaymoney,jdbcType=DECIMAL},
+			</if>
+			<if test="summoney != null">
+				summoney = #{summoney,jdbcType=DECIMAL},
+			</if>
+			<if test="sumrefundmoney != null">
+				sumrefundmoney = #{sumrefundmoney,jdbcType=DECIMAL},
+			</if>
+			<if test="starttime != null">
+				starttime = #{starttime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="endtime != null">
+				endtime = #{endtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="creattime != null">
+				creattime = #{creattime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.deyi.entity.OrgCollectDay">
+		update sta_org_collectday
+		set orgid = #{orgid,jdbcType=BIGINT},
+		orgname = #{orgname,jdbcType=VARCHAR},
+		wxcount = #{wxcount,jdbcType=INTEGER},
+		alicount = #{alicount,jdbcType=INTEGER},
+		alipaymoney = #{alipaymoney,jdbcType=DECIMAL},
+		wxpaymoney = #{wxpaymoney,jdbcType=DECIMAL},
+		summoney = #{summoney,jdbcType=DECIMAL},
+		sumrefundmoney = #{sumrefundmoney,jdbcType=DECIMAL},
+		starttime = #{starttime,jdbcType=TIMESTAMP},
+		endtime = #{endtime,jdbcType=TIMESTAMP},
+		creattime = #{creattime,jdbcType=TIMESTAMP}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+
+	<select id="queryYesterdayData" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		SELECT distinct
+		  a.id orgid,
+		  a.name orgname,
+		  IFNULL(c.wxcount, 0) wxcount,
+		  IFNULL(b.alicount, 0) alicount,
+		  IFNULL(b.alirefundMoney, 0) alirefundMoney,
+		  IFNULL(c.wxrefundMoney, 0) wxrefundMoney,
+		  IFNULL(b.alipaymoney, 0) alipaymoney,
+		  IFNULL(c.wxpaymoney, 0) wxpaymoney,
+		  ratemoney,
+		  <!-- IFNULL(f.ratemoney, 0) ratemoney, -->
+		  IFNULL(d.summoney, 0) summoney,
+		  IFNULL(d.sumrefundmoney, 0) sumrefundmoney 
+		FROM
+		  dis_org a 
+		  LEFT JOIN 
+		    (SELECT 
+		      org_id,
+		      COUNT(orderNo) alicount,
+		      SUM(refundMoney) alirefundMoney,
+		      SUM(payMoney) alipaymoney 
+		    FROM
+		      sta_order 
+		    WHERE payType = 1 
+		      AND TO_DAYS(NOW()) - TO_DAYS(payTime) = #{i} AND payStatus = 2
+		    GROUP BY org_id) b 
+		    ON a.id = b.org_id 
+		  LEFT JOIN 
+		    (SELECT 
+		      org_id,
+		      COUNT(orderNo) wxcount,
+		      SUM(payMoney) wxpaymoney,
+		      SUM(refundMoney) wxrefundMoney 
+		    FROM
+		      sta_order 
+		    WHERE payType = 2 
+		      AND TO_DAYS(NOW()) - TO_DAYS(payTime) = #{i} AND payStatus = 2
+		    GROUP BY org_id) c 
+		    ON a.id = c.org_id 
+		  LEFT JOIN 
+		    (SELECT 
+		      org_id,
+		      SUM(CASE when  payStatus='2' AND orderStatus='3' THEN 0 ELSE ratemoney END) ratemoney,
+		      SUM(payMoney) summoney,
+		      SUM(refundMoney) sumrefundmoney 
+		    FROM
+		      sta_order 
+		    WHERE TO_DAYS(NOW()) - TO_DAYS(payTime) = #{i} AND payStatus = 2 GROUP BY org_id
+		    ) d 
+		    ON a.id = d.org_id 
+		  <!-- LEFT JOIN 
+		    (SELECT 
+		      org_id,
+		      SUM(sta_mer_collectday.ratemoney) ratemoney 
+		    FROM
+		      sta_mer_collectday 
+		    GROUP BY org_id) f 
+		    ON a.id = f.org_id  -->
+		WHERE a.id != 1 
+	</select>
+
+
+	<select id="queryOrgCollectListBypage" parameterType="com.deyi.util.Page"
+		resultType="com.deyi.vo.OrgCollectDayVo" useCache="false">
+
+		select
+		<include refid="Base_Column_List" />
+		from sta_org_collectday
+		<where>
+			1=1 
+			<!-- and mer_id in(${params.merchantIds}) -->
+
+			<!-- and orgid in (${params.orgIds}) -->
+			<if test="params.querystarttime !=null and params.querystarttime !=''">
+				and endtime <![CDATA[>=]]>#{params.querystarttime}
+			</if>
+
+			<if test="params.queryendtime!=null and params.queryendtime!=''">
+				and endtime <![CDATA[<=]]>#{params.queryendtime}
+			</if>
+
+			<if test="params.orgname!=null and params.orgname!='' ">
+				and orgname like CONCAT('%',#{params.orgname},'%')
+			</if>
+		</where>
+	</select>
+	<select id="getExcelOrgStatisticList" parameterType="com.deyi.vo.OrgCollectDayVo"
+		resultType="com.deyi.vo.OrgCollectDayVo">
+		select
+		<include refid="Base_Column_List" />
+		from sta_org_collectday
+		<where>
+			1=1
+			<!-- and mer_id in(${merchantIds}) -->
+
+			<!-- and orgid in (${orgIds}) -->
+			<if test="querystarttime !=null and querystarttime!=''">
+				and endtime <![CDATA[>=]]>	#{querystarttime}
+			</if>
+
+			<if test="queryendtime !=null and queryendtime!=''">
+				and endtime <![CDATA[<=]]>#{queryendtime}
+			</if>
+
+			<if test="orgname!=null and queryendtime!=''">
+				and orgname like CONCAT('%',#{orgname},'%')
+			</if>
+		</where>
+
+		ORDER BY starttime DESC, summoney DESC
+	</select>
+
+
+	<select id="queryorgbymonth" parameterType="com.deyi.util.Page"
+		resultType="com.deyi.vo.OrgCollectDayVo" useCache="false">
+		SELECT orgid ,orgname,SUM(wxcount)wxcount,SUM(alicount)alicount,SUM(alirefundMoney)alirefundMoney,SUM(wxrefundMoney) wxrefundMoney,
+		SUM(alipaymoney)alipaymoney,SUM(wxpaymoney)wxpaymoney,SUM(summoney)summoney,SUM(sumrefundmoney)sumrefundmoney
+		FROM sta_org_collectday
+		<where>
+			orgid in (${params.orgIds}) and
+			DATE_FORMAT(starttime,'%Y-%m') = #{params.querystarttime}
+		</where>
+		GROUP BY orgid
+	</select>
+
+	<select id="queryYesterdayCount" resultType="java.lang.Integer"
+		parameterType="java.lang.String">
+		SELECT COUNT(*) FROM sta_org_collectday WHERE
+		TO_DAYS(NOW()) -
+		TO_DAYS(starttime) = #{day} AND orgid = #{orgid}
+	</select>
+	
+	
+	<select id="queryOrgCollectSum" parameterType="com.deyi.vo.OrgCollectDayVo"
+		resultType="com.deyi.vo.OrgCollectDayVo">
+		SELECT SUM(wxcount) wxcount,SUM(alicount) alicount,SUM(unioncount) unioncount,SUM(alipaymoney) alipaymoney,SUM(wxpaymoney) wxpaymoney,
+		SUM(summoney) summoney,SUM(sumrefundmoney)sumrefundmoney,SUM(alirefundMoney)alirefundMoney,SUM(wxrefundMoney)wxrefundMoney,
+		SUM(ratemoney) sumratemoney
+		from sta_org_collectday
+		<where>
+			1=1  <!-- and orgid in (${orgIds}) -->
+			<if test="querystarttime!=null and querystarttime !=''">
+				and endtime <![CDATA[>=]]>	#{querystarttime}
+			</if>
+
+			<if test="queryendtime!=null and queryendtime !=''">
+				and endtime <![CDATA[<=]]>	#{queryendtime}
+			</if>
+
+			<if test="orgname!=null and orgname!=''">
+				and orgname like CONCAT('%',#{orgname},'%')
+			</if>
+		</where>
+		</select>
+		
+		<select id="queryorgbymonthsum" parameterType="com.deyi.vo.OrgCollectDayVo"
+		resultType="com.deyi.vo.OrgCollectDayVo">
+			SELECT SUM(wxcount)wxcount,SUM(alicount)alicount,SUM(alipaymoney)alipaymoney,SUM(wxpaymoney)wxpaymoney,
+			SUM(summoney)summoney,SUM(sumrefundmoney)sumrefundmoney,SUM(alirefundMoney)alirefundMoney,SUM(wxrefundMoney) wxrefundMoney
+			FROM (SELECT orgid ,orgname,SUM(wxcount)wxcount,SUM(alicount)alicount,SUM(alipaymoney)alipaymoney,SUM(wxpaymoney)wxpaymoney,
+			SUM(summoney)summoney,SUM(sumrefundmoney)sumrefundmoney,SUM(alirefundMoney)alirefundMoney,SUM(wxrefundMoney) wxrefundMoney
+			FROM sta_org_collectday
+		<where>
+			orgid in (${orgIds}) and
+			DATE_FORMAT(starttime,'%Y-%m') = #{querystarttime}
+		</where>
+		GROUP BY orgid )A
+	</select>
+</mapper>

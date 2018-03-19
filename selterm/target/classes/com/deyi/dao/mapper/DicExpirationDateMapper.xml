@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.deyi.dao.DicExpirationDateMapper" >
+    <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
+    <resultMap id="BaseResultMap" type="com.deyi.entity.DicExpirationDate" >
+        <result column="code" property="code" jdbcType="INTEGER" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+
+    </resultMap>
+    <sql id="Base_Column_List" >
+        code,name
+    </sql>
+    <select id="getDicExpirationDate" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+        select
+        <include refid="Base_Column_List" />
+        from t_dic_expiration_date
+        where code = #{code,jdbcType=INTEGER}
+    </select>
+    <select id="getDicExpirationDates" parameterType="com.deyi.entity.DicExpirationDate" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from t_dic_expiration_date
+        <where>
+
+            <if test="code != null" >
+                and code = #{code,jdbcType=INTEGER},
+            </if>
+            <if test="name != null" >
+               and name= #{name,jdbcType=VARCHAR},
+            </if>
+        </where>
+    </select>
+    <delete id="delete" parameterType="java.lang.Integer" >
+        delete from t_dic_expiration_date
+        where code = #{code,jdbcType=INTEGER}
+    </delete>
+
+    <insert id="insert" parameterType="com.deyi.entity.DicExpirationDate" >
+        insert into t_dic_expiration_date
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="code != null" >
+                code,
+            </if>
+            <if test="name != null" >
+                name,
+            </if></trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="code != null" >
+                #{code,jdbcType=INTEGER},
+            </if>
+            <if test="name != null" >
+                #{name,jdbcType=VARCHAR},
+            </if></trim>
+    </insert>
+
+    <update id="update" parameterType="com.deyi.entity.DicExpirationDate" >
+        update t_dic_expiration_date
+        <set >
+            <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="code != null" >
+                    code = #{code,jdbcType=INTEGER},
+                </if>
+                <if test="code != null" >
+                    code =  #{code,jdbcType=VARCHAR},
+                </if></trim>
+        </set>
+        where code = #{code,jdbcType=INTEGER}
+    </update>
+</mapper>

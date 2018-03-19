@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.deyi.dao.AliPublicMapper" >
+<cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
+  <resultMap id="BaseResultMap" type="com.deyi.entity.AliPublic" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="mechId" property="mechid" jdbcType="VARCHAR" />
+    <result column="mechName" property="mechname" jdbcType="VARCHAR" />
+    <result column="pid" property="pid" jdbcType="VARCHAR" />
+    <result column="appId" property="appid" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="audit" property="audit" jdbcType="CHAR" />
+    <result column="orgid" property="orgid" jdbcType="VARCHAR" />
+    <result column="orgname" property="orgname" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.deyi.entity.AliPublicWithBLOBs" extends="BaseResultMap" >
+    <result column="pkey" property="pkey" jdbcType="LONGVARCHAR" />
+    <result column="public_key" property="publicKey" jdbcType="LONGVARCHAR" />
+    <result column="ali_public_key" property="aliPublicKey" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, mechId, mechName, pid, appId, email, mobile, creator, createTime,audit,orgid,orgname
+  </sql>
+  <sql id="Blob_Column_List" >
+    pkey, public_key, ali_public_key
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from ali_public
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectByMechId" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from ali_public
+    where mechId = #{mechid}
+  </select>
+  
+    <select id="selectByMechantId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from ali_public
+    where mechId = #{mechid}
+   </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from ali_public
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.deyi.entity.AliPublicWithBLOBs" >
+    insert into ali_public (mechId, mechName, 
+      pid, appId, email, 
+      mobile, creator, createTime, 
+      pkey, public_key, ali_public_key,audit,orgid,orgname
+      )
+    values ( #{mechid,jdbcType=VARCHAR}, #{mechname,jdbcType=VARCHAR}, 
+      #{pid,jdbcType=VARCHAR}, #{appid,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{mobile,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{pkey,jdbcType=LONGVARCHAR}, #{publicKey,jdbcType=LONGVARCHAR}, #{aliPublicKey,jdbcType=LONGVARCHAR},#{audit,jdbcType=CHAR},#{orgid,jdbcType=VARCHAR}, #{orgname,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.deyi.entity.AliPublicWithBLOBs" >
+    insert into ali_public
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="mechid != null" >
+        mechId,
+      </if>
+      <if test="mechname != null" >
+        mechName,
+      </if>
+      <if test="pid != null" >
+        pid,
+      </if>
+      <if test="appid != null" >
+        appId,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="mobile != null" >
+        mobile,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+      <if test="pkey != null" >
+        pkey,
+      </if>
+      <if test="publicKey != null" >
+        public_key,
+      </if>
+      <if test="aliPublicKey != null" >
+        ali_public_key,
+      </if>
+      <if test="audit != null" >
+        audit,
+      </if>
+      <if test="orgid != null" >
+        orgid,
+      </if>
+      <if test="orgname != null" >
+        orgname,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="mechid != null" >
+        #{mechid,jdbcType=VARCHAR},
+      </if>
+      <if test="mechname != null" >
+        #{mechname,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null" >
+        #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="appid != null" >
+        #{appid,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pkey != null" >
+        #{pkey,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="publicKey != null" >
+        #{publicKey,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="aliPublicKey != null" >
+        #{aliPublicKey,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="audit != null" >
+        #{audit,jdbcType=CHAR},
+      </if>
+      <if test="orgid != null" >
+        #{orgid,jdbcType=VARCHAR},
+      </if>
+      <if test="orgname != null" >
+        #{orgname,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKey" parameterType="com.deyi.entity.AliPublic" >
+    update ali_public
+    <set >
+      <if test="mechid != null and mechid != ''" >
+        mechId = #{mechid,jdbcType=VARCHAR},
+      </if>
+      <if test="mechname != null and mechname != ''" >
+        mechName = #{mechname,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null and pid != ''" >
+        pid = #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="appid != null and appid != ''" >
+        appId = #{appid,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null and email != ''" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null and mobile != ''" >
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null and creator != ''" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null and createtime != ''" >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pkey != null and pkey != ''" >
+        pkey = #{pkey,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="publicKey != null and publicKey != ''" >
+        public_key = #{publicKey,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="aliPublicKey != null and aliPublicKey != ''" >
+        ali_public_key = #{aliPublicKey,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="audit != null and audit != ''" >
+        audit = #{audit,jdbcType=CHAR},
+      </if>
+      <if test="orgname != null" >
+        orgname = #{orgname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.deyi.entity.AliPublicWithBLOBs" >
+    update ali_public
+    <set >
+      <if test="mechid != null" >
+        mechId = #{mechid,jdbcType=VARCHAR},
+      </if>
+      <if test="mechname != null" >
+        mechName = #{mechname,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null" >
+        pid = #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="appid != null" >
+        appId = #{appid,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pkey != null" >
+        pkey = #{pkey,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="publicKey != null" >
+        public_key = #{publicKey,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="aliPublicKey != null" >
+        ali_public_key = #{aliPublicKey,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="audit != null" >
+        audit = #{audit,jdbcType=CHAR},
+      </if>
+      <if test="orgid != null" >
+       orgid = #{orgid,jdbcType=VARCHAR},
+      </if>
+      <if test="orgname != null" >
+       orgname =  #{orgname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where mechId = #{mechid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.deyi.entity.AliPublicWithBLOBs" >
+    update ali_public
+    set mechId = #{mechid,jdbcType=VARCHAR},
+      mechName = #{mechname,jdbcType=VARCHAR},
+      pid = #{pid,jdbcType=VARCHAR},
+      appId = #{appid,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=VARCHAR},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      pkey = #{pkey,jdbcType=LONGVARCHAR},
+      public_key = #{publicKey,jdbcType=LONGVARCHAR},
+      ali_public_key = #{aliPublicKey,jdbcType=LONGVARCHAR},
+      orgid = #{orgid,jdbcType=VARCHAR},
+      orgname =  #{orgname,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="getAliWxList"   parameterType="com.deyi.util.Page"  resultType="com.deyi.vo.AliWxPublicVo" useCache="false">
+  select * from (
+    select id as id ,merchId as merId,mch_id as mchId ,merchName as merName ,creator as creator,app_id as appId, null as pid,audit as audit , 1 as status,createTime  from wx_public
+     <where>
+        audit!='' 
+        <if test="params.ids != null and params.ids !=''">
+  			and merchId in (${params.ids})
+  		</if>
+          <if test="params.merName != null and params.merName !=''">
+  			and merchName like CONCAT('%','${params.merName}','%')
+  			</if>
+    </where> 
+    UNION select id as id,mechId as merId,null as mchId ,mechName as merName , creator as creator , appId as appId ,pid as pid ,audit as audit ,2 as status,createTime  from ali_public
+         <where> 
+            audit!=''
+            <if test="params.ids != null and params.ids !=''">
+  			and mechId in (${params.ids})
+  		    </if>
+             <if test="params.merName != null and params.merName !=''">
+  			and mechName like CONCAT('%','${params.merName}','%')
+  			</if> 
+  		</where>
+  		   UNION select id as id,merchid as merId,mchid as mchId ,merchname as merName , creator as creator , null as appId ,null as pid ,audit as audit ,3 as status,createTime  from union_public
+         <where>
+            audit!=''
+            <if test="params.ids != null and params.ids !=''">
+  			and merchid in (${params.ids})
+  		    </if>
+             <if test="params.merName != null and params.merName !=''">
+  			and merchname like CONCAT('%','${params.merName}','%')
+  			</if>
+  		</where>
+  	
+  	) a
+  	
+  </select>
+  
+    <select id="queryorgAlipublic" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from ali_public
+    where orgid = #{0}
+  </select>
+  
+</mapper>

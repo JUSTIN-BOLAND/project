@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.deyi.dao.DealerMapper" >
+<cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
+  <resultMap id="BaseResultMap" type="com.deyi.entity.Dealer" >
+    <id column="id"                       property="id"                   jdbcType="INTEGER" />
+    <result column="dealerId"  			property="dealerId"   		  jdbcType="VARCHAR" />
+    <result column="dealerName"  		property="dealerName"   		  jdbcType="VARCHAR" />
+    <result column="series"  			property="series"   			  jdbcType="VARCHAR" />
+    <result column="expirationId" 		property="expirationId"   	  jdbcType="VARCHAR" />
+    <result column="busLicence"  		property="busLicence"   		  jdbcType="VARCHAR" />
+    <result column="busLicenceNo" 		property="busLicenceNo"   	  jdbcType="VARCHAR" />
+    <result column="address"  			property="address"  			  jdbcType="VARCHAR" />
+    <result column="linkman"  			property="linkman"   		  jdbcType="VARCHAR" />
+    <result column="email"  				property="email"   			  jdbcType="VARCHAR" />
+    <result column="mobile"  		    property="mobile"   			  jdbcType="VARCHAR" />
+    <result column="singleMaxAmount"   property="singleMaxAmount"    jdbcType="DECIMAL" />
+    <result column="dayMaxCount"  		property="dayMaxCount"   	  jdbcType="VARCHAR" />
+    <result column="monthMaxCount"  	property="monthMaxCount"   	  jdbcType="VARCHAR" />
+    <result column="adWords"  			property="adWords"   		  jdbcType="VARCHAR" />
+    <result column="adLogo"  			property="adLogo"   			  jdbcType="VARCHAR" />
+    <result column="parentId"  			property="parentId"   		  jdbcType="VARCHAR" />
+    <result column="creator"  			property="creator"   		  jdbcType="VARCHAR" />
+    <result column="createTime"  		property="createTime"       	  jdbcType="TIMESTAMP" />
+    <result column="status"  			property="status"   		  jdbcType="VARCHAR" />
+
+    <result column="userId"  			property="userId"   		  jdbcType="VARCHAR" />
+    <result column="passwd"  		    property="passwd"   		  jdbcType="VARCHAR" />
+    <result column="accountExpiration"     property="accountExpiration"  jdbcType="VARCHAR" />
+
+  </resultMap>
+  <sql id="Base_Column_List" >
+   id,dealerId,dealerName,  series,expirationId,busLicence,busLicenceNo,address,
+   linkman, email,mobile,singleMaxAmount,dayMaxCount,monthMaxCount,adWords,adLogo,parentId,creator,createTime,status,
+   userId,passwd,accountExpiration
+  </sql>
+  <select id="getDealer" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from t_dealer
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="getDealerByCode" resultMap="BaseResultMap" parameterType="com.deyi.entity.Dealer" >
+    select
+    <include refid="Base_Column_List" />
+    from t_dealer
+
+    <where>
+    1=1
+    <if test="dealerId != null" >
+      and dealerId=#{dealerId}
+    </if>
+    <if test="dealerName != null" >
+
+      and dealerName=#{dealerName}
+    </if>
+      <if test="userId != null" >
+
+        and userId=#{userId}
+      </if>
+      <if test="passwd != null" >
+
+        and dealerName!=#{passwd}
+      </if>
+    </where>
+  </select>
+
+  <delete id="delete" parameterType="java.lang.Integer" >
+    delete from t_dealer
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" parameterType="com.deyi.entity.Dealer" >
+    insert into t_dealer
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+
+      <if test="dealerId != null" >
+        dealerId,
+      </if>
+      <if test="dealerName != null" >
+        dealerName,
+      </if>
+      <if test="series != null" >
+        series,
+      </if>
+      <if test="expirationId != null" >
+        expirationId,
+      </if>
+      <if test="busLicence != null" >
+        busLicence,
+      </if>
+      <if test="busLicenceNo != null" >
+        busLicenceNo,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="linkman != null" >
+        linkman,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="mobile != null" >
+        mobile,
+      </if>
+      <if test="singleMaxAmount != null" >
+        singleMaxAmount,
+      </if>
+      <if test="dayMaxCount != null" >
+        dayMaxCount,
+      </if>
+      <if test="monthMaxCount != null" >
+        monthMaxCount,
+      </if>
+      <if test="adWords != null" >
+        adWords,
+      </if>
+      <if test="adLogo != null" >
+        adLogo,
+      </if>
+      <if test="parentId != null" >
+        parentId,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="createTime != null" >
+        createTime,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+
+
+      <if test="userId != null" >
+        userId,
+      </if>
+      <if test="passwd != null" >
+        passwd,
+      </if>
+      <if test="accountExpiration != null" >
+        accountExpiration,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+
+      <if test="dealerId != null" >
+        #{dealerId,jdbcType=VARCHAR},
+      </if>
+      <if test="dealerName != null" >
+        #{dealerName,jdbcType=VARCHAR},
+      </if>
+      <if test="series != null" >
+        #{series,jdbcType=VARCHAR},
+      </if>
+      <if test="expirationId != null" >
+        #{expirationId,jdbcType=INTEGER},
+      </if>
+      <if test="busLicence != null" >
+        #{busLicence,jdbcType=VARCHAR},
+      </if>
+      <if test="busLicenceNo != null" >
+        #{busLicenceNo,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="linkman != null" >
+        #{linkman,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="singleMaxAmount != null" >
+        #{singleMaxAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="dayMaxCount != null" >
+        #{dayMaxCount,jdbcType=INTEGER},
+      </if>
+      <if test="monthMaxCount != null" >
+        #{monthMaxCount,jdbcType=INTEGER},
+      </if>
+      <if test="adWords != null" >
+        #{adWords,jdbcType=VARCHAR},
+      </if>
+      <if test="adLogo != null" >
+        #{adLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+         #{status,jdbcType=TIMESTAMP},
+      </if>
+
+      <if test="userId != null" >
+
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="passwd != null" >
+
+        #{passwd,jdbcType=VARCHAR},
+      </if>
+      <if test="accountExpiration != null" >
+
+        #{accountExpiration,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="update" parameterType="com.deyi.entity.Dealer" >
+    update t_dealer
+    <set >
+      <if test="dealerId != null" >
+        dealerId=#{dealerId,jdbcType=VARCHAR},
+      </if>
+      <if test="dealerName != null" >
+        dealerName= #{dealerName,jdbcType=VARCHAR},
+      </if>
+      <if test="series != null" >
+        series=#{series,jdbcType=VARCHAR},
+      </if>
+      <if test="expirationId != null" >
+        expirationId=#{expirationId,jdbcType=INTEGER},
+      </if>
+      <if test="busLicence != null" >
+        busLicence=#{busLicence,jdbcType=VARCHAR},
+      </if>
+      <if test="busLicenceNo != null" >
+        busLicenceNo=#{busLicenceNo,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address=#{address,jdbcType=VARCHAR},
+      </if>
+      <if test="linkman != null" >
+        linkman=#{linkman,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email=#{email,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        mobile=#{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="singleMaxAmount != null" >
+        singleMaxAmount=#{singleMaxAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="dayMaxCount != null" >
+        dayMaxCount=#{dayMaxCount,jdbcType=INTEGER},
+      </if>
+      <if test="monthMaxCount != null" >
+        monthMaxCount=#{monthMaxCount,jdbcType=INTEGER},
+      </if>
+      <if test="adWords != null" >
+        adWords=#{adWords,jdbcType=VARCHAR},
+      </if>
+      <if test="adLogo != null" >
+        adLogo=#{adLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        parentId=#{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null" >
+        creator=#{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        createTime=#{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status=#{status,jdbcType=TIMESTAMP},
+      </if>
+
+      <if test="userId != null" >
+
+        userId=#{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="passwd != null" >
+
+        passwd=#{passwd,jdbcType=VARCHAR},
+      </if>
+      <if test="accountExpiration != null" >
+
+        accountExpiration=#{accountExpiration,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+  <select id="getDealers" parameterType="com.deyi.util.Page" resultMap="BaseResultMap">
+
+    SELECT a.id,a.dealerId,a.dealerName,a.series,a.expirationId,a.busLicence,a.busLicenceNo,a.address,
+    a.linkman,a. email,a.mobile,a.singleMaxAmount,a.dayMaxCount,a.monthMaxCount,a.adWords,
+    a.adLogo,a.parentId,a.creator,a.createTime,a.status,a.userId,a.passwd,
+
+    DATE_FORMAT(DATE_ADD(a.createTime, INTERVAL IFNULL(a.expirationId,0) YEAR), '%Y-%m-%d %H:%i:%s') accountExpiration,
+    b.wxMchId,
+    b.aliMachId
+    FROM t_dealer a LEFT JOIN  t_dealer_pay b ON a.id = b.dealerId
+    <where>
+       1=1
+
+      <if test="params.id != null and params.id != ''" >
+        and a.id = #{id,jdbcType=INTEGER}
+      </if>
+      <if test="params.dealerId != null and params.dealerId != ''" >
+        and a.dealerId=#{params.dealerId}
+      </if>
+      <if test="params.dealerName != null and params.dealerName != ''" >
+
+        and dealerName like CONCAT('%','${params.dealerName}','%')
+      </if>
+      <if test="params.series != null and params.series != ''" >
+
+        and series=#{params.series}
+      </if>
+      <if test="params.expirationId != null" >
+
+        and expirationId=#{params.expirationId}
+      </if>
+      <if test="params.busLicence != null" >
+
+        and busLicence=#{params.busLicence}
+      </if>
+      <if test="params.busLicenceNo != null" >
+
+        and busLicenceNo=#{params.busLicenceNo}
+      </if>
+
+      <if test="params.linkman != null and params.linkman != ''" >
+
+        and linkman=#{params.linkman}
+      </if>
+      <if test="params.email != null" >
+
+        and email=#{params.email}
+      </if>
+      <if test="params.mobile != null" >
+
+        and mobile=#{params.mobile}
+      </if>
+      <if test="params.singleMaxAmount != null" >
+
+        and singleMaxAmount=#{params.singleMaxAmount}
+      </if>
+      <if test="params.dayMaxCount != null" >
+
+        and dayMaxCount=#{params.dayMaxCount}
+      </if>
+      <if test="params.monthMaxCount != null" >
+
+        and monthMaxCount=#{params.monthMaxCount}
+      </if>
+      <if test="params.adWords != null" >
+
+        and adWords=#{params.adWords}
+      </if>
+
+      <if test="params.parentId != null" >
+
+        and parentId=#{params.parentId}
+      </if>
+      <if test="params.userId != null and params.userId != ''" >
+
+        and a.userId=#{params.userId}
+      </if>
+      <if test="params.creator != null" >
+
+        or creator=#{params.creator}
+      </if>
+      <if test="params.createTime != null" >
+
+        and createTime=#{params.createTime}
+      </if>
+      <if test="params.status != null and params.status != ''" >
+        and status=#{params.status}
+      </if>
+
+
+
+      <if test="params.wxMchId != null  and params.wxMchId != ''" >
+
+        and  b.wxMchId=#{params.wxMchId}
+      </if>
+
+      <if test="params.aliMachId != null and params.aliMachId != ''" >
+
+        and b.aliMachId=#{params.aliMachId}
+      </if>
+
+
+    </where>
+  </select>
+</mapper>

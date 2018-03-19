@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.deyi.dao.AdvertiseMapper" >
+<cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
+  <resultMap id="BaseResultMap" type="com.deyi.entity.Advertise" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="creatTime" property="creattime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="CHAR" />
+    <result column="org_id" property="orgId" jdbcType="BIGINT" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="CHAR" />
+    <result column="image1" property="image1" jdbcType="VARCHAR" />
+    <result column="image2" property="image2" jdbcType="VARCHAR" />
+    <result column="image3" property="image3" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, code, name, creatTime, status, org_id, creator, type,image1,image2,image3
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from dis_advertise
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from dis_advertise
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.deyi.entity.Advertise" >
+    insert into dis_advertise (id, code, name, 
+      creatTime, status, org_id, 
+      creator, type)
+    values (#{id,jdbcType=BIGINT}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{creattime,jdbcType=TIMESTAMP}, #{status,jdbcType=CHAR}, #{orgId,jdbcType=BIGINT}, 
+      #{creator,jdbcType=VARCHAR}, #{type,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.deyi.entity.Advertise" >
+    insert into dis_advertise
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="creattime != null" >
+        creatTime,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="orgId != null" >
+        org_id,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="image1 != null and image1 !=''" >
+        image1,
+      </if>
+      <if test="image2 != null and image2 !=''" >
+        image2,
+      </if>
+      <if test="image3 != null and image3 !=''" >
+        image3,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="creattime != null" >
+        #{creattime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="orgId != null" >
+        #{orgId,jdbcType=BIGINT},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=CHAR},
+      </if>
+      <if test="image1 != null and image1 !=''"  >
+        #{image1,jdbcType=CHAR},
+      </if>
+      <if test="image2 != null and image2 !=''" >
+        #{image2,jdbcType=CHAR},
+      </if>
+      <if test="image3 != null and image3 !=''" >
+        #{image3,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.deyi.entity.Advertise" >
+    update dis_advertise
+    <set >
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="creattime != null" >
+        creatTime = #{creattime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=CHAR},
+      </if>
+      <if test="orgId != null" >
+        org_id = #{orgId,jdbcType=BIGINT},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=CHAR},
+      </if>
+       <if test="image1 != null and image1 !=''" >
+        image1  = #{image1,jdbcType=CHAR},
+      </if>
+      <if test="image2 != null and image2 !=''" >
+        image2  = #{image2,jdbcType=CHAR},
+      </if>
+      <if test="image3 != null and image3 !=''" >
+        image3  = #{image3,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.deyi.entity.Advertise" >
+    update dis_advertise
+    set code = #{code,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      creatTime = #{creattime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=CHAR},
+      org_id = #{orgId,jdbcType=BIGINT},
+      creator = #{creator,jdbcType=VARCHAR},
+      type = #{type,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+    <select id="getAdvertisesList" resultMap="BaseResultMap" parameterType="com.deyi.util.Page" useCache="false" >
+    select 
+    <include refid="Base_Column_List" />
+    from dis_advertise
+     where 1=1  
+    <if test ="params.orgId !=null and params.orgId !='' ">
+       and org_id = #{params.orgId}
+    </if>
+    <if test="params.name !=null and params.name !=''">
+		and name like CONCAT('%','${params.name}','%')
+	</if>
+	<if test="params.status !=null and params.status !=''">
+		and status like CONCAT('%','${params.status}','%')
+	</if>
+  </select>
+   
+    
+   <select id="getAdvertisesByOrg" parameterType="com.deyi.entity.Advertise" resultMap="BaseResultMap">
+     select * from dis_advertise where org_id = #{orgId}
+   </select>
+  
+  
+  <select id="getAdvByOrg" parameterType="com.deyi.entity.Advertise" resultMap="BaseResultMap">
+     select * from dis_advertise where org_id = #{orgId}  and status=1 order by creatTime desc limit 0,1 
+   </select>
+</mapper>

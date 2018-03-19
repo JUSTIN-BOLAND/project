@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.deyi.dao.BulletinMapper" >
+<cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
+  <resultMap id="BaseResultMap" type="com.deyi.entity.Bulletin" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="orgid" property="orgid" jdbcType="BIGINT" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, code, title, createtime, status, orgid, content, creator
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from dis_bulletin
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from dis_bulletin
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.deyi.entity.Bulletin" >
+    insert into dis_bulletin (id, code, title, 
+      createtime, status, orgid, 
+      content, creator)
+    values (#{id,jdbcType=BIGINT}, #{code,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{status,jdbcType=VARCHAR}, #{orgid,jdbcType=BIGINT}, 
+      #{content,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.deyi.entity.Bulletin" >
+    insert into dis_bulletin
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="orgid != null" >
+        orgid,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="orgid != null" >
+        #{orgid,jdbcType=BIGINT},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.deyi.entity.Bulletin" >
+    update dis_bulletin
+    <set >
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="orgid != null" >
+        orgid = #{orgid,jdbcType=BIGINT},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.deyi.entity.Bulletin" >
+    update dis_bulletin
+    set code = #{code,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=VARCHAR},
+      orgid = #{orgid,jdbcType=BIGINT},
+      content = #{content,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="getBulletinList" resultMap="BaseResultMap" parameterType="com.deyi.util.Page"  useCache="false" >
+    select 
+    *
+    from dis_bulletin
+     where 1=1  
+    <if test ="params.orgid !=null and params.orgid !='' ">
+       and orgid = #{params.orgid}
+    </if>
+    <if test="params.title !=null and params.title !=''">
+		and title like CONCAT('%','${params.title}','%')
+	</if>
+	<if test="params.status !=null and params.status !=''">
+		and status like CONCAT('%','${params.status}','%')
+	</if>
+  </select>
+  
+   <select id="getBulletinByOrg" parameterType="com.deyi.entity.Bulletin" resultMap="BaseResultMap">
+     select * from dis_bulletin where orgid = #{orgid}
+   </select>
+   
+    <select id="getBullByOrg" resultMap="BaseResultMap" parameterType="com.deyi.util.Page"  useCache="false">
+    select 
+    *
+    from dis_bulletin
+     where orgid = #{params.orgid} and  status =1
+    </select>
+    
+    <select id="getBullList" resultMap="BaseResultMap" parameterType="com.deyi.util.Page" useCache="false" >
+    select 
+    *
+    from dis_bulletin
+     where 1=1  and  status =1
+    <if test ="params.orgid !=null and params.orgid !='' ">
+       and orgid = #{params.orgid}
+    </if>
+    <if test ="params.orgidTwo !=null and params.orgidTwo !='' ">
+       or orgid = #{params.orgidTwo}
+    </if>
+    order by createtime desc
+  </select>
+  
+</mapper>

@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.deyi.dao.OrgDao" >
+
+<cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
+  <resultMap id="BaseResultMap" type="com.deyi.entity.Org" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="CHAR" />
+    <result column="contactPerson" property="contactPerson" jdbcType="VARCHAR" />
+    <result column="contactTel" property="contactTel" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="CHAR" />
+    <result column="areaId" property="areaId" jdbcType="INTEGER" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="creatorName" property="creatorName" jdbcType="VARCHAR" />
+    <result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="parentId" property="parentId" jdbcType="BIGINT" />
+    <result column="level" property="level" jdbcType="CHAR" />
+    <result column="orgAccount" property="orgAccount" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="rate" property="rate" jdbcType="DECIMAL" />
+    <result column="node" property="node" jdbcType="CHAR" />
+    <result column="deletedStatus" property="deletedStatus" jdbcType="CHAR"/>
+    <result column="legalIdentityCardPositive" property="legalIdentityCardPositive" jdbcType="VARCHAR" />
+    <result column="legalIdentityCardOpposite" property="legalIdentityCardOpposite" jdbcType="VARCHAR" />
+    <result column="businessLicense" property="businessLicense" jdbcType="VARCHAR" />
+    <result column="accountPermit" property="accountPermit" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="licenseNumber" property="licenseNumber" jdbcType="VARCHAR" />
+    <result column="bankNumber" property="bankNumber" jdbcType="VARCHAR" />
+    <result column="appId" property="appId" jdbcType="VARCHAR" />
+    <result column="appSecret" property="appSecret" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, contactPerson, contactTel, address, status, areaId, creator, creatorName, 
+    createTime, parentId, level, orgAccount, rate,node,code,remark,legalIdentityCardPositive,
+    legalIdentityCardOpposite,businessLicense,accountPermit,email,licenseNumber,bankNumber,appId,appSecret
+  </sql>
+  
+  <select id="getOrgsByPage" resultMap="BaseResultMap" parameterType="com.deyi.util.Page" useCache="false" >
+    select 
+    <include refid="Base_Column_List" />
+    from dis_org
+    where id in(${params.ids}) 
+    <if test="params.name !=null and params.name !=''">
+		and name like CONCAT('%',#{params.name},'%')
+	</if>
+	    and deletedStatus = 0
+  </select>
+  
+  <select id="getOrgWxApp" resultMap="BaseResultMap" parameterType="string" >
+    select 
+      c.id,c.NAME,c.contactPerson,c.contactTel,c.address,c.STATUS,c.areaId,c.creator,c.creatorName,c.createTime,c.parentId,
+      c.LEVEL,c.orgAccount,c.rate,c.node,c.CODE,c.remark,c.deletedStatus,c.legalIdentityCardPositive,c.legalIdentityCardOpposite,
+      c.businessLicense,c.accountPermit,c.email,c.licenseNumber,c.bankNumber,c.appId,c.appSecret
+    FROM dis_store a,dis_merchant b,dis_org c
+    WHERE a.merId = b.id AND b.org_id = c.id
+    AND a.storeCode= #{0} LIMIT 1
+  </select>
+  <select id="getChildOrgs" resultMap="BaseResultMap" parameterType="string" >
+    select
+    <include refid="Base_Column_List" />
+    from dis_org
+    where parentId = #{0} and deletedStatus = 0
+  </select>
+
+ 
+  <select id="selectByOrgAccount" resultMap="BaseResultMap" parameterType="string" >
+    select 
+    <include refid="Base_Column_List" />
+    from dis_org
+    where orgAccount = #{0} and deletedStatus = 0
+  </select>
+  
+  <select id="selectByOrgSalesman" resultMap="BaseResultMap" parameterType="string" >
+    select 
+    <include refid="Base_Column_List" />
+    from dis_org
+    where id = (select orgId from dis_salesman where accountName=#{0}) and deletedStatus = 0
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from dis_org
+    where id = #{id,jdbcType=BIGINT} and deletedStatus = 0
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from dis_org
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.deyi.entity.Org" useGeneratedKeys="true" keyProperty="id">
+    insert into dis_org (id, name, contactPerson, 
+      contactTel, address, status, 
+      areaId, creator, creatorName, 
+      createTime, parentId, level, 
+      orgAccount, rate,code,appId,appSecret)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{contactPerson,jdbcType=VARCHAR}, 
+      #{contactTel,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, 
+      #{areaId,jdbcType=INTEGER}, #{creator,jdbcType=VARCHAR}, #{creatorName,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{parentId,jdbcType=CHAR}, #{level,jdbcType=CHAR}, 
+      #{orgAccount,jdbcType=VARCHAR}, #{rate,jdbcType=DECIMAL},#{code,jdbcType=CHAR}
+      , #{appId,jdbcType=VARCHAR}, #{appSecret,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.deyi.entity.Org" useGeneratedKeys="true" keyProperty="id">
+    insert into dis_org
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="contactPerson != null" >
+        contactPerson,
+      </if>
+      <if test="contactTel != null" >
+        contactTel,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="areaId != null" >
+        areaId,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="creatorName != null" >
+        creatorName,
+      </if>
+      <if test="createTime != null" >
+        createTime,
+      </if>
+      <if test="parentId != null" >
+        parentId,
+      </if>
+      <if test="level != null" >
+        level,
+      </if>
+      <if test="orgAccount != null" >
+        orgAccount,
+      </if>
+      <if test="rate != null" >
+        rate,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="legalIdentityCardPositive != null" >
+        legalIdentityCardPositive,
+      </if>
+      <if test="legalIdentityCardOpposite != null" >
+        legalIdentityCardOpposite,
+      </if>
+       <if test="businessLicense != null" >
+        businessLicense,
+      </if>
+       <if test="accountPermit != null" >
+        accountPermit,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+       <if test="licenseNumber != null" >
+        licenseNumber,
+      </if>
+       <if test="bankNumber != null" >
+        bankNumber,
+      </if>
+
+      <if test="appId != null" >
+        appId,
+      </if>
+      <if test="appSecret != null" >
+        appSecret
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="contactPerson != null" >
+        #{contactPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="contactTel != null" >
+        #{contactTel,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="areaId != null" >
+        #{areaId,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorName != null" >
+        #{creatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=CHAR},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=CHAR},
+      </if>
+      <if test="orgAccount != null" >
+        #{orgAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="rate != null" >
+        #{rate,jdbcType=DECIMAL},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=CHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=CHAR},
+      </if>
+      <if test="legalIdentityCardPositive != null" >
+        #{legalIdentityCardPositive,jdbcType=VARCHAR},
+      </if>
+       <if test="legalIdentityCardOpposite != null" >
+        #{legalIdentityCardOpposite,jdbcType=VARCHAR},
+      </if>
+      <if test="businessLicense != null" >
+        #{businessLicense,jdbcType=VARCHAR},
+      </if>
+      <if test="accountPermit != null" >
+        #{accountPermit,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="licenseNumber != null" >
+        #{licenseNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="bankNumber != null" >
+        #{bankNumber,jdbcType=VARCHAR},
+      </if>
+
+      <if test="appId != null" >
+        #{appId,jdbcType=VARCHAR},
+      </if>
+      <if test="appSecret != null" >
+         #{appSecret,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.deyi.entity.Org" >
+    update dis_org
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="contactPerson != null" >
+        contactPerson = #{contactPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="contactTel != null" >
+        contactTel = #{contactTel,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=CHAR},
+      </if>
+      <if test="areaId != null" >
+        areaId = #{areaId,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorName != null" >
+        creatorName = #{creatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        createTime = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="parentId != null" >
+        parentId = #{parentId,jdbcType=CHAR},
+      </if>
+      <if test="level != null" >
+        level = #{level,jdbcType=CHAR},
+      </if>
+      <if test="orgAccount != null" >
+        orgAccount = #{orgAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="rate != null" >
+        rate = #{rate,jdbcType=DECIMAL},
+      </if>
+      <if test="node != null" >
+        node = #{node,jdbcType=CHAR},
+      </if>
+      
+      <if test="code != null" >
+        code = #{code,jdbcType=CHAR},
+      </if>
+     <if test="remark != null" >
+        remark = #{remark},
+      </if>
+      <if test="deletedStatus != null" >
+        deletedStatus = #{deletedStatus},
+      </if>
+       <if test="legalIdentityCardPositive != null" >
+        legalIdentityCardPositive = #{legalIdentityCardPositive},
+      </if>
+       <if test="legalIdentityCardOpposite != null" >
+        legalIdentityCardOpposite = #{legalIdentityCardOpposite},
+      </if>
+       <if test="businessLicense != null" >
+        businessLicense = #{businessLicense},
+      </if>
+       <if test="accountPermit != null" >
+        accountPermit = #{accountPermit},
+      </if>
+       <if test="email != null" >
+        email = #{email},
+      </if>
+       <if test="licenseNumber != null" >
+        licenseNumber = #{licenseNumber},
+      </if>
+       <if test="bankNumber != null" >
+        bankNumber = #{bankNumber},
+      </if>
+
+      <if test="appId != null" >
+        appId = #{appId,jdbcType=VARCHAR},
+      </if>
+      <if test="appSecret != null" >
+        appSecret = #{appSecret,jdbcType=VARCHAR}
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.deyi.entity.Org" >
+    update dis_org
+    set name = #{name,jdbcType=VARCHAR},
+      contactPerson = #{contactPerson,jdbcType=VARCHAR},
+      contactTel = #{contactTel,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      status = #{status,jdbcType=CHAR},
+      areaId = #{areaId,jdbcType=INTEGER},
+      creator = #{creator,jdbcType=VARCHAR},
+      creatorName = #{creatorName,jdbcType=VARCHAR},
+      createTime = #{createTime,jdbcType=TIMESTAMP},
+      parentId = #{parentId,jdbcType=CHAR},
+      level = #{level,jdbcType=CHAR},
+      orgAccount = #{orgAccount,jdbcType=VARCHAR},
+      rate = #{rate,jdbcType=DECIMAL},
+      node = #{node,jdbcType=CHAR},
+      code = #{code,jdbcType=CHAR},
+      appId = #{appId,jdbcType=VARCHAR},
+      appSecret = #{appSecret,jdbcType=VARCHAR}
+      where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+   <select id="selectByOrgName" resultMap="BaseResultMap" parameterType="java.lang.String">
+      select * from dis_org
+    where name = #{name,jdbcType=VARCHAR} and deletedStatus = 0
+   </select>
+  
+  <select id="getExportOrg"  resultMap="BaseResultMap" parameterType="com.deyi.util.Page" useCache="false">
+     select 
+     org.id ,
+     org.name ,
+     org.contactPerson ,
+     org.contactTel ,
+     org.creatorName ,
+     org.createTime ,
+     org.address ,
+     org.status 
+     from dis_org org and deletedStatus = 0
+  </select>
+</mapper>

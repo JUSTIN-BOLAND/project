@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.deyi.dao.ClerkDao">
+<cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
+	<resultMap id="BaseResultMap" type="com.deyi.entity.Clerk">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<id column="clerkCode" property="clerkCode" jdbcType="VARCHAR" />
+		<id column="accountName" property="accountName" jdbcType="VARCHAR" />
+		<result column="storeId" property="storeid" jdbcType="BIGINT" />
+		<result column="storeName" property="storename" jdbcType="VARCHAR" />
+		<result column="clerkName" property="clerkname" jdbcType="VARCHAR" />
+		<result column="clerkJob" property="clerkjob" jdbcType="VARCHAR" />
+		<result column="phone" property="phone" jdbcType="VARCHAR" />
+		<result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+		<result column="mac" property="mac" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="VARCHAR" />
+		<result column="imei" property="imei" jdbcType="VARCHAR" />
+		<result column="uuid" property="uuid" jdbcType="VARCHAR" />
+		<result column="posmac" property="posmac" jdbcType="VARCHAR" />
+		<result column="merchant_no" property="merchant_no" jdbcType="VARCHAR" />
+		<result column="terminal_id" property="terminal_id" jdbcType="VARCHAR" />
+		<result column="access_token" property="access_token" jdbcType="VARCHAR" />
+		<result column="qrcodeId" property="qrcodeId" jdbcType="VARCHAR" />
+
+	</resultMap>
+	<resultMap id="ClerkRelResultMap" type="com.deyi.entity.ClerkRel">
+		<result column="merchantId" property="merchantId" jdbcType="VARCHAR" />
+		<result column="aliMerchantId" property="aliMerchantId" jdbcType="VARCHAR" />
+		<result column="storeId" property="storeid" jdbcType="BIGINT" />
+		<result column="storeName" property="storeName" jdbcType="VARCHAR" />
+		<result column="merchantCode" property="merchantCode" jdbcType="VARCHAR" />
+		<result column="merchantName" property="merchantName" jdbcType="VARCHAR" />
+		<result column="orgId" property="orgId" jdbcType="BIGINT" />
+		<result column="orgName" property="orgName" jdbcType="VARCHAR" />
+
+
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, clerkCode,accountName,storeId, storeName, clerkName, clerkJob, phone,
+		createTime,mac,status,imei,uuid,posmac,refundstatus,terminal_id,access_token,merchant_no,qrcodeId
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from dis_clerk
+		where id = #{id,jdbcType=VARCHAR} and deletedStatus = 0
+	</select>
+
+	<select id="selectByPrimaryStore" parameterType="com.deyi.util.Page"
+		resultType="com.deyi.entity.Clerk" useCache="false">
+		select id from dis_clerk where storeid = #{storeid,jdbcType=VARCHAR} AND
+		deletedStatus = 0 ORDER BY createTime DESC
+	</select>
+	<select id="getClerkRelByCode" resultMap="ClerkRelResultMap"	parameterType="java.lang.String">
+		SELECT c.id AS orgId,c.name AS orgName, b.code AS merchantCode,b.name AS merchantName,
+		d.storeCode,d.storeName, b.ali_merchant_id AS aliMerchantId, b.id AS merchantId
+		FROM  dis_merchant b,dis_org c,dis_store d
+		WHERE  b.org_id = c.id AND b.id = d.merId AND d.storeCode = #{storeCode,jdbcType=VARCHAR}  AND d.deletedStatus = 0
+
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from dis_clerk
+		where id = #{id,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="com.deyi.entity.Clerk">
+		insert into dis_clerk (id, clerkCode,accountName,storeId, storeName,
+		clerkName, clerkJob, phone,
+		createTime,qrcodeId)
+		values (#{id,jdbcType=VARCHAR},
+		#{clerkCode,jdbcType=VARCHAR},#{accountName,jdbcType=VARCHAR},#{storeid,jdbcType=BIGINT},
+		#{storename,jdbcType=VARCHAR},
+		#{clerkname,jdbcType=VARCHAR}, #{clerkjob,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR},
+		#{createtime,jdbcType=TIMESTAMP}, #{qrcodeId,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.deyi.entity.Clerk">
+		insert into dis_clerk
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="clerkCode != null">
+				clerkCode,
+			</if>
+			<if test="accountName != null">
+				accountName,
+			</if>
+			<if test="storeid != null">
+				storeId,
+			</if>
+			<if test="storename != null">
+				storeName,
+			</if>
+			<if test="clerkname != null">
+				clerkName,
+			</if>
+			<if test="clerkjob != null">
+				clerkJob,
+			</if>
+			<if test="phone != null">
+				phone,
+			</if>
+			<if test="createtime != null">
+				createTime,
+			</if>
+			<if test="merId != null">
+				merId,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="refundstatus != null">
+				refundstatus,
+			</if>
+			<if test="terminal_id != null">
+				terminal_id,
+			</if>
+			<if test="access_token != null">
+				access_token,
+			</if>
+			<if test="merchant_no != null">
+				merchant_no,
+			</if>
+
+			<if test="qrcodeId != null">
+				qrcodeId,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="clerkCode != null">
+				#{clerkCode,jdbcType=VARCHAR},
+			</if>
+			<if test="accountName != null">
+				#{accountName,jdbcType=VARCHAR},
+			</if>
+			<if test="storeid != null">
+				#{storeid,jdbcType=BIGINT},
+			</if>
+			<if test="storename != null">
+				#{storename,jdbcType=VARCHAR},
+			</if>
+			<if test="clerkname != null">
+				#{clerkname,jdbcType=VARCHAR},
+			</if>
+			<if test="clerkjob != null">
+				#{clerkjob,jdbcType=VARCHAR},
+			</if>
+			<if test="phone != null">
+				#{phone,jdbcType=VARCHAR},
+			</if>
+			<if test="createtime != null">
+				#{createtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="merId != null">
+				#{merId},
+			</if>
+			<if test="status != null">
+				#{status},
+			</if>
+			<if test="refundstatus != null">
+				#{refundstatus},
+			</if>
+			<if test="terminal_id != null">
+				#{terminal_id},
+			</if>
+			<if test="access_token != null">
+				#{access_token},
+			</if>
+			<if test="merchant_no != null">
+				#{merchant_no},
+			</if>
+
+			<if test="qrcodeId != null">
+				#{qrcodeId},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.deyi.entity.Clerk">
+		update dis_clerk
+		<set>
+			<if test="clerkCode != null">
+				clerkCode = #{clerkCode,jdbcType=VARCHAR},
+			</if>
+			<if test="storename != null">
+				storeName = #{storename,jdbcType=VARCHAR},
+			</if>
+			<if test="clerkname != null">
+				clerkName = #{clerkname,jdbcType=VARCHAR},
+			</if>
+			<if test="clerkjob != null">
+				clerkJob = #{clerkjob,jdbcType=VARCHAR},
+			</if>
+			<if test="phone != null">
+				phone = #{phone,jdbcType=VARCHAR},
+			</if>
+			<if test="createtime != null">
+				createTime = #{createtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="mac != null">
+				mac = #{mac},
+			</if>
+			<if test="deletedStatus != null">
+				deletedStatus = #{deletedStatus},
+			</if>
+			<if test="status != null">
+				status = #{status},
+			</if>
+			<if test="imei != null">
+				imei = #{imei,jdbcType=VARCHAR},
+			</if>
+			<if test="uuid != null">
+				uuid = #{uuid,jdbcType=VARCHAR},
+			</if>
+			<if test="posmac != null">
+				posmac = #{posmac,jdbcType=VARCHAR},
+			</if>
+			<if test="refundstatus != null">
+				refundstatus = #{refundstatus,jdbcType=VARCHAR},
+			</if>
+			<if test="qrcodeId != null">
+				qrcodeId  = #{qrcodeId},
+			</if>
+		</set>
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+
+
+	<update id="updateByPrimaryKey" parameterType="com.deyi.entity.Clerk">
+		update dis_clerk
+		set storeId = #{storeid,jdbcType=BIGINT},
+		clerkCode = #{clerkCode,jdbcType=VARCHAR},
+		storeName = #{storename,jdbcType=VARCHAR},
+		clerkName = #{clerkname,jdbcType=VARCHAR},
+		imei = #{imei,jdbcType=VARCHAR},
+		uuid = #{uuid,jdbcType=VARCHAR},
+		posmac = #{posmac,jdbcType=VARCHAR},
+		clerkJob = #{clerkjob,jdbcType=VARCHAR},
+		refundstatus = #{refundstatus,jdbcType=VARCHAR},
+		phone = #{phone,jdbcType=VARCHAR},
+		createTime = #{createtime,jdbcType=TIMESTAMP},
+		qrcodeId  = #{qrcodeId}
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+	<update id="updateQrCodeId" parameterType="java.lang.String">
+		update dis_clerk
+		set
+		qrcodeId  = null
+		where qrcodeId  = #{qrcodeId}
+	</update>
+	<update id="updateByMerId" parameterType="com.deyi.entity.Clerk">
+		update dis_clerk
+		<set>
+			<if test="clerkCode != null">
+				clerkCode = #{clerkCode,jdbcType=VARCHAR},
+			</if>
+			<if test="storename != null">
+				storeName = #{storename,jdbcType=VARCHAR},
+			</if>
+			<if test="clerkname != null">
+				clerkName = #{clerkname,jdbcType=VARCHAR},
+			</if>
+			<if test="clerkjob != null">
+				clerkJob = #{clerkjob,jdbcType=VARCHAR},
+			</if>
+			<if test="phone != null">
+				phone = #{phone,jdbcType=VARCHAR},
+			</if>
+			<if test="createtime != null">
+				createTime = #{createtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="mac != null">
+				mac = #{mac},
+			</if>
+			<if test="deletedStatus != null">
+				deletedStatus = #{deletedStatus},
+			</if>
+			<if test="status != null">
+				status = #{status},
+			</if>
+			<if test="imei != null">
+				imei = #{imei,jdbcType=VARCHAR},
+			</if>
+			<if test="uuid != null">
+				uuid = #{uuid,jdbcType=VARCHAR},
+			</if>
+			<if test="posmac != null">
+				posmac = #{posmac,jdbcType=VARCHAR},
+			</if>
+			<if test="refundstatus != null">
+				refundstatus = #{refundstatus,jdbcType=VARCHAR},
+			</if>
+			<if test="qrcodeId != null">
+				qrcodeId  = #{qrcodeId},
+			</if>
+		</set>
+		where merId = #{merId,jdbcType=VARCHAR}
+	</update>
+	<select id="getClerks" parameterType="com.deyi.util.Page"
+		resultType="com.deyi.entity.Clerk" useCache="false">
+		select * FROM dis_clerk
+		<where>
+			deletedStatus = 0
+			<if test="params.merIds != null and params.merIds !=''">
+				and merId in (${params.merIds})
+			</if>
+
+			<if test="params.merId != null and params.merId !=''">
+				and merId = #{params.merId}
+			</if>
+
+			<if test="params.storename != null and params.storename !=''">
+				and storeName like CONCAT('%',#{params.storename},'%')
+
+			</if>
+			<if test="params.clerkname != null and params.clerkname !=''">
+				and clerkName like CONCAT('%',#{params.clerkname},'%')
+
+			</if>
+		</where>
+		ORDER BY createTime DESC
+	</select>
+
+	<select id="getClerkByAccountName" parameterType="string"
+		resultType="com.deyi.entity.Clerk">
+		select *
+		FROM dis_clerk where AccountName=#{0} AND deletedStatus = 0 ORDER
+		BY createTime DESC
+	</select>
+	<select id="getBindClerks"   parameterType="java.lang.String"
+			resultType="com.deyi.vo.TypeVo">
+		SELECT a.id,a.accountName AS NAME
+		 FROM dis_clerk a WHERE a.qrcodeId IS NULL AND a.deletedStatus = 0
+		 AND a.storeId= #{0}
+	</select>
+
+	<select id="getClerkByQrCode" parameterType="java.lang.String"
+			resultType="java.lang.String">
+		 SELECT b.accountName FROM  te_qrcode a,dis_clerk b
+			WHERE a.id = b.qrcodeId
+			AND a.code = #{0} LIMIT 1
+	</select>
+</mapper>

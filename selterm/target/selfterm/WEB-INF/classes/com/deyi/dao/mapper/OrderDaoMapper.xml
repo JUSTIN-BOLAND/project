@@ -1,0 +1,1296 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deyi.dao.OrderDao">
+<!-- 	<cache type="org.mybatis.caches.ehcache.LoggingEhcache"/> -->
+	<insert id="saveInfLog" parameterType="com.deyi.entity.InfLog" >
+		insert into dis_advertise (orderNo, request, resonse, infType)
+		values (#{orderNo,jdbcType=VARCHAR}, #{request,jdbcType=VARCHAR}, #{resonse,jdbcType=VARCHAR},
+		#{infType,jdbcType=VARCHAR})
+	</insert>
+
+	<insert id="saveOrderAsyn" parameterType="java.lang.String">
+		INSERT INTO sta_order_asyn
+			SELECT
+			  orderNo,
+			  payNo,
+			  orderMoney,
+			  payMoney,
+			  refundMoney,
+			  org_id,
+			  org_name,
+			  merId,
+			  merName,
+			  terId,
+			  storeId,
+			  storeName,
+			  goneType,
+			  payType,
+			  orderTime,
+			  payTime,
+			  payStatus,
+			  orderStatus,
+			  payAccount,
+			  distType,
+			  creator,
+			  payEnv,
+			  refundNo,
+			  refundTime,
+			  clerkname,
+			  undiscountMoney,
+			  mertype,
+			  ratemoney,
+			  payMode,
+			  cancelNo,
+			  cancelTime,
+			  notifyUrl,
+			  clerkCode,
+			  now(),
+			  0
+			FROM
+			  sta_order
+			WHERE orderNo=#{0}
+	</insert>
+	<update id="updateOrderAsyn" parameterType="java.lang.String">
+		 update sta_order_asyn set handleFlag=1 where orderNo=#{0}
+	</update>
+	<select id="getOrderAsyns" parameterType="java.lang.Integer" resultType="com.deyi.entity.OrderAsyn">
+		select * FROM sta_order_asyn WHERE handleFlag=#{0}
+	</select>
+	<select id="getOrderAsynsCnt" parameterType="java.lang.String" resultType="java.lang.Integer">
+		select count(1) FROM sta_order_asyn WHERE orderNo=#{0}
+	</select>
+
+	<select id="getNotPayOrder"  parameterType="java.lang.Integer"  resultType="com.deyi.entity.Order">
+		select * FROM sta_order
+		WHERE  (UNIX_TIMESTAMP(NOW()) - UNIX_TIMESTAMP(orderTime))/60 >= #{0}
+		AND payStatus in('4','1') AND orderStatus='1'
+	</select>
+
+	<select id="getOrder" parameterType="string" resultType="com.deyi.entity.Order">
+		select * FROM sta_order WHERE orderNo=#{0}
+	</select>
+
+
+  	<insert id="save" parameterType="com.deyi.entity.Order">
+  		insert into sta_order
+  		<trim prefix="(" suffix=")" suffixOverrides=",">
+	  		<if test="orderNo != null and orderNo != ''">orderNo,</if>
+	  		<if test="payNo != null and payNo != ''">payNo,</if>
+	  		<if test="orderMoney != null and orderMoney != ''">orderMoney,</if>
+	  		<if test="payMoney != null and payMoney != ''">payMoney,</if>
+	  		<if test="refundMoney != null and refundMoney != ''">refundMoney,</if>
+	  		<if test="orgId != null and orgId != ''">org_id,</if>
+	  		<if test="orgName != null and orgName != ''">org_name,</if>
+	  		<if test="merId != null and merId != ''">merId,</if>
+	  		<if test="merName != null and merName != ''">merName,</if>
+	  		<if test="terId != null and terId != ''">terId,</if>
+	  		<if test="storeId != null and storeId != ''">storeId,</if>
+	  		<if test="storeName != null and storeName != ''">storeName,</if>
+	  		<if test="goneType != null and goneType != ''">goneType,</if>
+	  		<if test="payType != null and payType != ''">payType,</if>
+	  		<if test="payTime != null and payTime != ''">payTime,</if>
+	  		<if test="payStatus != null and payStatus != ''">payStatus,</if>
+	  		<if test="orderStatus != null and orderStatus != ''">orderStatus,</if>
+	  		<if test="payAccount != null and payAccount != ''">payAccount,</if>
+	  		<if test="creator != null and creator != ''">creator,</if>
+	  		<if test="clerkname != null and clerkname != ''">clerkname,</if>
+	  		<if test="undiscountMoney != null and undiscountMoney != ''">undiscountMoney,</if>
+	  		<if test="mertype != null and mertype != ''">mertype,</if>
+			<if test="merCode != null and merCode != ''">merCode,</if>
+			<if test="storeCode != null and storeCode != ''">storeCode,</if>
+			<if test="cancelNo != null and cancelNo != ''">
+				cancelNo ,
+			</if>
+			<if test="cancelTime != null and cancelTime != ''">
+				cancelTime,
+			</if>
+
+			<if test="notifyUrl != null and notifyUrl != ''">
+				notifyUrl ,
+			</if>
+			<if test="clerkCode != null and clerkCode != ''">
+				clerkCode,
+			</if>
+			<if test="payMode != null and payMode != ''">payMode,</if>
+			<if test="ratemoney != null and ratemoney != ''">ratemoney,</if>
+  		</trim>
+
+		<trim prefix="VALUES(" suffix=")" suffixOverrides=",">
+	  		<if test="orderNo != null and orderNo != ''">#{orderNo},</if>
+	  		<if test="payNo != null and payNo != ''">#{payNo},</if>
+	  		<if test="orderMoney != null and orderMoney != ''">#{orderMoney},</if>
+	  		<if test="payMoney != null and payMoney != ''">#{payMoney},</if>
+	  		<if test="refundMoney != null and refundMoney != ''">#{refundMoney},</if>
+	  		<if test="orgId != null and orgId != ''">#{orgId},</if>
+	  		<if test="orgName != null and orgName != ''">#{orgName},</if>
+	  		<if test="merId != null and merId != ''">#{merId},</if>
+	  		<if test="merName != null and merName != ''">#{merName},</if>
+	  		<if test="terId != null and terId != ''">#{terId},</if>
+	  		<if test="storeId != null and storeId != ''">#{storeId},</if>
+	  		<if test="storeName != null and storeName != ''">#{storeName},</if>
+	  		<if test="goneType != null and goneType != ''">#{goneType},</if>
+	  		<if test="payType != null and payType != ''">#{payType},</if>
+	  		<if test="payTime != null and payTime != ''">#{payTime},</if>
+	  		<if test="payStatus != null and payStatus != ''">#{payStatus},</if>
+	  		<if test="orderStatus != null and orderStatus != ''">#{orderStatus},</if>
+	  		<if test="payAccount != null and payAccount != ''">#{payAccount},</if>
+	  		<if test="creator != null and creator != ''">#{creator},</if>
+	  		<if test="clerkname != null and clerkname != ''">#{clerkname},</if>
+	  		<if test="undiscountMoney != null and undiscountMoney != ''">#{undiscountMoney},</if>
+	  		<if test="mertype != null and mertype != ''">#{mertype},</if>
+			<if test="merCode != null and merCode != ''">#{merCode},</if>
+			<if test="storeCode != null and storeCode != ''">#{storeCode},</if>
+			<if test="cancelNo != null and cancelNo != ''">
+			    #{cancelNo},
+		    </if>
+			<if test="cancelTime != null and cancelTime != ''">
+				#{cancelTime},
+			</if>
+
+			<if test="notifyUrl != null and notifyUrl != ''">
+				#{notifyUrl},
+			</if>
+			<if test="clerkCode != null and clerkCode != ''">
+				#{clerkCode},
+			</if>
+			<if test="payMode != null and payMode != ''">
+				#{payMode},
+			</if>
+			<if test="ratemoney != null and ratemoney != ''">
+				#{ratemoney},
+			</if>
+	  	</trim>
+  	</insert>
+
+  	<!-- 新增三个月前前一天的历史数据到历史数据表(sta_order_copy) -->
+  	<insert id="saveLastDayOrder" parameterType="com.deyi.entity.Order">
+  		insert into sta_order_copy
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="orderNo != null and orderNo != ''">orderNo,</if>
+			<if test="payNo != null and payNo != ''">payNo,</if>
+			<if test="orderMoney != null and orderMoney != ''">orderMoney,</if>
+			<if test="payMoney != null and payMoney != ''">payMoney,</if>
+			<if test="refundMoney != null and refundMoney != ''">refundMoney,</if>
+			<if test="orgId != null and orgId != ''">org_id,</if>
+			<if test="orgName != null and orgName != ''">org_name,</if>
+			<if test="merId != null and merId != ''">merId,</if>
+			<if test="merName != null and merName != ''">merName,</if>
+			<if test="terId != null and terId != ''">terId,</if>
+			<if test="storeId != null and storeId != ''">storeId,</if>
+			<if test="storeName != null and storeName != ''">storeName,</if>
+			<if test="goneType != null and goneType != ''">goneType,</if>
+			<if test="payType != null and payType != ''">payType,</if>
+			<if test="payTime != null and payTime != ''">payTime,</if>
+			<if test="payStatus != null and payStatus != ''">payStatus,</if>
+			<if test="orderStatus != null and orderStatus != ''">orderStatus,</if>
+			<if test="payAccount != null and payAccount != ''">payAccount,</if>
+			<if test="creator != null and creator != ''">creator,</if>
+			<if test="clerkname != null and clerkname != ''">clerkname,</if>
+			<if test="undiscountMoney != null and undiscountMoney != ''">undiscountMoney,</if>
+			<if test="mertype != null and mertype != ''">mertype,</if>
+			<if test="merCode != null and merCode != ''">merCode,</if>
+			<if test="storeCode != null and storeCode != ''">storeCode,</if>
+			<if test="cancelNo != null and cancelNo != ''">
+				cancelNo ,
+			</if>
+			<if test="cancelTime != null and cancelTime != ''">
+				cancelTime,
+			</if>
+
+			<if test="notifyUrl != null and notifyUrl != ''">
+				notifyUrl ,
+			</if>
+			<if test="clerkCode != null and clerkCode != ''">
+				clerkCode,
+			</if>
+			<if test="ratemoney != null and ratemoney != ''">ratemoney,</if>
+		</trim>
+
+		<trim prefix="VALUES(" suffix=")" suffixOverrides=",">
+			<if test="orderNo != null and orderNo != ''">#{orderNo},</if>
+			<if test="payNo != null and payNo != ''">#{payNo},</if>
+			<if test="orderMoney != null and orderMoney != ''">#{orderMoney},</if>
+			<if test="payMoney != null and payMoney != ''">#{payMoney},</if>
+			<if test="refundMoney != null and refundMoney != ''">#{refundMoney},</if>
+			<if test="orgId != null and orgId != ''">#{orgId},</if>
+			<if test="orgName != null and orgName != ''">#{orgName},</if>
+			<if test="merId != null and merId != ''">#{merId},</if>
+			<if test="merName != null and merName != ''">#{merName},</if>
+			<if test="terId != null and terId != ''">#{terId},</if>
+			<if test="storeId != null and storeId != ''">#{storeId},</if>
+			<if test="storeName != null and storeName != ''">#{storeName},</if>
+			<if test="goneType != null and goneType != ''">#{goneType},</if>
+			<if test="payType != null and payType != ''">#{payType},</if>
+			<if test="payTime != null and payTime != ''">#{payTime},</if>
+			<if test="payStatus != null and payStatus != ''">#{payStatus},</if>
+			<if test="orderStatus != null and orderStatus != ''">#{orderStatus},</if>
+			<if test="payAccount != null and payAccount != ''">#{payAccount},</if>
+			<if test="creator != null and creator != ''">#{creator},</if>
+			<if test="clerkname != null and clerkname != ''">#{clerkname},</if>
+			<if test="undiscountMoney != null and undiscountMoney != ''">#{undiscountMoney},</if>
+			<if test="mertype != null and mertype != ''">#{mertype},</if>
+			<if test="merCode != null and merCode != ''">#{merCode},</if>
+			<if test="storeCode != null and storeCode != ''">#{storeCode},</if>
+			<if test="cancelNo != null and cancelNo != ''">
+				 #{cancelNo},
+			</if>
+			<if test="cancelTime != null and cancelTime != ''">
+				 #{cancelTime},
+			</if>
+
+			<if test="notifyUrl != null and notifyUrl != ''">
+				#{notifyUrl},
+			</if>
+			<if test="clerkCode != null and clerkCode != ''">
+				#{clerkCode},
+			</if>
+			<if test="ratemoney != null and ratemoney != ''">#{ratemoney},</if>
+		</trim>
+  	</insert>
+
+  	<update id="update" parameterType="com.deyi.entity.Order">
+  		update sta_order
+  		<set>
+  			<if test="payMoney != null and payMoney !=''">
+  				payMoney =#{payMoney},
+  			</if>
+
+  			<if test="payTime != null and payTime !=''">
+  				payTime =#{payTime},
+  			</if>
+
+  			<if test="payStatus != null and payStatus !=''">
+  				payStatus =#{payStatus},
+  			</if>
+
+  			<if test="payNo != null and payNo !=''">
+  				payNo = #{payNo},
+  			</if>
+  			<if test="terId != null and terId !=''">
+  				terId = #{terId},
+  			</if>
+
+  			<if test="orderStatus != null and orderStatus !=''">
+  				orderStatus =#{orderStatus},
+  			</if>
+  			<if test="payType != null and payType !=''">
+  				payType =#{payType},
+  			</if>
+
+  			<if test="payAccount != null and payAccount !=''">
+  				payAccount =#{payAccount},
+  			</if>
+
+  			<if test="refundMoney != null and refundMoney !=''">
+  				refundMoney = #{refundMoney},
+  			</if>
+
+  			<if test="refundNo != null and refundNo !=''">
+  				refundNo =#{refundNo},
+  			</if>
+
+  			<if test="refundTime != null and refundTime !=''">
+  				refundTime =#{refundTime},
+  			</if>
+  			<if test="clerkname != null and clerkname !=''">
+  				clerkname =#{clerkname},
+  			</if>
+			<if test="merCode != null and merCode != ''">
+				merCode = #{merCode},
+			</if>
+			<if test="storeCode != null and storeCode != ''">
+				storeCode = #{storeCode},
+			</if>
+			<if test="distType != null and distType != ''">
+                distType = #{distType},
+			</if>
+			<if test="cancelNo != null and cancelNo != ''">
+				cancelNo = #{cancelNo},
+			</if>
+			<if test="cancelTime != null and cancelTime != ''">
+				cancelTime = #{cancelTime},
+			</if>
+
+			<if test="notifyUrl != null and notifyUrl != ''">
+				notifyUrl = #{notifyUrl},
+			</if>
+			<if test="clerkCode != null and clerkCode != ''">
+				clerkCode = #{clerkCode},
+			</if>
+			<if test="payMode != null and payMode != ''">
+				payMode = #{payMode},
+			</if>
+			<if test="ratemoney != null and ratemoney != ''">
+				ratemoney = #{ratemoney},
+			</if>
+  		</set>
+  		<where>
+  			orderNo =#{orderNo}
+  		</where>
+
+  	</update>
+<!--   	LEFT JOIN dis_clerk  b ON b.accountName = a.creator   ,b.clerkName clerkname  AND b.deletedStatus = 0-->
+  	<select id="getOrdersList" parameterType="com.deyi.util.Page" resultType="com.deyi.vo.OrderVo" useCache="false">
+  	SELECT orderNo,payNo,orderMoney,payMoney,refundMoney,org_id orgId,org_name orgName, a.merId,a.merName,terId,a.storeId,
+  	a.storeName,goneType,payType,orderTime, payTime,payStatus,orderStatus,payAccount,creator,payEnv, refundNo,refundTime ,
+  	clerkname,undiscountMoney,ratemoney,payMode,cancelNo,cancelTime,ratemoney,notifyUrl,clerkCode
+		FROM sta_order a
+		<where>
+			payStatus != '-1'
+  			<if test="params.payStatus != null and params.payStatus !=''">
+  				and payStatus = #{params.payStatus}
+  			</if>
+  			<if test="params.orderTimeStart != null and params.orderTimeStart !=''">
+  				and orderTime <![CDATA[>=]]> #{params.orderTimeStart}
+  			</if>
+  			<if test="params.orderTimeEnd != null and params.orderTimeEnd !=''">
+  				and orderTime <![CDATA[<=]]> DATE_FORMAT(#{params.orderTimeEnd},'%Y-%m-%d 23:59:59')
+  			</if>
+  			<if test="params.merchantIds != null and params.merchantIds !=''">
+  				and a.merId in(${params.merchantIds})
+  			</if>
+
+  			<if test="params.merId != null and params.merId !=''">
+  				and a.merId = #{params.merId}
+  			</if>
+
+  			<if test="params.orgIds != null and params.orgIds !=''">
+  				and org_id in(${params.orgIds})
+  			</if>
+
+  			<!-- 20160613   PC客户查询的是paytime 为了解决这一BUG ,将paytime 改为 orderTime -->
+  			<if test="params.payTimeStart != null and params.payTimeStart !=''">
+  				and orderTime <![CDATA[>=]]> #{params.payTimeStart}
+  			</if>
+  			<if test="params.payTimeEnd != null and params.payTimeEnd !=''">
+  				and orderTime <![CDATA[<=]]> #{params.payTimeEnd}
+  			</if>
+
+
+  			<if test="params.merName != null and params.merName !=''">
+  				and merName like CONCAT('%',#{params.merName},'%')
+  			</if>
+
+
+  			<if test="params.storeId != null and params.storeId !=''">
+  				and storeId = #{params.storeId}
+  			</if>
+
+			<if test="params.storeName != null and params.storeName !=''">
+  				and storeName like CONCAT('%',#{params.storeName},'%')
+  			</if>
+
+  			<if test="params.orgName != null and params.orgName !=''">
+  				and org_name like CONCAT('%',#{params.orgName},'%')
+  			</if>
+
+  			<if test="params.creator != null and params.creator !=''">
+  				and creator = #{params.creator}
+  			</if>
+
+  			<if test="params.orderNo != null and params.orderNo !=''">
+  				and orderNo like CONCAT(#{params.orderNo},'%')
+  			</if>
+
+  			<if test="params.payType != null and params.payType !=''">
+  				and payType = #{params.payType}
+  			</if>
+
+  			<if test="params.orderStatus != null and params.orderStatus !=''">
+  				and orderStatus = #{params.orderStatus}
+  			</if>
+  			<if test="params.payMode != null and params.payMode !=''">
+  				and payMode = #{params.payMode}
+  			</if>
+
+  			<if test="params.clerkname != null and params.clerkname !=''">
+  				and clerkname like CONCAT('%',#{params.clerkname},'%')
+  			</if>
+
+			<if test="params.clerkCode != null and params.clerkCode !=''">
+				and clerkCode = #{params.clerkCode}
+			</if>
+  		</where>
+
+
+           order by orderTime desc
+
+  	</select>
+
+
+
+  	<select id="getOrdersListHistory" parameterType="com.deyi.util.Page" resultType="com.deyi.vo.OrderVo" useCache="false">
+  	SELECT orderNo,payNo,orderMoney,payMoney,refundMoney,org_id orgId,org_name orgName, a.merId,a.merName,terId,a.storeId,
+  	a.storeName,goneType,payType,orderTime, payTime,payStatus,orderStatus,payAccount,creator,payEnv, refundNo,refundTime ,clerkname,undiscountMoney
+		,cancelNo,cancelTime,ratemoney,notifyUrl,clerkCode
+		FROM sta_order_copy a
+		<where>
+  			1=1
+  			<if test="params.payStatus != null and params.payStatus !=''">
+  				and payStatus = #{params.payStatus}
+  			</if>
+  			<if test="params.orderTimeStart != null and params.orderTimeStart !=''">
+  				and orderTime <![CDATA[>=]]> #{params.orderTimeStart}
+  			</if>
+  			<if test="params.orderTimeEnd != null and params.orderTimeEnd !=''">
+  				and orderTime <![CDATA[<=]]> DATE_FORMAT(#{params.orderTimeEnd},'%Y-%m-%d 23:59:59')
+  			</if>
+  			<if test="params.merchantIds != null and params.merchantIds !=''">
+  				and a.merId in(${params.merchantIds})
+  			</if>
+
+  			<if test="params.merId != null and params.merId !=''">
+  				and a.merId = #{params.merId}
+  			</if>
+
+  			<if test="params.orgIds != null and params.orgIds !=''">
+  				and org_id in(${params.orgIds})
+  			</if>
+
+  			<!-- 20160613   PC客户查询的是paytime 为了解决这一BUG ,将paytime 改为 orderTime -->
+  			<if test="params.payTimeStart != null and params.payTimeStart !=''">
+  				and orderTime <![CDATA[>=]]> #{params.payTimeStart}
+  			</if>
+  			<if test="params.payTimeEnd != null and params.payTimeEnd !=''">
+  				and orderTime <![CDATA[<=]]> #{params.payTimeEnd}
+  			</if>
+
+
+  			<if test="params.merName != null and params.merName !=''">
+  				and merName like CONCAT('%',#{params.merName},'%')
+  			</if>
+
+
+  			<if test="params.storeId != null and params.storeId !=''">
+  				and storeId = #{params.storeId}
+  			</if>
+
+			<if test="params.storeName != null and params.storeName !=''">
+  				and storeName like CONCAT('%',#{params.storeName},'%')
+  			</if>
+
+  			<if test="params.orgName != null and params.orgName !=''">
+  				and org_name like CONCAT('%',#{params.orgName},'%')
+  			</if>
+
+  			<if test="params.creator != null and params.creator !=''">
+  				and creator = #{params.creator}
+  			</if>
+
+  			<if test="params.orderNo != null and params.orderNo !=''">
+  				and orderNo like CONCAT(#{params.orderNo},'%')
+  			</if>
+
+  			<if test="params.payType != null and params.payType !=''">
+  				and payType = #{params.payType}
+  			</if>
+
+  			<if test="params.orderStatus != null and params.orderStatus !=''">
+  				and orderStatus = #{params.orderStatus}
+  			</if>
+
+  			<if test="params.clerkname != null and params.clerkname !=''">
+  				and clerkname like CONCAT('%',#{params.clerkname},'%')
+  			</if>
+			<if test="params.clerkCode != null and params.clerkCode !=''">
+				and clerkCode = #{params.clerkCode}
+			</if>
+  		</where>
+
+
+           order by orderTime desc
+
+  	</select>
+
+  	<!-- 对getOrdersList进行统计 -->
+  	<select id="getOrdersListStatis" parameterType="com.deyi.vo.OrderVo" resultType="com.deyi.vo.PaystatisWorkVo" useCache="false">
+  		select count(1) as number,sum(orderMoney) as money FROM sta_order
+  		<where>
+  			1=1
+  			<if test="payStatus != null and payStatus !=''">
+  				and payStatus = #{payStatus}
+  			</if>
+  			<if test="orderTimeStart != null and orderTimeStart !=''">
+  				and orderTime <![CDATA[>=]]> #{orderTimeStart}
+  			</if>
+  			<if test="orderTimeEnd != null and orderTimeEnd !=''">
+  				and orderTime <![CDATA[<=]]> DATE_FORMAT(#{orderTimeEnd},'%Y-%m-%d 23:59:59')
+  			</if>
+  			<if test="merId != null and merId !=''">
+  				and merId = #{merId}
+  			</if>
+  			<if test="storeId != null and storeId !=''">
+  				and storeId = #{storeId}
+  			</if>
+  			<if test="creator != null and creator !=''">
+  				and creator = #{creator}
+  			</if>
+
+  			<if test="orderNo != null and orderNo !=''">
+  				and orderNo like CONCAT(#{orderNo},'%')
+  			</if>
+
+  			<if test="payType != null and payType !=''">
+  				and payType = #{payType}
+  			</if>
+
+  			<if test="orderStatus != null and orderStatus !=''">
+  				and orderStatus = #{orderStatus}
+  			</if>
+
+			<if test="payMode != null and payMode !=''">
+				and payMode = #{payMode}
+			</if>
+
+
+
+  			<if test="payTimeStart != null and payTimeStart !=''">
+  				and payTime <![CDATA[>=]]> #{payTimeStart}
+  			</if>
+  			<if test="payTimeEnd != null and payTimeEnd !=''">
+  				and payTime <![CDATA[<=]]> #{payTimeEnd}
+  			</if>
+
+			<if test="clerkCode != null and clerkCode !=''">
+				and clerkCode = #{clerkCode}
+			</if>
+  		</where>
+  	</select>
+
+  		<select id="getAppOrdersList" parameterType="com.deyi.util.Page" resultType="com.deyi.vo.OrderParams" useCache="false">
+  		select * FROM sta_order
+  		<where>
+  		1=1
+
+  			<if test="params.payStatus != null and params.payStatus !=''">
+  				and payStatus = #{params.payStatus}
+  			</if>
+
+  			<if test="params.orderTimeStart != null and params.orderTimeStart !=''">
+  				and orderTime <![CDATA[>=]]> #{params.orderTimeStart}
+  			</if>
+  			<if test="params.orderTimeEnd != null and params.orderTimeEnd !=''">
+  				and orderTime <![CDATA[<=]]> #{params.orderTimeEnd}
+  			</if>
+
+  			<if test="params.storeId != null and params.storeId !=''">
+  			    and storeId = #{params.storeId}
+  			</if>
+
+  			<if test="params.creator != null and params.creator !=''">
+  				and creator = #{params.creator}
+  			</if>
+
+  			<if test="params.orderNo != null and params.orderNo !=''">
+  				and orderNo like CONCAT(#{params.orderNo},'%')
+  			</if>
+
+  			<if test="params.payType != null and params.payType !=''">
+  				and payType = #{params.payType}
+  			</if>
+
+  			<if test="params.orderStatus != null and params.orderStatus !=''">
+  				and orderStatus = #{params.orderStatus}
+  			</if>
+
+			<if test="params.clerkCode != null and params.clerkCode !=''">
+				and clerkCode = #{params.clerkCode}
+			</if>
+  		</where>
+  		order by orderTime desc
+  	</select>
+
+  	<select id="getOrdersStatis" parameterType="com.deyi.vo.OrderParams" resultType="com.deyi.vo.PaystatisVo" useCache="false">
+  		SELECT (sum(orderMoney)-sum(refundMoney)) AS summoney,
+  		 (select count(*) from sta_order
+  		 <where>
+  		 payType = '1'  and payStatus='2'
+  		 <if test="storeId != null and storeId !=''">
+  		  and storeId = #{storeId}
+  		  </if>
+  		 <if test="creator != null and creator !=''">
+  				and creator = #{creator}
+  		 </if>
+  		 <if test="orderNo != null and orderNo !=''">
+  				and orderNo like CONCAT(#{orderNo},'%')
+  			</if>
+
+  			<if test="orderTimeStart != null and orderTimeStart !=''">
+  				and orderTime <![CDATA[>=]]> #{orderTimeStart}
+  			</if>
+  			<if test="orderTimeEnd != null and orderTimeEnd !=''">
+  				and orderTime <![CDATA[<=]]> #{orderTimeEnd}
+  			</if>
+  		 </where>) as  aliPaySum ,
+
+  		 (select count(*) from sta_order
+  		 <where>
+  		  payType = '2'  and payStatus='2'
+  		  <if test="storeId != null and storeId !=''">
+  		  and storeId = #{storeId}
+  		  </if>
+  		 <if test="creator != null and creator !=''">
+  				and creator = #{creator}
+  		 </if>
+  		 <if test="orderNo != null and orderNo !=''">
+  				and orderNo like CONCAT(#{orderNo},'%')
+  			</if>
+
+  			<if test="orderTimeStart != null and orderTimeStart !=''">
+  				and orderTime <![CDATA[>=]]> #{orderTimeStart}
+  			</if>
+  			<if test="orderTimeEnd != null and orderTimeEnd !=''">
+  				and orderTime <![CDATA[<=]]> #{orderTimeEnd}
+  			</if>
+  		 </where>) as wxPaySum ,
+
+  		 (select count(*) from sta_order
+  		 <where>
+  		  payType = '3'  and payStatus='2'
+  		  <if test="storeId != null and storeId !=''">
+  		  and storeId = #{storeId}
+  		  </if>
+  		 <if test="creator != null and creator !=''">
+  				and creator = #{creator}
+  		 </if>
+  		 <if test="orderNo != null and orderNo !=''">
+  				and orderNo like CONCAT(#{orderNo},'%')
+  			</if>
+
+  			<if test="orderTimeStart != null and orderTimeStart !=''">
+  				and orderTime <![CDATA[>=]]> #{orderTimeStart}
+  			</if>
+  			<if test="orderTimeEnd != null and orderTimeEnd !=''">
+  				and orderTime <![CDATA[<=]]> #{orderTimeEnd}
+  			</if>
+  		 </where>) as unionPaySum ,
+
+  		 (select count(*) from sta_order
+  		 <where>
+  		    payStatus='2'
+  		   <if test="storeId != null and storeId !=''">
+  		  and storeId = #{storeId}
+  		  </if>
+  		   <if test="creator != null and creator !=''">
+  				and creator = #{creator}
+  		 </if>
+  		 <if test="orderNo != null and orderNo !=''">
+  				and orderNo like CONCAT(#{orderNo},'%')
+  			</if>
+
+  			<if test="orderTimeStart != null and orderTimeStart !=''">
+  				and orderTime <![CDATA[>=]]> #{orderTimeStart}
+  			</if>
+  			<if test="orderTimeEnd != null and orderTimeEnd !=''">
+  				and orderTime <![CDATA[<=]]> #{orderTimeEnd}
+  			</if>
+  		 </where>) sumNumber ,
+
+  		(SELECT (sum(orderMoney)-sum(refundMoney))   FROM sta_order
+  		<where>
+  			payType = '1' and payStatus='2'
+  			<if test="storeId != null and storeId !=''">
+  		  and storeId = #{storeId}
+  		  </if>
+  			<if test="creator != null and creator !=''">
+  				and creator = #{creator}
+  			</if>
+
+  			<if test="orderNo != null and orderNo !=''">
+  				and orderNo like CONCAT(#{orderNo},'%')
+  			</if>
+
+  			<if test="orderTimeStart != null and orderTimeStart !=''">
+  				and orderTime <![CDATA[>=]]> #{orderTimeStart}
+  			</if>
+  			<if test="orderTimeEnd != null and orderTimeEnd !=''">
+  				and orderTime <![CDATA[<=]]> #{orderTimeEnd}
+  			</if>
+  		</where>) AS zhifbaoMoney,
+  		(SELECT (sum(orderMoney)-sum(refundMoney))   FROM sta_order
+  		<where>
+  			payType = '3' and payStatus='2'
+  			<if test="storeId != null and storeId !=''">
+  		  and storeId = #{storeId}
+  		  </if>
+  			<if test="creator != null and creator !=''">
+  				and creator = #{creator}
+  			</if>
+
+  			<if test="orderNo != null and orderNo !=''">
+  				and orderNo like CONCAT(#{orderNo},'%')
+  			</if>
+
+  			<if test="orderTimeStart != null and orderTimeStart !=''">
+  				and orderTime <![CDATA[>=]]> #{orderTimeStart}
+  			</if>
+  			<if test="orderTimeEnd != null and orderTimeEnd !=''">
+  				and orderTime <![CDATA[<=]]> #{orderTimeEnd}
+  			</if>
+  		</where>) AS unionmoney,
+				(SELECT (sum(orderMoney)-sum(refundMoney)) FROM sta_order <where>
+  			payType = '2'  and payStatus='2'
+  			<if test="storeId != null and storeId !=''">
+  		  and storeId = #{storeId}
+  		  </if>
+  			<if test="creator != null and creator !=''">
+  				and creator = #{creator}
+  			</if>
+
+  			<if test="orderNo != null and orderNo !=''">
+  				and orderNo like CONCAT(#{orderNo},'%')
+  			</if>
+
+  			<if test="orderTimeStart != null and orderTimeStart !=''">
+  				and orderTime <![CDATA[>=]]> #{orderTimeStart}
+  			</if>
+  			<if test="orderTimeEnd != null and orderTimeEnd !=''">
+  				and orderTime <![CDATA[<=]]> #{orderTimeEnd}
+  			</if>
+  		</where>) AS weixMoney FROM sta_order
+  		<where>
+  			 payStatus='2'
+  			 <if test="storeId != null and storeId !=''">
+  		  and storeId = #{storeId}
+  		  </if>
+  			<if test="creator != null and creator !=''">
+  				and creator = #{creator}
+  			</if>
+
+  			<if test="orderNo != null and orderNo !=''">
+  				and orderNo like CONCAT(#{orderNo},'%')
+  			</if>
+
+  			<if test="orderTimeStart != null and orderTimeStart !=''">
+  				and orderTime <![CDATA[>=]]> #{orderTimeStart}
+  			</if>
+  			<if test="orderTimeEnd != null and orderTimeEnd !=''">
+  				and orderTime <![CDATA[<=]]> #{orderTimeEnd}
+  			</if>
+  		</where>
+  	</select>
+
+  	<!-- 结算按天 按人按日期 统计 -->
+  	<select id="settleByDay" parameterType="com.deyi.util.Page" resultType="com.deyi.vo.OrderSettleByDayVo" useCache="false">
+			select sum(payMoney) as payMoney,sum(refundMoney) as refundMoney,creator,payDate FROM (
+				select T.*,DATE_FORMAT(T.payTime, '%Y-%m-%d') AS payDate from sta_order as T
+				where T.payStatus='2' and T.storeId=#{params.storeId}
+				<if test="params.creator != null and params.creator !=''">
+					and T.creator=#{params.creator}
+				</if>
+				<if test="params.payTimeStart != null and params.payTimeStart !=''">
+	  				and T.payTime <![CDATA[>=]]> #{params.payTimeStart}
+	  			</if>
+	  			<if test="params.payTimeEnd != null and params.payTimeEnd !=''">
+	  				and T.payTime <![CDATA[<=]]> #{params.payTimeEnd}
+	  			</if>
+			) TT group by creator,payDate
+  	</select>
+
+  	<!-- settleByDay 的总统计 -->
+  	<select id="settleByDayTotal" parameterType="com.deyi.vo.OrderSettleByDayVo" resultType="java.lang.Double" useCache="false">
+			select sum(T.payMoney) from sta_order as T
+			where T.payStatus='2' and T.storeId=#{storeId}
+			<if test="creator != null and creator !=''">
+				and T.creator=#{creator}
+			</if>
+			<if test="payTimeStart != null and payTimeStart !=''">
+  				and T.payTime <![CDATA[>=]]> #{payTimeStart}
+  			</if>
+  			<if test="payTimeEnd != null and payTimeEnd !=''">
+  				and T.payTime <![CDATA[<=]]> #{payTimeEnd}
+  			</if>
+
+  	</select>
+
+  	<!-- settleByDay 支付方式的统计 -->
+  	<select id="settleByDay2" parameterType="string" resultType="com.deyi.vo.OrderSettleByDayVo" useCache="false">
+			select sum(payMoney) as payMoney,sum(refundMoney) as refundMoney,creator,payDate,payType from (
+			select T.*,DATE_FORMAT(T.payTime, '%Y-%m-%d') AS payDate from sta_order as T where T.payStatus='2'  and storeId =#{0}  and T.creator=#{2} and T.payType = #{3}
+			) TT where TT.payDate=#{4}
+  	</select>
+
+
+
+  	<!-- 按时间段查询统计-->
+  	<select id="settleByTime" parameterType="com.deyi.vo.OrderVo" resultType="com.deyi.vo.PaystatisWorkVo" useCache="false">
+		select sum(payMoney) as payMoney,sum(refundMoney) as refundMoney ,(sum(payMoney)-sum(refundMoney)) as money from sta_order
+		where payStatus='2' and storeId=#{storeId}
+		and payTime <![CDATA[>=]]> #{orderTimeStart}
+		and payTime <![CDATA[<=]]> #{orderTimeEnd}
+		<if test="payType != null">
+			and payType = #{payType}
+		</if>
+  	</select>
+
+  	<!-- 按时间段查询统计-->
+  	<select id="settleByPayType" parameterType="com.deyi.vo.OrderVo" resultType="java.lang.Integer" useCache="false">
+		select sum(1) from sta_order
+		where payStatus='2' and storeId=#{storeId}
+		and payTime <![CDATA[>=]]> #{orderTimeStart}
+		and payTime <![CDATA[<=]]> #{orderTimeEnd}
+		<if test="payType != null">
+			and payType = #{payType}
+		</if>
+  	</select>
+
+  	<select id="getExceleOrderList" parameterType="com.deyi.vo.OrderVo" resultType="com.deyi.vo.OrderVo" useCache="false">
+  	select * FROM sta_order
+  		<where>
+  			1=1
+
+  			<if test="payStatus != null and payStatus !=''">
+  				and payStatus = #{payStatus}
+  			</if>
+  			<if test="orderTimeStart != null and orderTimeStart !=''">
+  				and orderTime <![CDATA[>=]]> #{orderTimeStart}
+  			</if>
+  			<if test="orderTimeEnd != null and orderTimeEnd !=''">
+  				and orderTime <![CDATA[<=]]> #{orderTimeEnd}
+  			</if>
+  			<if test="merchantIds != null and merchantIds !=''">
+  				and merId in(${merchantIds})
+  			</if>
+  			<if test="merId != null and merId !=''">
+  				and merId = #{merId}
+  			</if>
+  			<if test="orgIds != null and orgIds !=''">
+  				and org_id in(${orgIds})
+  			</if>
+
+
+  			<if test="merName != null and merName !=''">
+  				and merName like CONCAT('%',#{merName},'%')
+  			</if>
+
+
+  			<if test="storeId != null and storeId !=''">
+  				and storeId = #{storeId}
+  			</if>
+
+			<if test="storeName != null and storeName !=''">
+  				and storeName like CONCAT('%',#{storeName},'%')
+  			</if>
+
+
+
+
+  			<if test="creator != null and creator !=''">
+  				and creator = #{creator}
+  			</if>
+
+  			<if test="orderNo != null and orderNo !=''">
+  				and orderNo like CONCAT(#{orderNo},'%')
+  			</if>
+
+  			<if test="payType != null and payType !=''">
+  				and payType = #{payType}
+  			</if>
+
+  			<if test="orderStatus != null and orderStatus !=''">
+  				and orderStatus = #{orderStatus}
+  			</if>
+
+
+
+  			<if test="payTimeStart != null and payTimeStart !=''">
+  				and payTime <![CDATA[>=]]> #{payTimeStart}
+  			</if>
+  			<if test="payTimeEnd != null and payTimeEnd !=''">
+  				and payTime <![CDATA[<=]]> #{payTimeEnd}
+  			</if>
+  		</where>
+  		order by orderTime desc
+  	</select>
+
+
+  	<!-- 获取三个月前前一天的历史数据 -->
+  	  	<select id="queryLastDayOrder" parameterType="java.lang.String" resultType="com.deyi.entity.Order" useCache="false">
+  	select * FROM sta_order
+  		<where>
+  				 payTime <![CDATA[>=]]> #{nextDay} and payTime <![CDATA[<]]>  #{tody}
+  		</where>
+  		order by orderTime desc
+  	</select>
+
+
+  	<!-- 预约查询 -->
+  	 	<select id="getExceleOrderListCopy" parameterType="com.deyi.vo.OrderVo" resultType="com.deyi.vo.OrderVo" useCache="false">
+  	select * FROM sta_order_copy
+  		<where>
+  			1=1
+
+  			<if test="payStatus != null and payStatus !=''">
+  				and payStatus = #{payStatus}
+  			</if>
+  			<if test="orderTimeStart != null and orderTimeStart !=''">
+  				and orderTime <![CDATA[>=]]> #{orderTimeStart}
+  			</if>
+  			<if test="orderTimeEnd != null and orderTimeEnd !=''">
+  				and orderTime <![CDATA[<=]]> #{orderTimeEnd}
+  			</if>
+  			<if test="merchantIds != null and merchantIds !=''">
+  				and merId in(${merchantIds})
+  			</if>
+  			<if test="merId != null and merId !=''">
+  				and merId = #{merId}
+  			</if>
+  			<if test="orgIds != null and orgIds !=''">
+  				and org_id in(${orgIds})
+  			</if>
+
+
+  			<if test="merName != null and merName !=''">
+  				and merName like CONCAT('%',#{merName},'%')
+  			</if>
+
+
+  			<if test="storeId != null and storeId !=''">
+  				and storeId = #{storeId}
+  			</if>
+
+			<if test="storeName != null and storeName !=''">
+  				and storeName like CONCAT('%',#{storeName},'%')
+  			</if>
+
+
+
+
+  			<if test="creator != null and creator !=''">
+  				and creator = #{creator}
+  			</if>
+
+  			<if test="orderNo != null and orderNo !=''">
+  				and orderNo like CONCAT(#{orderNo},'%')
+  			</if>
+
+  			<if test="payType != null and payType !=''">
+  				and payType = #{payType}
+  			</if>
+
+  			<if test="orderStatus != null and orderStatus !=''">
+  				and orderStatus = #{orderStatus}
+  			</if>
+
+
+
+  			<if test="payTimeStart != null and payTimeStart !=''">
+  				and payTime <![CDATA[>=]]> #{payTimeStart}
+  			</if>
+  			<if test="payTimeEnd != null and payTimeEnd !=''">
+  				and payTime <![CDATA[<=]]> #{payTimeEnd}
+  			</if>
+  		</where>
+  		order by orderTime desc
+  	</select>
+
+
+  	<select id="queryCollectDay" resultType="com.deyi.entity.Mercollectday" useCache="false">
+	SELECT a.id MER_ID, a.name MER_NAME, IFNULL(c.wxcount, 0) AS wxcount, IFNULL(b.alicount, 0) AS alicount, IFNULL(b.alipaymoney, 0) AS alipaymoney
+		, IFNULL(c.wxpaymoney, 0) AS wxpaymoney, IFNULL(d.summoney, 0) AS summoney, IFNULL(d.sumrefundmoney, 0) AS sumrefundmoney
+	FROM dis_merchant a LEFT JOIN (SELECT merId, COUNT(orderNo) AS alicount, SUM(payMoney) AS alipaymoney
+		FROM sta_order
+		WHERE payType = 1
+			AND TO_DAYS(NOW()) - TO_DAYS(payTime) = 1
+		GROUP BY merId
+		) b ON a.id = b.merid LEFT JOIN (SELECT merId, COUNT(orderNo) AS wxcount, SUM(payMoney) AS wxpaymoney
+		FROM sta_order
+		WHERE payType = 2
+			AND TO_DAYS(NOW()) - TO_DAYS(payTime) = 1
+		GROUP BY merId
+		) c ON a.id = c.merid LEFT JOIN (SELECT merid, SUM(payMoney) AS summoney, SUM(refundMoney) AS sumrefundmoney
+		FROM sta_order
+		WHERE TO_DAYS(NOW()) - TO_DAYS(payTime) = 1
+		GROUP BY merId
+		) d ON a.id = d.merid
+
+  	</select>
+
+    <select id="toDayCollectDay"  parameterType="string" resultType="com.deyi.vo.PaystatisVo" useCache="false">
+	  SELECT (sum(orderMoney)-sum(refundMoney)) AS summoney,
+  		 (select count(*) from sta_order
+  		  <where>
+  		   payType = '1'  and payStatus='2'
+  		    <if test="merids != null and merids !=''">
+  				and merId  in(${merids})
+  			</if>
+  		    and TO_DAYS(orderTime) = TO_DAYS(NOW())
+  		 </where>) as  aliPaySum ,
+  		 (select count(*) from sta_order
+  		   <where>
+  		    payType = '2'  and payStatus='2'
+  		  <if test="merids != null and merids !=''">
+  				and merId  in(${merids})
+  			</if>
+  		   and TO_DAYS(orderTime) = TO_DAYS(NOW())
+  		  </where>) as wxPaySum ,
+  		    (select count(*) from sta_order
+  		    <where>  (payType = '2' or payType = '1') and payStatus='2'
+  		     <if test="merids != null and merids !=''">
+  				and merId  in(${merids})
+  			</if> and TO_DAYS(orderTime) = TO_DAYS(NOW())
+  			</where> ) as sumNumber ,
+ 	  	 (SELECT (sum(orderMoney)-sum(refundMoney))   FROM sta_order
+ 	  	 <where>	payType = '1' and payStatus='2'
+ 	  	 <if test="merids != null and merids !=''">
+  				and merId  in(${merids})
+  			</if>
+  			 and TO_DAYS(orderTime) = TO_DAYS(NOW())
+  			 </where> ) AS zhifbaoMoney,
+		(SELECT (sum(orderMoney)-sum(refundMoney)) FROM sta_order
+		 <where>	payType = '2'  and payStatus='2'
+		    <if test="merids != null and merids !=''">
+  				and merId  in(${merids})
+  			</if>  and TO_DAYS(orderTime) = TO_DAYS(NOW())
+  			</where>) AS weixMoney FROM sta_order
+  		   <where> payStatus='2'
+  		    <if test="merids != null and merids !=''">
+  				and merId  in(${merids})
+  			</if>
+  			and TO_DAYS(orderTime) = TO_DAYS(NOW())
+  			</where>
+  	</select>
+
+
+  	<select id="getOrderDetilByorderNo" parameterType="java.lang.String" resultType="com.deyi.vo.OrderVo" useCache="false">
+  		SELECT
+  		orderNo,payNo,orderMoney,payMoney,refundMoney,org_id orgId,org_name orgName,
+  		merId,merName,terId,storeId,storeName,goneType,payType,orderTime,
+  		payTime,payStatus,orderStatus,payAccount,distType,creator,payEnv,
+  		refundNo,refundTime,undiscountMoney,clerkname
+  		,ratemoney,payMode,cancelNo,cancelTime,ratemoney,notifyUrl,clerkCode
+  		FROM sta_order
+  		where orderno = #{orderno}
+
+  	</select>
+
+  	<!-- 查询订单历史表详情 -->
+  	<select id="getOrderDetilByorderNoHistory" parameterType="java.lang.String" resultType="com.deyi.vo.OrderVo" useCache="false">
+  		SELECT
+  		orderNo,payNo,orderMoney,payMoney,refundMoney,org_id orgId,org_name orgName,
+  		merId,merName,terId,storeId,storeName,goneType,payType,orderTime,
+  		payTime,payStatus,orderStatus,payAccount,distType,creator,payEnv,
+  		refundNo,refundTime,undiscountMoney,
+  		ratemoney,payMode,cancelNo,cancelTime,ratemoney,notifyUrl,clerkCode,
+  		(SELECT clerkName FROM  dis_clerk WHERE accountName = creator and deletedStatus = 0) clerkname
+  		FROM sta_order_copy
+  		where orderno = #{orderno}
+
+  	</select>
+
+  	<select id="toDayCollectData" parameterType="com.deyi.vo.OrderDaySum" resultType="com.deyi.vo.OrderDaySum" useCache="false">
+  		SELECT IFnull(SUM(paymoney),0) paymoney,COUNT(*) count,IFnull(SUM(refundMoney),0) refundMoney,
+		IFnull(SUM(CASE when  payStatus='2' AND orderStatus='3' THEN -ratemoney ELSE ratemoney END),0) sumratemoney,
+		IFnull(SUM(CASE when  payStatus='2' AND orderStatus='3' THEN 0 ELSE ratemoney END),0)  needRateMoney,
+		(select IFnull(SUM(orderStatus = 3),0)/3 )refundcount FROM sta_order
+  		<where>
+  			   orderTime &gt;= #{startDate} AND orderTime &lt;= #{endDate}
+  			<if test="merids != null and merids !=''">
+  				and merId  in (${merids})
+  			</if>
+  			<if test="storeid != null and storeid !=''">
+  				and storeid  in (${storeid})
+  			</if>
+  			<if test="paytype != null and paytype !=''">
+  				and paytype  = #{paytype}
+  			</if>
+  			<if test="orgid != null and orgid !=''">
+  				and org_id  = #{orgid}
+  			</if>
+			<if test="payStatus != null and payStatus !=''">
+				and payStatus = #{payStatus}
+			</if>
+  		</where>
+  	</select>
+
+  	<!-- 统计历史订单表当天数据 -->
+  	<select id="toDayCollectDataCopy" parameterType="com.deyi.vo.OrderDaySum" resultType="com.deyi.vo.OrderDaySum" useCache="false">
+  		SELECT IFnull(SUM(paymoney),0) paymoney,COUNT(*) count,IFnull(SUM(refundMoney),0) refundMoney,(select IFnull(SUM(orderStatus = 3),0)/3 )refundcount FROM sta_order_copy
+  		<where>
+  			  orderTime &gt;= #{startDate} AND orderTime &lt;= #{endDate}
+  			<if test="merids != null and merids !=''">
+  				and merId  in (${merids})
+  			</if>
+  			<if test="storeid != null and storeid !=''">
+  				and storeid  in (${storeid})
+  			</if>
+  			<if test="paytype != null and paytype !=''">
+  				and paytype  = #{paytype}
+  			</if>
+  			<if test="orgid != null and orgid !=''">
+  				and org_id  = #{orgid}
+  			</if>
+			<if test="payStatus != null and payStatus !=''">
+				and payStatus = #{payStatus}
+			</if>
+  		</where>
+  	</select>
+
+
+  	<select id="selectorderbysum"  resultType="com.deyi.vo.OrderDaySum" parameterType="com.deyi.vo.OrderVo" useCache="false">
+  		SELECT COUNT(*) count,SUM(payMoney) paymoney,SUM(refundMoney) refundMoney,
+		IFnull(SUM(CASE when  payStatus='2' AND orderStatus='3' THEN -ratemoney ELSE ratemoney END),0) sumratemoney,
+		IFnull(SUM(CASE when  payStatus='2' AND orderStatus='3' THEN 0 ELSE ratemoney END),0)  needRateMoney
+		FROM sta_order
+  		<where>
+  			1=1
+  			<if test="payStatus != null and payStatus !=''">
+  				and payStatus = #{payStatus}
+  			</if>
+  			<if test="orderTimeStart != null and orderTimeStart !=''">
+  				and orderTime <![CDATA[>=]]> #{orderTimeStart}
+  			</if>
+  			<if test="orderTimeEnd != null and orderTimeEnd !=''">
+  				and orderTime <![CDATA[<=]]> DATE_FORMAT(#{orderTimeEnd},'%Y-%m-%d 23:59:59')
+  			</if>
+  			<!-- 20160613   PC客户查询的是paytime 为了解决这一BUG ,将paytime 改为 orderTime -->
+  			<if test="payTimeStart != null and payTimeStart !=''">
+  				and orderTime <![CDATA[>=]]> #{payTimeStart}
+  			</if>
+  			<if test="payTimeEnd != null and payTimeEnd !=''">
+  				and orderTime <![CDATA[<=]]> #{payTimeEnd}
+  			</if>
+
+
+  			<if test="merchantIds != null and merchantIds !=''">
+  				and merId in(${merchantIds})
+  			</if>
+
+  			<if test="merId != null and merId !=''">
+  				and merId = #{merId}
+  			</if>
+  			<if test="merName != null and merName !=''">
+  				and merName like CONCAT('%',#{merName},'%')
+  			</if>
+  			<if test="orgIds != null and orgIds !=''">
+  				and org_id in(${orgIds})
+  			</if>
+
+  			<if test="storeId != null and storeId !=''">
+  				and storeId = #{storeId}
+  			</if>
+
+			<if test="storeName != null and storeName !=''">
+  				and storeName like CONCAT('%',#{storeName},'%')
+  			</if>
+
+  			<if test="orgName != null and orgName !=''">
+  				and org_name like CONCAT('%',#{orgName},'%')
+  			</if>
+
+  			<if test="creator != null and creator !=''">
+  				and creator = #{creator}
+  			</if>
+
+  			<if test="orderNo != null and orderNo !=''">
+  				and orderNo like CONCAT(#{orderNo},'%')
+  			</if>
+
+  			<if test="payType != null and payType !=''">
+  				and payType = ${payType}
+  			</if>
+
+  			<if test="orderStatus != null and orderStatus !=''">
+  				and orderStatus = #{orderStatus}
+  			</if>
+
+
+  			<if test="clerkname != null and clerkname !=''">
+  				and clerkname like CONCAT('%',#{clerkname},'%')
+  			</if>
+  		</where>
+  	</select>
+
+
+  	<!-- 统计订单历史表 -->
+  	<select id="selectordercopybysum"  resultType="com.deyi.vo.OrderDaySum" parameterType="com.deyi.vo.OrderVo" useCache="false">
+  		SELECT COUNT(*) count,SUM(payMoney) paymoney,SUM(refundMoney) refundMoney FROM sta_order_copy
+  		<where>
+  			1=1
+  			<if test="payStatus != null and payStatus !=''">
+  				and payStatus = #{payStatus}
+  			</if>
+  			<if test="orderTimeStart != null and orderTimeStart !=''">
+  				and orderTime <![CDATA[>=]]> #{orderTimeStart}
+  			</if>
+  			<if test="orderTimeEnd != null and orderTimeEnd !=''">
+  				and orderTime <![CDATA[<=]]> DATE_FORMAT(#{orderTimeEnd},'%Y-%m-%d 23:59:59')
+  			</if>
+  			<!-- 20160613   PC客户查询的是paytime 为了解决这一BUG ,将paytime 改为 orderTime -->
+  			<if test="payTimeStart != null and payTimeStart !=''">
+  				and orderTime <![CDATA[>=]]> #{payTimeStart}
+  			</if>
+  			<if test="payTimeEnd != null and payTimeEnd !=''">
+  				and orderTime <![CDATA[<=]]> #{payTimeEnd}
+  			</if>
+
+
+  			<if test="merchantIds != null and merchantIds !=''">
+  				and merId in(${merchantIds})
+  			</if>
+
+  			<if test="merId != null and merId !=''">
+  				and merId = #{merId}
+  			</if>
+  			<if test="merName != null and merName !=''">
+  				and merName like CONCAT('%',#{merName},'%')
+  			</if>
+  			<if test="orgIds != null and orgIds !=''">
+  				and org_id in(${orgIds})
+  			</if>
+
+  			<if test="storeId != null and storeId !=''">
+  				and storeId = #{storeId}
+  			</if>
+
+			<if test="storeName != null and storeName !=''">
+  				and storeName like CONCAT('%',#{storeName},'%')
+  			</if>
+
+  			<if test="orgName != null and orgName !=''">
+  				and org_name like CONCAT('%',#{orgName},'%')
+  			</if>
+
+  			<if test="creator != null and creator !=''">
+  				and creator = #{creator}
+  			</if>
+
+  			<if test="orderNo != null and orderNo !=''">
+  				and orderNo like CONCAT(#{orderNo},'%')
+  			</if>
+
+  			<if test="payType != null and payType !=''">
+  				and payType = ${payType}
+  			</if>
+
+  			<if test="orderStatus != null and orderStatus !=''">
+  				and orderStatus = #{orderStatus}
+  			</if>
+
+
+  			<if test="clerkname != null and clerkname !=''">
+  				and clerkname like CONCAT('%',#{clerkname},'%')
+  			</if>
+  		</where>
+  	</select>
+
+
+  	<!-- 删除三个月前前一天的数据 -->
+  	<delete id="deleteLastDayOrder"   parameterType="java.lang.String">
+  		delete FROM sta_order
+  		<where>
+  				 payTime <![CDATA[>=]]> #{nextDay} and payTime <![CDATA[<]]> #{tody}
+  		</where>
+  	</delete>
+
+
+  	<select id="queryYesterdayOrder" parameterType="java.lang.Integer" resultType="java.lang.String" useCache="false">
+  		select orderNo from sta_order WHERE TO_DAYS(NOW()) - TO_DAYS(orderTime) = #{i} and orderStatus IN(1, 2) AND payStatus = 1
+  	</select>
+
+  	<select id="loadOrderFile" parameterType="string" >
+		LOAD DATA INFILE #{0} INTO TABLE sta_order FIELDS TERMINATED BY '\t' ENCLOSED BY '"' LINES TERMINATED BY '\n'
+	</select>
+
+
+</mapper>

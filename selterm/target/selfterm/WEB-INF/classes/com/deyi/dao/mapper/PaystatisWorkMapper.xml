@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.deyi.dao.PaystatisWorkMapper" >
+	<cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
+
+  <resultMap id="BaseResultMap" type="com.deyi.entity.PaystatisWork" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="wxPaySum" property="wxpaysum" jdbcType="INTEGER" />
+    <result column="aliPaySum" property="alipaysum" jdbcType="INTEGER" />
+    <result column="unionPaySum" property="unionpaysum" jdbcType="INTEGER" />
+    <result column="wxPayMoney" property="wxpayMoney" jdbcType="DECIMAL" />
+    <result column="aliPayMoney" property="alipayMoney" jdbcType="DECIMAL" />
+    <result column="unionPayMoney" property="unionpayMoney" jdbcType="DECIMAL" />
+    <result column="wxRefundMoney" property="wxrefundMoney" jdbcType="DECIMAL" />
+    <result column="aliRefundMoney" property="alirefundMoney" jdbcType="DECIMAL" />
+    <result column="unionRefundMoney" property="unionrefundMoney" jdbcType="DECIMAL" />
+    <result column="wxMoney" property="wxMoney" jdbcType="DECIMAL" />
+    <result column="aliMoney" property="aliMoney" jdbcType="DECIMAL" />
+    <result column="unionMoney" property="unionMoney" jdbcType="DECIMAL" />
+    <result column="startTime" property="starttime" jdbcType="TIMESTAMP" />
+    <result column="endTime" property="endtime" jdbcType="TIMESTAMP" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="loginName" property="loginName" jdbcType="VARCHAR" />
+    <result column="storename" property="storename" jdbcType="VARCHAR" />
+    <result column="storeId" property="storeid" jdbcType="BIGINT" />
+    <result column="payMoney" property="payMoney" jdbcType="DECIMAL" />
+    <result column="refundMoney" property="refundMoney" jdbcType="DECIMAL" />
+    <result column="money" property="money" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, wxPaySum, aliPaySum,unionPaySum, wxPayMoney, aliPayMoney,unionPayMoney, wxRefundMoney, aliRefundMoney, unionRefundMoney, wxMoney, 
+    aliMoney, unionMoney, startTime, endTime, creator, storeId, payMoney, refundMoney, money,loginName
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from sta_paystatis_work
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  
+   <select id="getPaystatisWorks" resultMap="BaseResultMap" parameterType="com.deyi.util.Page" useCache="false" >
+    select 
+    a.id, wxPaySum, aliPaySum, unionPaySum, wxPayMoney, aliPayMoney, unionPayMoney, wxRefundMoney, aliRefundMoney, unionRefundMoney, wxMoney, 
+    aliMoney, unionMoney, startTime, endTime, a.creator, a.storeId, payMoney, refundMoney, money,loginName ,b.storename ,c.name merchantname
+    from sta_paystatis_work a LEFT JOIN dis_store b ON a.storeId  = b.id left join dis_merchant c ON c.id= b.merid
+    <where>
+    	storeId in (${params.storeid}) 
+    	<if test="params.loginName != null">
+    		and loginName =#{params.loginName}
+    	</if>
+    	<if test="params.creator !=null and params.creator !=''">
+			and a.creator like CONCAT('%',#{params.creator},'%')
+	    </if>
+    	<if test="params.timeStart != null and params.timeStart !=''">
+    		and startTime <![CDATA[>=]]> #{params.timeStart}
+    	</if>
+    	<if test="params.timeEnd != null and params.timeEnd !=''">
+    		and endTime <![CDATA[<=]]> #{params.timeEnd}
+    	</if>
+    	<if test="params.storename != null">
+    		and storename like CONCAT('%',#{params.storename},'%')
+    	</if>
+    	<if test="params.merchantname != null">
+    		and c.name like CONCAT('%',#{params.merchantname},'%')
+    	</if>
+    </where>
+  </select>
+  
+  <insert id="insertSelective" parameterType="com.deyi.entity.PaystatisWork" >
+    insert into sta_paystatis_work
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="wxpaysum != null" >
+        wxPaySum,
+      </if>
+      <if test="alipaysum != null" >
+        aliPaySum,
+      </if>
+      <if test="unionpaysum != null" >
+        unionPaySum,
+      </if>
+      <if test="wxpayMoney != null" >
+        wxPayMoney,
+      </if>
+      <if test="alipayMoney != null" >
+        aliPayMoney,
+      </if>
+      <if test="unionpayMoney != null" >
+        unionPayMoney,
+      </if>
+      <if test="wxrefundMoney != null" >
+        wxRefundMoney,
+      </if>
+      <if test="alirefundMoney != null" >
+        aliRefundMoney,
+      </if>
+      <if test="unionrefundMoney != null" >
+        unionRefundMoney,
+      </if>
+      <if test="wxMoney != null" >
+        wxMoney,
+      </if>
+      <if test="aliMoney != null" >
+        aliMoney,
+      </if>
+      <if test="aliMoney != null" >
+        unionMoney,
+      </if>
+      <if test="starttime != null" >
+        startTime,
+      </if>
+      <if test="endtime != null" >
+        endTime,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="loginName != null" >
+        loginName,
+      </if>
+      <if test="storeid != null" >
+        storeId,
+      </if>
+      <if test="payMoney != null" >
+        payMoney,
+      </if>
+      <if test="refundMoney != null" >
+        refundMoney,
+      </if>
+      <if test="money != null" >
+        money,
+      </if>
+      
+      
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="wxpaysum != null" >
+        #{wxpaysum,jdbcType=INTEGER},
+      </if>
+      <if test="alipaysum != null" >
+        #{alipaysum,jdbcType=INTEGER},
+      </if>
+      <if test="unionpaysum != null" >
+        #{unionpaysum,jdbcType=INTEGER},
+      </if>
+      <if test="wxpayMoney != null" >
+        #{wxpayMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="alipayMoney != null" >
+        #{alipayMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="unionpayMoney != null" >
+        #{unionpayMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="wxrefundMoney != null" >
+        #{wxrefundMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="alirefundMoney != null" >
+        #{alirefundMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="unionrefundMoney != null" >
+        #{unionrefundMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="wxMoney != null" >
+        #{wxMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="aliMoney != null" >
+        #{aliMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="unionMoney != null" >
+        #{unionMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="starttime != null" >
+        #{starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null" >
+        #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="loginName != null" >
+      	#{loginName,jdbcType=VARCHAR},
+      </if>
+      
+      <if test="storeid != null" >
+        #{storeid,jdbcType=BIGINT},
+      </if>
+      <if test="payMoney != null" >
+        #{payMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="refundMoney != null" >
+        #{refundMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="money != null" >
+        #{money,jdbcType=DECIMAL},
+      </if>
+      
+    </trim>
+  </insert>
+  
+  
+   <select id="getPaystatisWorksSum" resultType="com.deyi.entity.PaystatisWork" parameterType="com.deyi.entity.PaystatisWork" >
+       SELECT SUM(wxPaySum)wxPaySum,SUM(aliPaySum)aliPaySum,SUM(wxPayMoney)wxPayMoney,SUM(aliPayMoney)aliPayMoney,SUM(wxRefundMoney)wxRefundMoney,SUM(aliRefundMoney)aliRefundMoney,
+    SUM(wxMoney)wxMoney,SUM(aliMoney)aliMoney,SUM(payMoney)payMoney,SUM(refundMoney)refundMoney,SUM(money)money FROM (
+    select 
+    a.id, wxPaySum, aliPaySum, wxPayMoney, aliPayMoney, wxRefundMoney, aliRefundMoney, wxMoney, 
+    aliMoney, startTime, endTime, a.creator, a.storeId, payMoney, refundMoney, money,loginName ,b.storename ,c.name merchantname
+    from sta_paystatis_work a LEFT JOIN dis_store b ON a.storeId  = b.id left join dis_merchant c ON c.id= b.merid
+    <where>
+    	storeId in (${storeid}) 
+    	<if test="loginName != null">
+    		and loginName =#{loginName}
+    	</if>
+    	<if test="creator !=null and creator !=''">
+			and a.creator like CONCAT('%',#{creator},'%')
+	    </if>
+    	<if test="timeStart != null and timeStart !=''">
+    		and startTime <![CDATA[>=]]> #{timeStart}
+    	</if>
+    	<if test="timeEnd != null and timeEnd !=''">
+    		and endTime <![CDATA[<=]]> #{timeEnd}
+    	</if>
+    	<if test="storename != null">
+    		and storename like CONCAT('%',#{storename},'%')
+    	</if>
+    	<if test="merchantname != null">
+    		and c.name like CONCAT('%',#{merchantname},'%')
+    	</if>
+    </where>
+    
+    ) D
+  </select>
+  
+  
+  
+</mapper>

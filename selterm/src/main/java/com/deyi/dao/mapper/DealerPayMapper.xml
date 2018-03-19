@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.deyi.dao.DealerPayMapper" >
+    <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
+    <resultMap id="BaseResultMap" type="com.deyi.entity.DealerPay" >
+        <result column="dealerId" property="dealerId" jdbcType="VARCHAR" />
+        <result column="wxMchId" property="wxMchId" jdbcType="VARCHAR" />
+        <result column="aliMachId" property="aliMachId" jdbcType="VARCHAR" />
+        <result column="appAuthToken" property="appAuthToken" jdbcType="VARCHAR" />
+
+    </resultMap>
+    <sql id="Base_Column_List" >
+        dealerId,wxMchId,aliMachId,appAuthToken
+    </sql>
+    <select id="getDealerPay" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select  dealerId,wxMchId,aliMachId,appAuthToken
+        from t_dealer_pay a
+        where  a.dealerId = #{dealerId,jdbcType=VARCHAR}
+    </select>
+    <select id="getDealerPayByUserId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select  a.id as dealerId,ifnull(b.wxMchId,'') as wxMchId,b.aliMachId,b.appAuthToken
+        from t_dealer a left JOIN  t_dealer_pay b
+          on a.id = b.dealerId
+        where  a.userId = #{userId}
+    </select>
+    <select id="getDealerPays" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from t_dealer_pay
+        <where>
+            1=1
+            <if test="dealerId != null" >
+                and dealerId=#{dealerId,jdbcType=VARCHAR},
+            </if>
+            <if test="wxMchId != null" >
+                and wxMchId= #{wxMchId,jdbcType=VARCHAR},
+            </if>
+            <if test="aliMachId != null" >
+                and aliMachId=#{aliMachId,jdbcType=LONGTEXT},
+            </if>
+        </where>
+    </select>
+    <delete id="delete" parameterType="java.lang.Integer" >
+        delete from t_dealer_pay
+        where dealerId = #{dealerId,jdbcType=VARCHAR}
+    </delete>
+
+    <insert id="insert" parameterType="com.deyi.entity.DealerPay" >
+        insert into t_dealer_pay
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="dealerId != null" >
+                dealerId,
+            </if>
+            <if test="wxMchId != null" >
+                wxMchId,
+            </if>
+            <if test="aliMachId != null" >
+                aliMachId,
+            </if>
+            <if test="appAuthToken != null" >
+                appAuthToken,
+            </if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="dealerId != null" >
+                #{dealerId,jdbcType=VARCHAR},
+            </if>
+            <if test="wxMchId != null" >
+                #{wxMchId,jdbcType=VARCHAR},
+            </if>
+            <if test="aliMachId != null" >
+                #{aliMachId,jdbcType=VARCHAR},
+            </if>
+            <if test="appAuthToken != null" >
+                #{appAuthToken,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="com.deyi.entity.DealerPay" >
+        update t_dealer_pay
+        <set >
+
+
+                <if test="wxMchId != null" >
+                    wxMchId= #{wxMchId,jdbcType=VARCHAR},
+                </if>
+                <if test="aliMachId != null" >
+                    aliMachId= #{aliMachId,jdbcType=VARCHAR},
+                </if>
+                <if test="appAuthToken != null" >
+                    appAuthToken=#{appAuthToken,jdbcType=VARCHAR},
+                </if>
+        </set>
+        where dealerId = #{dealerId,jdbcType=VARCHAR}
+    </update>
+</mapper>

@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.deyi.dao.SalesmanMapper">
+	<cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
+
+	<resultMap id="BaseResultMap" type="com.deyi.entity.Salesman">
+		<id column="saleId" property="saleid" jdbcType="BIGINT" />
+		<result column="saleCode" property="salecode" jdbcType="VARCHAR" />
+		<result column="saleName" property="salename" jdbcType="VARCHAR" />
+		<result column="accountName" property="accountname" jdbcType="VARCHAR" />
+		<result column="contact" property="contact" jdbcType="VARCHAR" />
+		<result column="orgId" property="orgid" jdbcType="BIGINT" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		saleId, saleCode, saleName, accountName, contact, orgId,
+		remark
+	</sql>
+
+	<select id="getSalesmansByPage" resultMap="BaseResultMap"
+		parameterType="com.deyi.util.Page" useCache="false">
+		select
+		<include refid="Base_Column_List" />
+		from dis_salesman
+		where orgId = #{params.orgid}
+		<if test="params.salename != null and params.salename != ''">
+			AND saleName = #{params.saleName}
+		</if>
+	</select>
+
+
+	<select id="getSalesmanByAccountName" resultMap="BaseResultMap"
+		parameterType="string">
+		select
+		<include refid="Base_Column_List" />
+		from dis_salesman
+		where accountname = #{0}
+	</select>
+	<select id="selectByOrgId" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from dis_salesman
+		where orgId = #{orgid,jdbcType=BIGINT}
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from dis_salesman
+		where saleId = #{saleid,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from
+		dis_salesman
+		where saleId = #{saleid,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="com.deyi.entity.Salesman">
+		insert into dis_salesman
+		(saleId, saleCode, saleName,
+		accountName, contact, orgId,
+		remark)
+		values
+		(#{saleid,jdbcType=BIGINT}, #{salecode,jdbcType=VARCHAR},
+		#{salename,jdbcType=VARCHAR},
+		#{accountname,jdbcType=VARCHAR},
+		#{contact,jdbcType=VARCHAR}, #{orgid,jdbcType=BIGINT},
+		#{remark,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.deyi.entity.Salesman">
+		insert into dis_salesman
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="saleid != null">
+				saleId,
+			</if>
+			<if test="salecode != null">
+				saleCode,
+			</if>
+			<if test="salename != null">
+				saleName,
+			</if>
+			<if test="accountname != null">
+				accountName,
+			</if>
+			<if test="contact != null">
+				contact,
+			</if>
+			<if test="orgid != null">
+				orgId,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="saleid != null">
+				#{saleid,jdbcType=BIGINT},
+			</if>
+			<if test="salecode != null">
+				#{salecode,jdbcType=VARCHAR},
+			</if>
+			<if test="salename != null">
+				#{salename,jdbcType=VARCHAR},
+			</if>
+			<if test="accountname != null">
+				#{accountname,jdbcType=VARCHAR},
+			</if>
+			<if test="contact != null">
+				#{contact,jdbcType=VARCHAR},
+			</if>
+			<if test="orgid != null">
+				#{orgid,jdbcType=BIGINT},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.deyi.entity.Salesman">
+		update dis_salesman
+		<set>
+			<if test="salecode != null">
+				saleCode = #{salecode,jdbcType=VARCHAR},
+			</if>
+			<if test="salename != null">
+				saleName = #{salename,jdbcType=VARCHAR},
+			</if>
+			<if test="accountname != null">
+				accountName = #{accountname,jdbcType=VARCHAR},
+			</if>
+			<if test="contact != null">
+				contact = #{contact,jdbcType=VARCHAR},
+			</if>
+			<if test="orgid != null">
+				orgId = #{orgid,jdbcType=BIGINT},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where saleId = #{saleid,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.deyi.entity.Salesman">
+		update
+		dis_salesman
+		set saleCode = #{salecode,jdbcType=VARCHAR},
+		saleName =
+		#{salename,jdbcType=VARCHAR},
+		accountName =
+		#{accountname,jdbcType=VARCHAR},
+		contact = #{contact,jdbcType=VARCHAR},
+		orgId = #{orgid,jdbcType=BIGINT},
+		remark = #{remark,jdbcType=VARCHAR}
+		where saleId = #{saleid,jdbcType=BIGINT}
+	</update>
+
+
+	<select id="queryBusinessCollect" resultType="com.deyi.vo.BusinessInSalemanVo">
+		select * from(
+		SELECT C.creator, ONE, two, IFNULL(SUMCOUNT,0) SUMCOUNT
+		FROM (SELECT
+		creator, SUM(a.one) ONE, SUM(a.two) two FROM (SELECT
+		COUNT(1),merType,
+		creator, CASE merType WHEN '1' THEN COUNT(1) ELSE 0
+		END AS 'one', CASE
+		merType
+		WHEN '2' THEN COUNT(1) ELSE 0 END AS 'two'
+		FROM dis_merchant
+
+		<where>
+			1=1 and status = '1'
+			<if test="params.orgids !=null">
+				and org_id IN (${params.orgids})
+			</if>
+			<if test="params.querystarttime != null and params.querystarttime !=''">
+				and createTime <![CDATA[>=]]>
+				#{params.querystarttime}
+			</if>
+			<if test="params.queryendtime != null and params.queryendtime !=''">
+				and createTime <![CDATA[<=]]>
+				#{params.queryendtime}
+			</if>
+		</where>
+		GROUP BY merType, creator) a GROUP BY a.creator) C LEFT JOIN (SELECT
+		creator, COUNT(*) sumcount FROM dis_org
+		<where>
+			1=1 
+			<if test="params.querystarttime != null and params.querystarttime !=''">
+				and createTime <![CDATA[>=]]>
+				#{params.querystarttime}
+			</if>
+			<if test="params.queryendtime != null and params.queryendtime !=''">
+				and createTime <![CDATA[<=]]>
+				#{params.queryendtime}
+			</if>
+		</where>
+		GROUP BY creator) b ON
+		C.creator = b.creator
+		UNION
+		SELECT C.creator, ONE,
+		two,
+		IFNULL(SUMCOUNT,0) FROM (SELECT creator,
+		SUM(a.one) ONE, SUM(a.two)
+		two
+		FROM (SELECT COUNT(1), merType,
+		creator,
+		CASE merType WHEN '1' THEN
+		COUNT(1) ELSE 0 END AS 'one', CASE merType WHEN
+		'2' THEN COUNT(1) ELSE
+		0 END AS 'two' FROM dis_merchant
+		<where>
+			1=1 
+			<if test="params.orgids !=null">
+				and org_id IN (${params.orgids})
+			</if>
+			<if test="params.querystarttime != null and params.querystarttime !=''">
+				and createTime <![CDATA[>=]]>
+				#{params.querystarttime}
+			</if>
+			<if test="params.queryendtime != null and params.queryendtime !=''">
+				and createTime <![CDATA[<=]]>
+				#{params.queryendtime}
+			</if>
+		</where>
+		GROUP BY merType, creator) a GROUP BY a.creator) C RIGHT JOIN (SELECT
+		creator, COUNT(*) sumcount FROM dis_org
+		<where>
+			and 
+			<if test="params.querystarttime != null and params.querystarttime !=''">
+				and createTime <![CDATA[>=]]>
+				#{params.querystarttime}
+			</if>
+			<if test="params.queryendtime != null and params.queryendtime !=''">
+				and createTime <![CDATA[<=]]>
+				#{params.queryendtime}
+			</if>
+		</where>
+		GROUP BY creator) b ON
+		C.creator = b.creator) d
+
+		<where>
+			1=1
+			<if test="params.creator != null">
+				and creator = #{params.creator}
+			</if>
+		</where>
+	</select>
+	
+	
+	<select id="SaleManCollect" resultType="com.deyi.vo.SaleManCollectVo" parameterType="com.deyi.util.Page" useCache="false">
+		SELECT creator userid,creatorName username,COUNT(id) merchantcount,SUM(money) money,SUM(yesterdaymoney) yesterdaymoney,SUM(monthmoney) monthmoney ,sumcount,parentuser FROM (
+
+		SELECT a.creator,a.id,a.creatorName ,IFNULL(b.money,0) money,IFNULL(c.yesterdaymoney,0) yesterdaymoney,IFNULL(d.monthmoney,0) monthmoney,f.sumcount,g.parentuser FROM dis_merchant a 
+		LEFT JOIN (SELECT merId,SUM(paymoney) money FROM sta_order WHERE  payStatus = 2 AND orderStatus = 1 AND DATE(payTime) = CURDATE() GROUP BY merId) b ON a.id = b.merid
+		LEFT JOIN (SELECT merId,SUM(paymoney) yesterdaymoney FROM sta_order WHERE  payStatus = 2 AND orderStatus = 1 AND  TO_DAYS(NOW()) - TO_DAYS(payTime) = 1 GROUP BY merId) c ON a.id = c.merid
+		LEFT JOIN (SELECT merId,SUM(paymoney) monthmoney FROM sta_order WHERE  payStatus = 2 AND orderStatus = 1 AND   DATE_FORMAT(payTime,'%Y-%m')=DATE_FORMAT(NOW(),'%Y-%m')  GROUP BY merId) d ON a.id = d.merid
+		LEFT JOIN (SELECT merId ,COUNT(*) sumcount FROM dis_store where deletedStatus = 0 GROUP BY merId) f ON a.id = f.merid
+		LEFT JOIN (SELECT j.loginNmame,k.name parentuser FROM sys_user_operator j LEFT JOIN sys_user_operator k ON j.parentid = k.id) g ON a.creator = g.loginNmame
+		
+		<where>
+			1=1 and id in (${params.merids})
+			<if test="params.username != null and params.username != ''">
+				and creatorName like concat('%',#{params.username},'%')
+			</if>
+		</where>
+		) e GROUP BY creator 
+	</select>
+	
+	
+	<select id="SaleManUserCollect" resultType="com.deyi.vo.SaleManCollectVo" parameterType="com.deyi.vo.SaleManCollectVo">
+			SELECT SUM(merchantcount)merchantcount,SUM(money) money,SUM(yesterdaymoney) yesterdaymoney,SUM(monthmoney)monthmoney ,SUM(sumcount) sumcount FROM (
+		SELECT creator userid,creatorName username,COUNT(id) merchantcount,SUM(money) money,SUM(yesterdaymoney) yesterdaymoney,SUM(monthmoney) monthmoney ,sum(sumcount) sumcount FROM (
+
+		SELECT a.creator,a.id,a.creatorName ,IFNULL(b.money,0) money,IFNULL(c.yesterdaymoney,0) yesterdaymoney,IFNULL(d.monthmoney,0) monthmoney,f.sumcount FROM dis_merchant a 
+		LEFT JOIN (SELECT merId,SUM(paymoney) money FROM sta_order WHERE  payStatus = 2 AND orderStatus = 1 AND DATE(payTime) = CURDATE()  AND merid IN (${merids})  GROUP BY merId) b ON a.id = b.merid
+		LEFT JOIN (SELECT mer_id merId,summoney yesterdaymoney FROM sta_mer_collectday WHERE TO_DAYS(NOW()) - TO_DAYS(creattime) =1 AND mer_id IN (${merids})) c ON a.id = c.merid
+		LEFT JOIN (SELECT mer_id merId,SUM(summoney) monthmoney FROM sta_mer_collectday WHERE DATE_FORMAT(starttime,'%Y-%m')=DATE_FORMAT(NOW(),'%Y-%m')  AND mer_id IN (${merids}) GROUP BY merId) d ON a.id = d.merid
+		LEFT JOIN (SELECT merId ,COUNT(*) sumcount FROM dis_store WHERE deletedStatus = 0 GROUP BY merId) f ON a.id = f.merid
+		<where>
+			1=1 AND deletedStatus = 0 and id in (${merids}) 
+			<if test="userloginids != null and userloginids != ''">
+			and creator in (${userloginids})
+			</if>
+			<if test="username != null and username != ''">
+				and creatorName like concat('%',#{username},'%')
+			</if>
+		</where>
+		) e GROUP BY creator 
+		) tt
+	</select>
+</mapper>

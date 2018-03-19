@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.deyi.dao.WxPublicMapper" >
+
+
+	<cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
+  <resultMap id="BaseResultMap" type="com.deyi.entity.WxPublic" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="merchId" property="merchid" jdbcType="VARCHAR" />
+    <result column="merchName" property="merchname" jdbcType="VARCHAR" />
+    <result column="app_id" property="appId" jdbcType="VARCHAR" />
+    <result column="mch_id" property="mchId" jdbcType="VARCHAR" />
+    <result column="applic_key" property="applicKey" jdbcType="VARCHAR" />
+    <result column="cert_localpath" property="certLocalpath" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="audit" property="audit" jdbcType="CHAR" />
+    <result column="orgid" property="orgid" jdbcType="VARCHAR" />
+    <result column="orgname" property="orgname" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, merchId, merchName, app_id, mch_id, applic_key, cert_localpath, 
+    creator, createTime,audit,orgid,orgname
+  </sql>
+  <select id="getWxPublicByMerchId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from wx_public
+    where merchId = #{0}
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from wx_public
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByMechId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from wx_public
+    where merchId = #{merchId}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from wx_public
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.deyi.entity.WxPublic" >
+    insert into wx_public (merchId, merchName, 
+      app_id, mch_id, applic_key, 
+      cert_localpath, oauth_authorize, creator, 
+      createTime, sub_mch_id,audit,orgid,orgname)
+    values (#{merchid,jdbcType=VARCHAR}, #{merchname,jdbcType=VARCHAR}, 
+      #{appId,jdbcType=VARCHAR}, #{mchId,jdbcType=VARCHAR}, #{applicKey,jdbcType=VARCHAR}, 
+      #{certLocalpath,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=TIMESTAMP},#{audit,jdbcType=CHAR},#{orgid,jdbcType=VARCHAR},#{orgname,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.deyi.entity.WxPublic" >
+    insert into wx_public
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="merchid != null" >
+        merchId,
+      </if>
+      <if test="merchname != null" >
+        merchName,
+      </if>
+      <if test="appId != null" >
+        app_id,
+      </if>
+      <if test="mchId != null" >
+        mch_id,
+      </if>
+      <if test="applicKey != null" >
+        applic_key,
+      </if>
+      <if test="certLocalpath != null" >
+        cert_localpath,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+      <if test="audit != null" >
+        audit,
+      </if>
+      <if test="orgid != null" >
+        orgid,
+      </if>
+      <if test="orgname != null" >
+        orgname,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="merchid != null" >
+        #{merchid,jdbcType=VARCHAR},
+      </if>
+      <if test="merchname != null" >
+        #{merchname,jdbcType=VARCHAR},
+      </if>
+      <if test="appId != null" >
+        #{appId,jdbcType=VARCHAR},
+      </if>
+      <if test="mchId != null" >
+        #{mchId,jdbcType=VARCHAR},
+      </if>
+      <if test="applicKey != null" >
+        #{applicKey,jdbcType=VARCHAR},
+      </if>
+      <if test="certLocalpath != null" >
+        #{certLocalpath,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="audit != null" >
+        #{audit,jdbcType=CHAR},
+      </if>
+      <if test="orgid != null" >
+        #{orgid,jdbcType=VARCHAR},
+      </if>
+      <if test="orgname != null" >
+        #{orgname,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.deyi.entity.WxPublic" >
+    update wx_public
+    <set >
+      <if test="merchid != null" >
+        merchId = #{merchid,jdbcType=VARCHAR},
+      </if>
+      <if test="merchname != null" >
+        merchName = #{merchname,jdbcType=VARCHAR},
+      </if>
+      <if test="appId != null" >
+        app_id = #{appId,jdbcType=VARCHAR},
+      </if>
+      <if test="mchId != null" >
+        mch_id = #{mchId,jdbcType=VARCHAR},
+      </if>
+      <if test="applicKey != null" >
+        applic_key = #{applicKey,jdbcType=VARCHAR},
+      </if>
+      <if test="certLocalpath != null" >
+        cert_localpath = #{certLocalpath,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="audit != null" >
+        audit = #{audit,jdbcType=CHAR},
+      </if>
+      <if test="orgid != null" >
+        orgid = #{orgid,jdbcType=VARCHAR},
+      </if>
+      <if test="orgname != null" >
+        orgname = #{orgname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where merchId = #{merchid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.deyi.entity.WxPublic" >
+    update wx_public
+    set merchId = #{merchid,jdbcType=VARCHAR},
+      merchName = #{merchname,jdbcType=VARCHAR},
+      app_id = #{appId,jdbcType=VARCHAR},
+      mch_id = #{mchId,jdbcType=VARCHAR},
+      applic_key = #{applicKey,jdbcType=VARCHAR},
+      cert_localpath = #{certLocalpath,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=VARCHAR},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      orgid = #{orgid,jdbcType=VARCHAR},
+      orgname = #{orgname,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+    <select id="getWxPublicByOrgId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from wx_public
+    where orgid = #{0}
+  </select>
+  
+</mapper>

@@ -1,0 +1,618 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.deyi.dao.OthMerchantMapper" >
+  <resultMap id="BaseResultMap" type="com.deyi.entity.OthMerchant" >
+    <id column="merid" property="merid" jdbcType="INTEGER" />
+    <result column="inst_no" property="instNo" jdbcType="VARCHAR" />
+    <result column="trace_no" property="traceNo" jdbcType="VARCHAR" />
+    <result column="merchant_no" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="merchant_type" property="merchantType" jdbcType="VARCHAR" />
+    <result column="merchant_name" property="merchantName" jdbcType="VARCHAR" />
+    <result column="merchant_alias" property="merchantAlias" jdbcType="VARCHAR" />
+    <result column="merchant_company" property="merchantCompany" jdbcType="VARCHAR" />
+    <result column="merchant_province" property="merchantProvince" jdbcType="VARCHAR" />
+    <result column="merchant_province_code" property="merchantProvinceCode" jdbcType="VARCHAR" />
+    <result column="merchant_city" property="merchantCity" jdbcType="VARCHAR" />
+    <result column="merchant_city_code" property="merchantCityCode" jdbcType="VARCHAR" />
+    <result column="merchant_address" property="merchantAddress" jdbcType="VARCHAR" />
+    <result column="merchant_person" property="merchantPerson" jdbcType="VARCHAR" />
+    <result column="merchant_phone" property="merchantPhone" jdbcType="VARCHAR" />
+    <result column="merchant_email" property="merchantEmail" jdbcType="VARCHAR" />
+    <result column="merchant_id_no" property="merchantIdNo" jdbcType="VARCHAR" />
+    <result column="merchant_id_expire" property="merchantIdExpire" jdbcType="VARCHAR" />
+    <result column="business_name" property="businessName" jdbcType="VARCHAR" />
+    <result column="business_code" property="businessCode" jdbcType="VARCHAR" />
+    <result column="account_type" property="accountType" jdbcType="VARCHAR" />
+    <result column="account_name" property="accountName" jdbcType="VARCHAR" />
+    <result column="account_no" property="accountNo" jdbcType="VARCHAR" />
+    <result column="bank_name" property="bankName" jdbcType="VARCHAR" />
+    <result column="bank_no" property="bankNo" jdbcType="VARCHAR" />
+    <result column="settle_type" property="settleType" jdbcType="VARCHAR" />
+    <result column="settle_amount" property="settleAmount" jdbcType="INTEGER" />
+    <result column="img_license" property="imgLicense" jdbcType="VARCHAR" />
+    <result column="img_idcard_a" property="imgIdcardA" jdbcType="VARCHAR" />
+    <result column="img_idcard_b" property="imgIdcardB" jdbcType="VARCHAR" />
+    <result column="img_bankcard_a" property="imgBankcardA" jdbcType="VARCHAR" />
+    <result column="img_bankcard_b" property="imgBankcardB" jdbcType="VARCHAR" />
+    <result column="img_logo" property="imgLogo" jdbcType="VARCHAR" />
+    <result column="img_indoor" property="imgIndoor" jdbcType="VARCHAR" />
+    <result column="img_contract" property="imgContract" jdbcType="VARCHAR" />
+    <result column="img_other" property="imgOther" jdbcType="VARCHAR" />
+    <result column="notify_url" property="notifyUrl" jdbcType="VARCHAR" />
+    <result column="parent_no" property="parentNo" jdbcType="VARCHAR" />
+    <result column="wx_appid" property="wxAppid" jdbcType="VARCHAR" />
+    <result column="wx_appsecret" property="wxAppsecret" jdbcType="VARCHAR" />
+    <result column="salesman_id" property="salesmanId" jdbcType="VARCHAR" />
+    <result column="agent_id" property="agentId" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="account_phone" property="accountPhone" jdbcType="VARCHAR" />
+    <result column="merchant_blicense_no" property="merchantBlicenseNo" jdbcType="VARCHAR" />
+    <result column="merchant_district" property="merchantDistrict" jdbcType="VARCHAR" />
+    <result column="merchant_district_code" property="merchantDistrictCode" jdbcType="VARCHAR" />
+    <result column="longitude" property="longitude" jdbcType="VARCHAR" />
+    <result column="latitude" property="latitude" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    merid, inst_no, trace_no, merchant_no, merchant_type, merchant_name, merchant_alias,
+    merchant_company, merchant_province, merchant_province_code, merchant_city, merchant_city_code,
+    merchant_address, merchant_person, merchant_phone, merchant_email, merchant_id_no,
+    merchant_id_expire, business_name, business_code, account_type, account_name, account_no,
+    bank_name, bank_no, settle_type, settle_amount, img_license, img_idcard_a, img_idcard_b,
+    img_bankcard_a, img_bankcard_b, img_logo, img_indoor, img_contract, img_other, notify_url,
+    parent_no, wx_appid, wx_appsecret, salesman_id, agent_id, user_id, account_phone,
+    merchant_blicense_no,merchant_district,merchant_district_code,longitude,latitude
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from oth_merchant
+    where merid = #{merid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from oth_merchant
+    where merid = #{merid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.deyi.entity.OthMerchant" >
+    insert into oth_merchant (merid, inst_no, trace_no,
+      merchant_no, merchant_type, merchant_name,
+      merchant_alias, merchant_company, merchant_province,
+      merchant_province_code, merchant_city, merchant_city_code,
+      merchant_address, merchant_person, merchant_phone,
+      merchant_email, merchant_id_no, merchant_id_expire,
+      business_name, business_code, account_type,
+      account_name, account_no, bank_name,
+      bank_no, settle_type, settle_amount,
+      img_license, img_idcard_a, img_idcard_b,
+      img_bankcard_a, img_bankcard_b, img_logo,
+      img_indoor, img_contract, img_other,
+      notify_url, parent_no, wx_appid,
+      wx_appsecret, salesman_id, agent_id,
+      user_id, account_phone,merchant_blicense_no,
+      merchant_district,merchant_district_code,longitude,latitude)
+    values (#{merid,jdbcType=INTEGER}, #{instNo,jdbcType=VARCHAR}, #{traceNo,jdbcType=VARCHAR},
+      #{merchantNo,jdbcType=VARCHAR}, #{merchantType,jdbcType=VARCHAR}, #{merchantName,jdbcType=VARCHAR},
+      #{merchantAlias,jdbcType=VARCHAR}, #{merchantCompany,jdbcType=VARCHAR}, #{merchantProvince,jdbcType=VARCHAR},
+      #{merchantProvinceCode,jdbcType=VARCHAR}, #{merchantCity,jdbcType=VARCHAR}, #{merchantCityCode,jdbcType=VARCHAR},
+      #{merchantAddress,jdbcType=VARCHAR}, #{merchantPerson,jdbcType=VARCHAR}, #{merchantPhone,jdbcType=VARCHAR},
+      #{merchantEmail,jdbcType=VARCHAR}, #{merchantIdNo,jdbcType=VARCHAR}, #{merchantIdExpire,jdbcType=VARCHAR},
+      #{businessName,jdbcType=VARCHAR}, #{businessCode,jdbcType=VARCHAR}, #{accountType,jdbcType=VARCHAR},
+      #{accountName,jdbcType=VARCHAR}, #{accountNo,jdbcType=VARCHAR}, #{bankName,jdbcType=VARCHAR},
+      #{bankNo,jdbcType=VARCHAR}, #{settleType,jdbcType=VARCHAR}, #{settleAmount,jdbcType=INTEGER},
+      #{imgLicense,jdbcType=VARCHAR}, #{imgIdcardA,jdbcType=VARCHAR}, #{imgIdcardB,jdbcType=VARCHAR},
+      #{imgBankcardA,jdbcType=VARCHAR}, #{imgBankcardB,jdbcType=VARCHAR}, #{imgLogo,jdbcType=VARCHAR},
+      #{imgIndoor,jdbcType=VARCHAR}, #{imgContract,jdbcType=VARCHAR}, #{imgOther,jdbcType=VARCHAR},
+      #{notifyUrl,jdbcType=VARCHAR}, #{parentNo,jdbcType=VARCHAR}, #{wxAppid,jdbcType=VARCHAR},
+      #{wxAppsecret,jdbcType=VARCHAR}, #{salesmanId,jdbcType=VARCHAR}, #{agentId,jdbcType=VARCHAR},
+      #{userId,jdbcType=VARCHAR}, #{accountPhone,jdbcType=VARCHAR}, #{merchantBlicenseNo,jdbcType=VARCHAR}
+      , #{merchantDistrict,jdbcType=VARCHAR}, #{merchantDistrictCode,jdbcType=VARCHAR}
+      , #{longitude,jdbcType=VARCHAR}, #{latitude,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.deyi.entity.OthMerchant" >
+    insert into oth_merchant
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="merid != null" >
+        merid,
+      </if>
+      <if test="instNo != null" >
+        inst_no,
+      </if>
+      <if test="traceNo != null" >
+        trace_no,
+      </if>
+      <if test="merchantNo != null" >
+        merchant_no,
+      </if>
+      <if test="merchantType != null" >
+        merchant_type,
+      </if>
+      <if test="merchantName != null" >
+        merchant_name,
+      </if>
+      <if test="merchantAlias != null" >
+        merchant_alias,
+      </if>
+      <if test="merchantCompany != null" >
+        merchant_company,
+      </if>
+      <if test="merchantProvince != null" >
+        merchant_province,
+      </if>
+      <if test="merchantProvinceCode != null" >
+        merchant_province_code,
+      </if>
+      <if test="merchantCity != null" >
+        merchant_city,
+      </if>
+      <if test="merchantCityCode != null" >
+        merchant_city_code,
+      </if>
+      <if test="merchantAddress != null" >
+        merchant_address,
+      </if>
+      <if test="merchantPerson != null" >
+        merchant_person,
+      </if>
+      <if test="merchantPhone != null" >
+        merchant_phone,
+      </if>
+      <if test="merchantEmail != null" >
+        merchant_email,
+      </if>
+      <if test="merchantIdNo != null" >
+        merchant_id_no,
+      </if>
+      <if test="merchantIdExpire != null" >
+        merchant_id_expire,
+      </if>
+      <if test="businessName != null" >
+        business_name,
+      </if>
+      <if test="businessCode != null" >
+        business_code,
+      </if>
+      <if test="accountType != null" >
+        account_type,
+      </if>
+      <if test="accountName != null" >
+        account_name,
+      </if>
+      <if test="accountNo != null" >
+        account_no,
+      </if>
+      <if test="bankName != null" >
+        bank_name,
+      </if>
+      <if test="bankNo != null" >
+        bank_no,
+      </if>
+      <if test="settleType != null" >
+        settle_type,
+      </if>
+      <if test="settleAmount != null" >
+        settle_amount,
+      </if>
+      <if test="imgLicense != null" >
+        img_license,
+      </if>
+      <if test="imgIdcardA != null" >
+        img_idcard_a,
+      </if>
+      <if test="imgIdcardB != null" >
+        img_idcard_b,
+      </if>
+      <if test="imgBankcardA != null" >
+        img_bankcard_a,
+      </if>
+      <if test="imgBankcardB != null" >
+        img_bankcard_b,
+      </if>
+      <if test="imgLogo != null" >
+        img_logo,
+      </if>
+      <if test="imgIndoor != null" >
+        img_indoor,
+      </if>
+      <if test="imgContract != null" >
+        img_contract,
+      </if>
+      <if test="imgOther != null" >
+        img_other,
+      </if>
+      <if test="notifyUrl != null" >
+        notify_url,
+      </if>
+      <if test="parentNo != null" >
+        parent_no,
+      </if>
+      <if test="wxAppid != null" >
+        wx_appid,
+      </if>
+      <if test="wxAppsecret != null" >
+        wx_appsecret,
+      </if>
+      <if test="salesmanId != null" >
+        salesman_id,
+      </if>
+      <if test="agentId != null" >
+        agent_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="accountPhone != null" >
+        account_phone,
+      </if>
+
+      <if test="merchantBlicenseNo != null" >
+        merchant_blicense_no,
+      </if>
+      <if test="merchantDistrict != null" >
+        merchant_district,
+      </if>
+      <if test="merchantDistrictCode != null" >
+        merchant_district_code,
+      </if>
+
+      <if test="longitude != null" >
+        longitude,
+      </if>
+      <if test="latitude != null" >
+        latitude,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="merid != null" >
+        #{merid,jdbcType=INTEGER},
+      </if>
+      <if test="instNo != null" >
+        #{instNo,jdbcType=VARCHAR},
+      </if>
+      <if test="traceNo != null" >
+        #{traceNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantType != null" >
+        #{merchantType,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantAlias != null" >
+        #{merchantAlias,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantCompany != null" >
+        #{merchantCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantProvince != null" >
+        #{merchantProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantProvinceCode != null" >
+        #{merchantProvinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantCity != null" >
+        #{merchantCity,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantCityCode != null" >
+        #{merchantCityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantAddress != null" >
+        #{merchantAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantPerson != null" >
+        #{merchantPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantPhone != null" >
+        #{merchantPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantEmail != null" >
+        #{merchantEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantIdNo != null" >
+        #{merchantIdNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantIdExpire != null" >
+        #{merchantIdExpire,jdbcType=VARCHAR},
+      </if>
+      <if test="businessName != null" >
+        #{businessName,jdbcType=VARCHAR},
+      </if>
+      <if test="businessCode != null" >
+        #{businessCode,jdbcType=VARCHAR},
+      </if>
+      <if test="accountType != null" >
+        #{accountType,jdbcType=VARCHAR},
+      </if>
+      <if test="accountName != null" >
+        #{accountName,jdbcType=VARCHAR},
+      </if>
+      <if test="accountNo != null" >
+        #{accountNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bankName != null" >
+        #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankNo != null" >
+        #{bankNo,jdbcType=VARCHAR},
+      </if>
+      <if test="settleType != null" >
+        #{settleType,jdbcType=VARCHAR},
+      </if>
+      <if test="settleAmount != null" >
+        #{settleAmount,jdbcType=INTEGER},
+      </if>
+      <if test="imgLicense != null" >
+        #{imgLicense,jdbcType=VARCHAR},
+      </if>
+      <if test="imgIdcardA != null" >
+        #{imgIdcardA,jdbcType=VARCHAR},
+      </if>
+      <if test="imgIdcardB != null" >
+        #{imgIdcardB,jdbcType=VARCHAR},
+      </if>
+      <if test="imgBankcardA != null" >
+        #{imgBankcardA,jdbcType=VARCHAR},
+      </if>
+      <if test="imgBankcardB != null" >
+        #{imgBankcardB,jdbcType=VARCHAR},
+      </if>
+      <if test="imgLogo != null" >
+        #{imgLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="imgIndoor != null" >
+        #{imgIndoor,jdbcType=VARCHAR},
+      </if>
+      <if test="imgContract != null" >
+        #{imgContract,jdbcType=VARCHAR},
+      </if>
+      <if test="imgOther != null" >
+        #{imgOther,jdbcType=VARCHAR},
+      </if>
+      <if test="notifyUrl != null" >
+        #{notifyUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="parentNo != null" >
+        #{parentNo,jdbcType=VARCHAR},
+      </if>
+      <if test="wxAppid != null" >
+        #{wxAppid,jdbcType=VARCHAR},
+      </if>
+      <if test="wxAppsecret != null" >
+        #{wxAppsecret,jdbcType=VARCHAR},
+      </if>
+      <if test="salesmanId != null" >
+        #{salesmanId,jdbcType=VARCHAR},
+      </if>
+      <if test="agentId != null" >
+        #{agentId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="accountPhone != null" >
+        #{accountPhone,jdbcType=VARCHAR},
+      </if>
+
+      <if test="merchantBlicenseNo != null" >
+        #{merchantBlicenseNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantDistrict != null" >
+        #{merchantDistrict,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantDistrictCode != null" >
+        #{merchantDistrictCode,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null" >
+        #{longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null" >
+        #{latitude,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.deyi.entity.OthMerchant" >
+    update oth_merchant
+    <set >
+      <if test="instNo != null" >
+        inst_no = #{instNo,jdbcType=VARCHAR},
+      </if>
+      <if test="traceNo != null" >
+        trace_no = #{traceNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        merchant_no = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantType != null" >
+        merchant_type = #{merchantType,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        merchant_name = #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantAlias != null" >
+        merchant_alias = #{merchantAlias,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantCompany != null" >
+        merchant_company = #{merchantCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantProvince != null" >
+        merchant_province = #{merchantProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantProvinceCode != null" >
+        merchant_province_code = #{merchantProvinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantCity != null" >
+        merchant_city = #{merchantCity,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantCityCode != null" >
+        merchant_city_code = #{merchantCityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantAddress != null" >
+        merchant_address = #{merchantAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantPerson != null" >
+        merchant_person = #{merchantPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantPhone != null" >
+        merchant_phone = #{merchantPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantEmail != null" >
+        merchant_email = #{merchantEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantIdNo != null" >
+        merchant_id_no = #{merchantIdNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantIdExpire != null" >
+        merchant_id_expire = #{merchantIdExpire,jdbcType=VARCHAR},
+      </if>
+      <if test="businessName != null" >
+        business_name = #{businessName,jdbcType=VARCHAR},
+      </if>
+      <if test="businessCode != null" >
+        business_code = #{businessCode,jdbcType=VARCHAR},
+      </if>
+      <if test="accountType != null" >
+        account_type = #{accountType,jdbcType=VARCHAR},
+      </if>
+      <if test="accountName != null" >
+        account_name = #{accountName,jdbcType=VARCHAR},
+      </if>
+      <if test="accountNo != null" >
+        account_no = #{accountNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bankName != null" >
+        bank_name = #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankNo != null" >
+        bank_no = #{bankNo,jdbcType=VARCHAR},
+      </if>
+      <if test="settleType != null" >
+        settle_type = #{settleType,jdbcType=VARCHAR},
+      </if>
+      <if test="settleAmount != null" >
+        settle_amount = #{settleAmount,jdbcType=INTEGER},
+      </if>
+      <if test="imgLicense != null" >
+        img_license = #{imgLicense,jdbcType=VARCHAR},
+      </if>
+      <if test="imgIdcardA != null" >
+        img_idcard_a = #{imgIdcardA,jdbcType=VARCHAR},
+      </if>
+      <if test="imgIdcardB != null" >
+        img_idcard_b = #{imgIdcardB,jdbcType=VARCHAR},
+      </if>
+      <if test="imgBankcardA != null" >
+        img_bankcard_a = #{imgBankcardA,jdbcType=VARCHAR},
+      </if>
+      <if test="imgBankcardB != null" >
+        img_bankcard_b = #{imgBankcardB,jdbcType=VARCHAR},
+      </if>
+      <if test="imgLogo != null" >
+        img_logo = #{imgLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="imgIndoor != null" >
+        img_indoor = #{imgIndoor,jdbcType=VARCHAR},
+      </if>
+      <if test="imgContract != null" >
+        img_contract = #{imgContract,jdbcType=VARCHAR},
+      </if>
+      <if test="imgOther != null" >
+        img_other = #{imgOther,jdbcType=VARCHAR},
+      </if>
+      <if test="notifyUrl != null" >
+        notify_url = #{notifyUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="parentNo != null" >
+        parent_no = #{parentNo,jdbcType=VARCHAR},
+      </if>
+      <if test="wxAppid != null" >
+        wx_appid = #{wxAppid,jdbcType=VARCHAR},
+      </if>
+      <if test="wxAppsecret != null" >
+        wx_appsecret = #{wxAppsecret,jdbcType=VARCHAR},
+      </if>
+      <if test="salesmanId != null" >
+        salesman_id = #{salesmanId,jdbcType=VARCHAR},
+      </if>
+      <if test="agentId != null" >
+        agent_id = #{agentId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="accountPhone != null" >
+        account_phone = #{accountPhone,jdbcType=VARCHAR},
+      </if>
+
+
+      <if test="merchantBlicenseNo != null" >
+        merchant_blicense_no = #{merchantBlicenseNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantDistrict != null" >
+        merchant_district = #{merchantDistrict,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantDistrictCode != null" >
+        merchant_district_code = #{merchantDistrictCode,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null" >
+        longitude = #{longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null" >
+        latitude = #{latitude,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where merid = #{merid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.deyi.entity.OthMerchant" >
+    update oth_merchant
+    set inst_no = #{instNo,jdbcType=VARCHAR},
+      trace_no = #{traceNo,jdbcType=VARCHAR},
+      merchant_no = #{merchantNo,jdbcType=VARCHAR},
+      merchant_type = #{merchantType,jdbcType=VARCHAR},
+      merchant_name = #{merchantName,jdbcType=VARCHAR},
+      merchant_alias = #{merchantAlias,jdbcType=VARCHAR},
+      merchant_company = #{merchantCompany,jdbcType=VARCHAR},
+      merchant_province = #{merchantProvince,jdbcType=VARCHAR},
+      merchant_province_code = #{merchantProvinceCode,jdbcType=VARCHAR},
+      merchant_city = #{merchantCity,jdbcType=VARCHAR},
+      merchant_city_code = #{merchantCityCode,jdbcType=VARCHAR},
+      merchant_address = #{merchantAddress,jdbcType=VARCHAR},
+      merchant_person = #{merchantPerson,jdbcType=VARCHAR},
+      merchant_phone = #{merchantPhone,jdbcType=VARCHAR},
+      merchant_email = #{merchantEmail,jdbcType=VARCHAR},
+      merchant_id_no = #{merchantIdNo,jdbcType=VARCHAR},
+      merchant_id_expire = #{merchantIdExpire,jdbcType=VARCHAR},
+      business_name = #{businessName,jdbcType=VARCHAR},
+      business_code = #{businessCode,jdbcType=VARCHAR},
+      account_type = #{accountType,jdbcType=VARCHAR},
+      account_name = #{accountName,jdbcType=VARCHAR},
+      account_no = #{accountNo,jdbcType=VARCHAR},
+      bank_name = #{bankName,jdbcType=VARCHAR},
+      bank_no = #{bankNo,jdbcType=VARCHAR},
+      settle_type = #{settleType,jdbcType=VARCHAR},
+      settle_amount = #{settleAmount,jdbcType=INTEGER},
+      img_license = #{imgLicense,jdbcType=VARCHAR},
+      img_idcard_a = #{imgIdcardA,jdbcType=VARCHAR},
+      img_idcard_b = #{imgIdcardB,jdbcType=VARCHAR},
+      img_bankcard_a = #{imgBankcardA,jdbcType=VARCHAR},
+      img_bankcard_b = #{imgBankcardB,jdbcType=VARCHAR},
+      img_logo = #{imgLogo,jdbcType=VARCHAR},
+      img_indoor = #{imgIndoor,jdbcType=VARCHAR},
+      img_contract = #{imgContract,jdbcType=VARCHAR},
+      img_other = #{imgOther,jdbcType=VARCHAR},
+      notify_url = #{notifyUrl,jdbcType=VARCHAR},
+      parent_no = #{parentNo,jdbcType=VARCHAR},
+      wx_appid = #{wxAppid,jdbcType=VARCHAR},
+      wx_appsecret = #{wxAppsecret,jdbcType=VARCHAR},
+      salesman_id = #{salesmanId,jdbcType=VARCHAR},
+      agent_id = #{agentId,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
+      account_phone = #{accountPhone,jdbcType=VARCHAR},
+      merchant_blicense_no = #{merchantBlicenseNo,jdbcType=VARCHAR},
+      merchant_district = #{merchantDistrict,jdbcType=VARCHAR},
+      merchant_district_code = #{merchantDistrictCode,jdbcType=VARCHAR},
+       longitude = #{longitude,jdbcType=VARCHAR},
+       latitude = #{latitude,jdbcType=VARCHAR}
+    where merid = #{merid,jdbcType=INTEGER}
+  </update>
+</mapper>

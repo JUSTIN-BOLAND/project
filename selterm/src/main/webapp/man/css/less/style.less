@@ -1,0 +1,25 @@
+
+
+/*公共样式*/
+@charset "utf-8";
+@col-1:#00a5a5;//头部背景
+@col-2:#e5e5e5; //底部背景
+@col-3:#28282e; //左侧背景
+@col-4:#32323a; //左侧导航背景
+@col-5:#aeb2b7; //左侧字体颜色
+input[type="button"],input[type="submit"],input[type="reset"]{ background:@col-1;}
+.header{  background:@col-1;}
+.aside-bar{
+  .aside-bar-drow a:hover{color:@col-1;}
+}
+.scors{ color:@col-1 !important;}
+.scors .glyphicon{ color:@col-1 !important;}
+//主体
+
+.navigation{
+   a{ color: @col-1; }
+}
+.arcle-grap input[type='text']:focus{ border:1px solid @col-1; box-shadow: 0 0 3px @col-1;}
+.arcle-grap select:focus{ border:1px solid @col-1; box-shadow: 0 0 3px @col-1;}
+ input[type='text']:focus,.form-cont:focus{ border:1px solid @col-1; box-shadow: 0 0 3px @col-1;}
+

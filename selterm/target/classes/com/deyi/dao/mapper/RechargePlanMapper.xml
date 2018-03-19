@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.deyi.dao.RechargePlanMapper" >
+<cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
+  <resultMap id="BaseResultMap" type="com.deyi.entity.RechargePlan" > 
+   <result column="id" property="id" jdbcType="INTEGER" />
+   <result column="planName" property="planName" jdbcType="VARCHAR" />
+   <result column="refillAmount" property="refillAmount" jdbcType="DECIMAL" />
+   <result column="giftAmount" property="giftAmount" jdbcType="DECIMAL" />
+   <result column="actualAmount" property="actualAmount" jdbcType="DECIMAL" />
+   <result column="price" property="price" jdbcType="DECIMAL" />
+   <result column="planImg" property="planImg" jdbcType="VARCHAR" />
+   <result column="memo" property="memo" jdbcType="VARCHAR" />
+   <result column="status" property="status" jdbcType="INTEGER" />
+   <result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+   <result column="flag" property="flag" jdbcType="VARCHAR" />
+      <result column="creator"  			property="creator"   		  jdbcType="VARCHAR" />
+</resultMap>
+  <sql id="Base_Column_List" >
+    id,planName,refillAmount,giftAmount,actualAmount,price,planImg,memo,status,createTime,flag,creator
+</sql>
+<select id="getRechargePlan" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from t_recharge_plan
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+    <select id="getRechargePlanByCode" parameterType="com.deyi.entity.RechargePlan" resultMap="BaseResultMap">
+        select
+        a.id,planName,refillAmount,giftAmount,actualAmount,price,planImg,memo,a.status,a.createTime,flag,b.roleName as creator
+
+        from t_recharge_plan a left JOIN  sys_user b on a.creator = b.id
+        <where>
+            1=1
+
+            <if test="id != null and id !=''" >
+                and id=#{id,jdbcType=INTEGER}
+            </if>
+            <if test="planName != null and planName !=''" >
+                and planName=#{planName,jdbcType=VARCHAR}
+            </if>
+
+            <if test="status != null and status !=''" >
+                and status=#{status,jdbcType=INTEGER}
+            </if>
+            <if test="createTime != null and createTime !=''" >
+                and createTime=#{createTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="flag != null and flag !=''" >
+                and planName!=#{flag,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
+  <select id="getRechargePlans" parameterType="com.deyi.entity.RechargePlan" resultMap="BaseResultMap">
+  	 select
+      a.id,planName,refillAmount,giftAmount,actualAmount,price,planImg,memo,status,createTime,a.flag,b.roleName as creator
+
+    from t_recharge_plan a left JOIN  sys_user b on a.creator = b.id
+    <where>
+        1=1
+
+          <if test="id != null and id !=''" >
+                and id=#{id,jdbcType=INTEGER}
+          </if>
+          <if test="planName != null and planName !=''" >
+                and planName=#{planName,jdbcType=VARCHAR}
+          </if>
+
+          <if test="status != null and status !=''" >
+                and status=#{status,jdbcType=INTEGER}
+          </if>
+          <if test="createTime != null and createTime !=''" >
+                and createTime=#{createTime,jdbcType=TIMESTAMP}
+          </if>
+          <if test="flag != null and flag !=''" >
+                and flag=#{flag,jdbcType=VARCHAR}
+          </if>
+        <if test="creator != null and creator !=''" >
+            and creator=#{creator,jdbcType=VARCHAR}
+        </if>
+   </where>
+  </select>
+  <select id="getPageRechargePlans" parameterType="com.deyi.util.Page" resultMap="BaseResultMap">
+  	 select
+    <include refid="Base_Column_List" />
+    from t_recharge_plan
+    <where>  1=1  
+
+          <if test="params.planName != null and params.planName !=''" >
+                      and planName LIKE CONCAT('%','${params.planName}','%')
+          </if>
+
+          <if test="params.status != null and params.status !=''" >
+                      and status=#{param.status}
+          </if>
+          <if test="params.createTimeStart != null and params.createTimeStart !=''">
+            and createTime <![CDATA[>=]]> DATE_FORMAT(#{params.createTimeStart},'%Y-%m-%d 00:00:00')
+        </if>
+        <if test="params.createTimeEnd != null and params.createTimeEnd !=''">
+              and createTime <![CDATA[<=]]> DATE_FORMAT(#{params.createTimeEnd},'%Y-%m-%d 23:59:59')
+        </if>
+          <if test="params.flag != null and params.flag !=''" >
+                      and flag=#{params.flag}
+          </if>
+        <if test="params.creator != null and params.creator !=''" >
+            and creator=#{params.creator}
+        </if>
+
+   </where>
+  </select>
+  <delete id="delete" parameterType="java.lang.Integer" >
+    delete from t_recharge_plan
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+ <insert id="insert" parameterType="com.deyi.entity.RechargePlan" >
+    insert into t_recharge_plan 
+ <trim prefix="(" suffix=")" suffixOverrides="," >
+  <if test="id != null" >
+        id,
+  </if>
+  <if test="planName != null" >
+        planName,
+  </if>
+  <if test="refillAmount != null" >
+        refillAmount,
+  </if>
+  <if test="giftAmount != null" >
+        giftAmount,
+  </if>
+  <if test="actualAmount != null" >
+        actualAmount,
+  </if>
+  <if test="price != null" >
+        price,
+  </if>
+  <if test="planImg != null" >
+        planImg,
+  </if>
+  <if test="memo != null" >
+        memo,
+  </if>
+  <if test="status != null" >
+        status,
+  </if>
+     <if test="creator != null" >
+         creator,
+     </if>
+  <if test="createTime != null" >
+        createTime,
+  </if>
+  <if test="flag != null" >
+        flag,
+  </if></trim> 
+<trim prefix="values (" suffix=")" suffixOverrides="," >
+  <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+  </if>
+  <if test="planName != null" >
+        #{planName,jdbcType=VARCHAR},
+  </if>
+  <if test="refillAmount != null" >
+        #{refillAmount,jdbcType=DECIMAL},
+  </if>
+  <if test="giftAmount != null" >
+        #{giftAmount,jdbcType=DECIMAL},
+  </if>
+  <if test="actualAmount != null" >
+        #{actualAmount,jdbcType=DECIMAL},
+  </if>
+  <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
+  </if>
+  <if test="planImg != null" >
+        #{planImg,jdbcType=VARCHAR},
+  </if>
+  <if test="memo != null" >
+        #{memo,jdbcType=VARCHAR},
+  </if>
+  <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+  </if>
+    <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+    </if>
+  <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+  </if>
+  <if test="flag != null" >
+        #{flag,jdbcType=VARCHAR},
+  </if></trim>
+</insert> 
+
+<update id="update" parameterType="com.deyi.entity.RechargePlan" >
+                update t_recharge_plan
+                <set >
+
+  <if test="id != null" >
+        id=#{id,jdbcType=INTEGER},
+  </if>
+  <if test="planName != null" >
+        planName=#{planName,jdbcType=VARCHAR},
+  </if>
+  <if test="refillAmount != null" >
+        refillAmount=#{refillAmount,jdbcType=DECIMAL},
+  </if>
+  <if test="giftAmount != null" >
+        giftAmount=#{giftAmount,jdbcType=DECIMAL},
+  </if>
+  <if test="actualAmount != null" >
+        actualAmount=#{actualAmount,jdbcType=DECIMAL},
+  </if>
+  <if test="price != null" >
+        price=#{price,jdbcType=DECIMAL},
+  </if>
+  <if test="planImg != null" >
+        planImg=#{planImg,jdbcType=VARCHAR},
+  </if>
+  <if test="memo != null" >
+        memo=#{memo,jdbcType=VARCHAR},
+  </if>
+  <if test="status != null" >
+        status=#{status,jdbcType=INTEGER},
+  </if>
+  <if test="createTime != null" >
+        createTime=#{createTime,jdbcType=TIMESTAMP},
+  </if>
+  <if test="flag != null" >
+        flag=#{flag,jdbcType=VARCHAR},
+  </if>
+                </set>
+                where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

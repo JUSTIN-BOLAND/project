@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.deyi.dao.StoreCollectDayMapper">
+<!-- 	<cache type="org.mybatis.caches.ehcache.LoggingEhcache"/> -->
+	<resultMap id="BaseResultMap" type="com.deyi.entity.StoreCollectDay">
+		<result column="id" property="id" jdbcType="INTEGER" />
+		<result column="storeid" property="storeid" jdbcType="BIGINT" />
+		<result column="storename" property="storename" jdbcType="VARCHAR" />
+		<result column="wxcount" property="wxcount" jdbcType="INTEGER" />
+		<result column="alicount" property="alicount" jdbcType="INTEGER" />
+		<result column="unioncount" property="unioncount" jdbcType="INTEGER" />
+		<result column="alipaymoney" property="alipaymoney" jdbcType="DECIMAL" />
+		<result column="wxpaymoney" property="wxpaymoney" jdbcType="DECIMAL" />
+		<result column="unionpaymoney" property="unionpaymoney" jdbcType="DECIMAL" />
+		<result column="summoney" property="summoney" jdbcType="DECIMAL" />
+		<result column="sumrefundmoney" property="sumrefundmoney"
+			jdbcType="DECIMAL" />
+		<result column="starttime" property="starttime" jdbcType="TIMESTAMP" />
+		<result column="endtime" property="endtime" jdbcType="TIMESTAMP" />
+		<result column="creattime" property="creattime" jdbcType="TIMESTAMP" />
+
+		<result column="alirefundMoney" property="alirefundMoney" jdbcType="DECIMAL"/>
+		<result column="wxrefundMoney" property="wxrefundMoney" jdbcType="DECIMAL"/>
+		<result column="unionrefundMoney" property="unionrefundMoney" jdbcType="DECIMAL"/>
+		<result column="ratemoney" property="ratemoney" jdbcType="DECIMAL"/>
+	</resultMap>
+
+
+	<sql id="Base_Column_List">
+		id, storeid, storename,
+		wxcount, alicount, alipaymoney,
+		wxpaymoney, summoney, sumrefundmoney,
+		starttime, endtime, creattime,alirefundMoney,wxrefundMoney,ratemoney
+	</sql>
+	<insert id="insert" parameterType="com.deyi.entity.StoreCollectDay">
+		insert into sta_store_collectday (id, storeid, storename,
+		wxcount, alicount, alipaymoney,
+		wxpaymoney, summoney, sumrefundmoney,
+		starttime, endtime, creattime,alirefundMoney,wxrefundMoney
+		)
+		values (#{id,jdbcType=INTEGER}, #{storeid,jdbcType=BIGINT},
+		#{storename,jdbcType=VARCHAR},
+		#{wxcount,jdbcType=INTEGER}, #{alicount,jdbcType=INTEGER}, #{alipaymoney,jdbcType=DECIMAL},
+		#{wxpaymoney,jdbcType=DECIMAL}, #{summoney,jdbcType=DECIMAL},
+		#{sumrefundmoney,jdbcType=DECIMAL},
+		#{starttime,jdbcType=TIMESTAMP}, #{endtime,jdbcType=TIMESTAMP}, #{creattime,jdbcType=TIMESTAMP},
+		#{alirefundMoney,jdbcType=DECIMAL},#{wxrefundMoney,jdbcType=DECIMAL}
+
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.deyi.entity.StoreCollectDay">
+		insert into sta_store_collectday
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="storeid != null">
+				storeid,
+			</if>
+			<if test="storename != null">
+				storename,
+			</if>
+			<if test="wxcount != null">
+				wxcount,
+			</if>
+			<if test="alicount != null">
+				alicount,
+			</if>
+			<if test="unioncount != null">
+			unioncount,
+			</if>
+			<if test="alipaymoney != null">
+				alipaymoney,
+			</if>
+			<if test="wxpaymoney != null">
+				wxpaymoney,
+			</if>
+			<if test="unionpaymoney != null">
+				unionpaymoney,
+			</if>
+			<if test="summoney != null">
+				summoney,
+			</if>
+			<if test="sumrefundmoney != null">
+				sumrefundmoney,
+			</if>
+			<if test="starttime != null">
+				starttime,
+			</if>
+			<if test="endtime != null">
+				endtime,
+			</if>
+			<if test="creattime != null">
+				creattime,
+			</if>
+			<if test="alirefundMoney != null">
+				alirefundMoney,
+			</if>
+			<if test="wxrefundMoney != null">
+				wxrefundMoney,
+			</if>
+			<if test="unionrefundMoney != null">
+				unionrefundMoney,
+			</if>
+			<if test="ratemoney != null">
+				ratemoney,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="storeid != null">
+				#{storeid,jdbcType=BIGINT},
+			</if>
+			<if test="storename != null">
+				#{storename,jdbcType=VARCHAR},
+			</if>
+			<if test="wxcount != null">
+				#{wxcount,jdbcType=INTEGER},
+			</if>
+			<if test="alicount != null">
+				#{alicount,jdbcType=INTEGER},
+			</if>
+			<if test="unioncount != null">
+				#{unioncount,jdbcType=INTEGER},
+			</if>
+			<if test="alipaymoney != null">
+				#{alipaymoney,jdbcType=DECIMAL},
+			</if>
+			<if test="wxpaymoney != null">
+				#{wxpaymoney,jdbcType=DECIMAL},
+			</if>
+			<if test="unionpaymoney != null">
+				#{unionpaymoney,jdbcType=DECIMAL},
+			</if>
+			<if test="summoney != null">
+				#{summoney,jdbcType=DECIMAL},
+			</if>
+			<if test="sumrefundmoney != null">
+				#{sumrefundmoney,jdbcType=DECIMAL},
+			</if>
+
+			<if test="starttime != null">
+				#{starttime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="endtime != null">
+				#{endtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="creattime != null">
+				#{creattime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="alirefundMoney != null">
+				#{alirefundMoney,jdbcType=DECIMAL},
+			</if>
+			<if test="wxrefundMoney != null">
+				#{wxrefundMoney,jdbcType=DECIMAL},
+			</if>
+			<if test="unionrefundMoney != null">
+				#{unionrefundMoney,jdbcType=DECIMAL},
+			</if>
+			<if test="ratemoney != null">
+				#{ratemoney,jdbcType=DECIMAL},
+			</if>
+		</trim>
+	</insert>
+
+
+	<select id="queryYesterdayData" resultMap="BaseResultMap" parameterType="java.lang.String">
+		SELECT distinct
+		  a.id storeID,
+		  a.storename storeNAME,
+		  IFNULL(c.wxcount, 0) wxcount,
+		  IFNULL(b.alicount, 0) alicount,
+		  IFNULL(e.unioncount, 0) unioncount,
+		  IFNULL(b.alipaymoney, 0) alipaymoney,
+		  IFNULL(c.wxpaymoney, 0) wxpaymoney,
+		  IFNULL(e.unionpaymoney, 0) unionpaymoney,
+		  IFNULL(d.summoney, 0) summoney,
+		  IFNULL(b.alirefundMoney, 0) alirefundMoney,
+		  IFNULL(c.wxrefundMoney, 0) wxrefundMoney,
+		  IFNULL(e.unionrefundMoney, 0) unionrefundMoney,
+		  IFNULL(d.sumrefundmoney, 0) sumrefundmoney,
+		  IFNULL(d.ratemoney,0) ratemoney
+		  <!-- FORMAT(IFNULL(d.summoney, 0) * (SELECT merchant_rate FROM dis_merchant WHERE id = a.merId) / 1000,2) ratemoney  -->
+		FROM
+		  dis_store a
+		  LEFT JOIN
+		    (SELECT
+		      storeid,
+		      COUNT(orderNo) alicount,
+		      SUM(payMoney) alipaymoney,
+		      SUM(refundMoney) alirefundMoney
+		    FROM
+		      sta_order
+		    WHERE payType = 1
+		      AND TO_DAYS(NOW()) - TO_DAYS(payTime) = #{i} AND payStatus = 2
+		    GROUP BY storeid) b
+		    ON a.storeCode = b.storeid
+		  LEFT JOIN
+		    (SELECT
+		      storeid,
+		      COUNT(orderNo) wxcount,
+		      SUM(payMoney) wxpaymoney,
+		      SUM(refundMoney) wxrefundMoney
+		    FROM
+		      sta_order
+		    WHERE payType = 2
+		      AND TO_DAYS(NOW()) - TO_DAYS(payTime) = #{i} AND payStatus = 2
+		    GROUP BY storeid) c
+		    ON a.storeCode = c.storeid
+		  LEFT JOIN
+		    (SELECT
+		      storeid,
+		      COUNT(orderNo) unioncount,
+		      SUM(payMoney) unionpaymoney,
+		      SUM(refundMoney) unionrefundMoney
+		    FROM
+		      sta_order
+		    WHERE payType = 3
+		      AND TO_DAYS(NOW()) - TO_DAYS(payTime) = #{i} AND payStatus = 2
+		    GROUP BY storeid) e
+		    ON a.storeCode = e.storeid
+		  LEFT JOIN
+		    (SELECT
+		      storeid,
+		      SUM(CASE when  payStatus='2' AND orderStatus='3' THEN 0 ELSE ratemoney END) ratemoney,
+		      SUM(payMoney) summoney,
+		      SUM(refundMoney) sumrefundmoney
+		    FROM
+		      sta_order
+		    WHERE TO_DAYS(NOW()) - TO_DAYS(payTime) = #{i} AND payStatus = 2 GROUP BY storeid)   d
+		      ON a.storeCode = d.storeid
+	</select>
+
+	<select id="queryYesterdayCount" resultType="java.lang.Integer"
+		parameterType="java.lang.Long">
+		SELECT COUNT(*) FROM sta_store_collectday WHERE TO_DAYS(NOW()) -
+		TO_DAYS(starttime) = #{day} and storeid = #{storeid}
+	</select>
+
+	<select id="querystoreConllectlist" parameterType="com.deyi.util.Page"
+		resultType="com.deyi.vo.StoreCollectDayVo" useCache="false">
+		select <include refid="Base_Column_List" /> from sta_store_collectday
+		<where>
+			1=1 <!-- and storeid in (${params.storeids}) -->
+			<if test="params.querystarttime !=null and params.querystarttime !=''">
+				and endtime <![CDATA[>=]]>
+				#{params.querystarttime}
+			</if>
+
+			<if test="params.queryendtime !=null and params.queryendtime !=''">
+				and endtime <![CDATA[<=]]>
+				#{params.queryendtime}
+			</if>
+
+			<if test="params.storename!=null  and params.storename!=''">
+				and storename like CONCAT('%',#{params.storename},'%')
+			</if>
+
+		</where>
+	</select>
+
+
+	<select id="getExcelStoreStatisticList" parameterType="com.deyi.vo.StoreCollectDayVo" resultType="com.deyi.vo.StoreCollectDayVo">
+		SELECT <include refid="Base_Column_List" /> FROM sta_store_collectday
+		<where>
+			1=1 <!-- AND storeid IN (${storeids}) -->
+			<if test="querystarttime !=null and querystarttime!=''">
+				AND endtime <![CDATA[>=]]>
+				#{querystarttime}
+			</if>
+
+			<if test="queryendtime !=null and queryendtime!=''">
+				AND endtime <![CDATA[<=]]>
+				#{queryendtime}
+			</if>
+
+			<if test="storename!=null and storename!=''">
+				AND storename LIKE CONCAT('%',#{storename},'%')
+			</if>
+
+		</where>
+		ORDER BY starttime DESC,  summoney DESC
+	</select>
+
+
+	<select id="querylistBymonth" parameterType="com.deyi.util.Page"
+		resultType="com.deyi.vo.StoreCollectDayVo" useCache="false">
+		SELECT storeid ,storename,SUM(wxcount)wxcount,SUM(alicount)alicount,
+		SUM(alipaymoney)alipaymoney,SUM(wxpaymoney)wxpaymoney,
+		SUM(summoney)summoney,SUM(sumrefundmoney) sumrefundmoney
+		FROM `sta_store_collectday`
+		<where>
+			storeid in (${params.storeids}) and
+			DATE_FORMAT(starttime,'%Y-%m') =  #{params.querystarttime}
+		</where>
+		 GROUP BY storeid,storename
+
+		</select>
+
+
+	<select id="querystoresum" resultType="com.deyi.vo.StoreCollectDayVo" parameterType="com.deyi.vo.StoreCollectDayVo">
+		SELECT SUM(wxcount) AS wxcount,SUM(alicount) AS alicount,SUM(sumrefundmoney) sumrefundmoney,
+		SUM(alirefundMoney) alirefundMoney,SUM(wxrefundMoney) wxrefundMoney,SUM(summoney) AS summoney,
+		SUM(alipaymoney) AS alipaymoney,SUM(wxpaymoney) AS wxpaymoney,SUM(ratemoney) AS sumratemoney FROM
+  		sta_store_collectday
+  		<where>
+			1=1 <!-- and storeid in (${storeids}) -->
+			<if test="querystarttime !=null and querystarttime !=''">
+				and endtime <![CDATA[>=]]>
+				#{querystarttime}
+			</if>
+
+			<if test="queryendtime !=null and queryendtime !=''">
+				and endtime <![CDATA[<=]]>
+				#{queryendtime}
+			</if>
+
+			<if test="storename!=null and queryendtime!=''">
+				and storename like CONCAT('%',#{storename},'%')
+			</if>
+
+		</where>
+	</select>
+
+		<select id="querylistBymonthsum" parameterType="com.deyi.vo.StoreCollectDayVo"
+		resultType="com.deyi.vo.StoreCollectDayVo">
+		SELECT SUM(wxcount)wxcount,SUM(alicount)alicount,SUM(alipaymoney)alipaymoney,SUM(wxpaymoney)wxpaymoney,
+		SUM(summoney)summoney,SUM(sumrefundmoney) sumrefundmoney,SUM(alirefundMoney) alirefundMoney,SUM(wxrefundMoney) wxrefundMoney FROM(
+		SELECT storeid ,storename,SUM(wxcount)wxcount,SUM(alicount)alicount,SUM(alipaymoney)alipaymoney,SUM(wxpaymoney)wxpaymoney,
+		SUM(summoney)summoney,SUM(sumrefundmoney) sumrefundmoney,SUM(alirefundMoney) alirefundMoney,SUM(wxrefundMoney) wxrefundMoney
+		FROM sta_store_collectday
+		<where>
+			storeid in (${storeids}) and
+			DATE_FORMAT(starttime,'%Y-%m') =  #{querystarttime}
+		</where>
+		 GROUP BY storeid,storename)A
+
+		</select>
+</mapper>

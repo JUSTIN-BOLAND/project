@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-3.1.xsd
+	http://www.springframework.org/schema/task
+	http://www.springframework.org/schema/task/spring-task-3.1.xsd">
+
+	<bean id="handleNoPayJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="handleNoPayTask"></property>
+		<property name="targetMethod" value="handleNoPay"></property>
+	</bean>
+
+
+	<bean name="handleNoPayTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="handleNoPayJobDetail"></property>
+		<property name="cronExpression" value="*/15 * * * * ? "></property>
+	</bean>
+
+	<bean id="merCollectDayJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="merCollectDayTask"></property>
+		<property name="targetMethod" value="test"></property>
+	</bean>
+
+
+	<bean name="merCollectDayTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="merCollectDayJobDetail"></property>
+		<property name="cronExpression" value="0 5 * * * ? "></property>
+	</bean>
+
+	<!-- 每天凌晨2点把订单表中三个月前第一天的数据迁移到历史订单表，然后再删除订单表中迁移过的数据 -->
+	<bean id="historyDataServiceJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="historyDataService"></property>
+		<property name="targetMethod" value="historyData"></property>
+	</bean>
+
+
+	<bean name="historyDataServiceTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="historyDataServiceJobDetail"></property>
+		<property name="cronExpression" value="0 0 2 * * ? "></property>
+	</bean>
+	<!--  -->
+
+	<bean id="SyncStoreJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="SyncDataUtil"></property>
+		<property name="targetMethod" value="SyncStore"></property>
+	</bean>
+
+	<bean name="SyncStoreTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="SyncStoreJobDetail"></property>
+		<property name="cronExpression" value="0 0 3 * * ? "></property>
+	</bean>
+
+	<bean id="SyncOrderJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="SyncDataUtil"></property>
+		<property name="targetMethod" value="SyncOrder"></property>
+	</bean>
+
+	<bean name="SyncOrderTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="SyncOrderJobDetail"></property>
+		<property name="cronExpression" value="0 0 4 * * ? "></property>
+	</bean>
+
+	<bean id="batchPayDayJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="batchPayService"></property>
+		<property name="targetMethod" value="BathPay"></property>
+	</bean>
+
+	<bean id="batchPayQueryDayJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="batchPayService"></property>
+		<property name="targetMethod" value="Bathquery"></property>
+	</bean>
+
+
+	<bean name="batchPayDayTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="batchPayDayJobDetail"></property>
+		<property name="cronExpression" value="10 50 * * * ? "></property>
+	</bean>
+
+	<bean name="batchPayQueryDayTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="batchPayQueryDayJobDetail"></property>
+		<property name="cronExpression" value="0 0 5-22 * * ?  "></property>
+	</bean>
+	<!-- 总管理类 如果将lazy-init='false'那么容器启动就会执行调度程序 -->
+	<bean id="startQuertz" lazy-init="false" autowire="no"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="merCollectDayTrigger" />
+				<ref bean="historyDataServiceTrigger" />
+				<ref bean="SyncStoreTrigger" />
+				<ref bean="SyncOrderTrigger" />
+				<ref bean="batchPayDayTrigger" />
+				<ref bean="batchPayQueryDayTrigger" />
+				<ref bean="handleNoPayTrigger" />
+			</list>
+		</property>
+	</bean>
+</beans>

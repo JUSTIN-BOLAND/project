@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.deyi.dao.MerlogoMapper" >
+  <resultMap id="BaseResultMap" type="com.deyi.entity.Merlogo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="merid" property="merid" jdbcType="INTEGER" />
+    <result column="mername" property="mername" jdbcType="VARCHAR" />
+    <result column="merlogo" property="merlogo" jdbcType="VARCHAR" />
+    <result column="audit" property="audit" jdbcType="CHAR" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="deletestatus" property="deletestatus" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, merid, mername, merlogo, audit, createtime, deletestatus
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sta_merlogo
+    where id = #{id,jdbcType=INTEGER} and deletestatus =0 
+  </select>
+  <select id="queryByMerId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sta_merlogo
+    where merid = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="queryLogoByMerId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sta_merlogo
+    where merid = #{id,jdbcType=INTEGER}  and audit = 1 and deletestatus = 0
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sta_merlogo
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.deyi.entity.Merlogo" >
+    insert into sta_merlogo (id, merid, mername, 
+      merlogo, audit, createtime, 
+      deletestatus)
+    values (#{id,jdbcType=INTEGER}, #{merid,jdbcType=INTEGER}, #{mername,jdbcType=VARCHAR}, 
+      #{merlogo,jdbcType=VARCHAR}, #{audit,jdbcType=CHAR}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{deletestatus,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.deyi.entity.Merlogo" >
+    insert into sta_merlogo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="merid != null" >
+        merid,
+      </if>
+      <if test="mername != null" >
+        mername,
+      </if>
+      <if test="merlogo != null" >
+        merlogo,
+      </if>
+      <if test="audit != null" >
+        audit,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+      <if test="deletestatus != null" >
+        deletestatus,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="merid != null" >
+        #{merid,jdbcType=INTEGER},
+      </if>
+      <if test="mername != null" >
+        #{mername,jdbcType=VARCHAR},
+      </if>
+      <if test="merlogo != null" >
+        #{merlogo,jdbcType=VARCHAR},
+      </if>
+      <if test="audit != null" >
+        #{audit,jdbcType=CHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletestatus != null" >
+        #{deletestatus,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.deyi.entity.Merlogo" >
+    update sta_merlogo
+    <set >
+      <if test="merid != null" >
+        merid = #{merid,jdbcType=INTEGER},
+      </if>
+      <if test="mername != null" >
+        mername = #{mername,jdbcType=VARCHAR},
+      </if>
+      <if test="merlogo != null" >
+        merlogo = #{merlogo,jdbcType=VARCHAR},
+      </if>
+      <if test="audit != null" >
+        audit = #{audit,jdbcType=CHAR},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletestatus != null" >
+        deletestatus = #{deletestatus,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.deyi.entity.Merlogo" >
+    update sta_merlogo
+    set merid = #{merid,jdbcType=INTEGER},
+      mername = #{mername,jdbcType=VARCHAR},
+      merlogo = #{merlogo,jdbcType=VARCHAR},
+      audit = #{audit,jdbcType=CHAR},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      deletestatus = #{deletestatus,jdbcType=CHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  
+  <select id="queryByPage" parameterType="com.deyi.util.Page" resultMap="BaseResultMap">
+  	select * from sta_merlogo
+  	<where>
+  		deletestatus =0 
+  		
+  		<if test="params.mername != null and params.mername != ''">
+  			and mername like concat('%',#{params.mername},'%')
+  		</if>
+  	</where>
+  </select>
+</mapper>

@@ -1,0 +1,35 @@
+@charset "utf-8";
+/*公共样式*/
+input[type="button"],
+input[type="submit"],
+input[type="reset"] {
+  background: #00a5a5;
+}
+.header {
+  background: #00a5a5;
+}
+.aside-bar .aside-bar-drow a:hover {
+  color: #00a5a5;
+}
+.scors {
+  color: #00a5a5 !important;
+}
+.scors .glyphicon {
+  color: #00a5a5 !important;
+}
+.navigation a {
+  color: #00a5a5;
+}
+.arcle-grap input[type='text']:focus {
+  border: 1px solid #00a5a5;
+  box-shadow: 0 0 3px #00a5a5;
+}
+.arcle-grap select:focus {
+  border: 1px solid #00a5a5;
+  box-shadow: 0 0 3px #00a5a5;
+}
+input[type='text']:focus,
+.form-cont:focus {
+  border: 1px solid #00a5a5;
+  box-shadow: 0 0 3px #00a5a5;
+}

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.deyi.dao.UnionPublicMapper" >
+
+
+	<cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
+  <resultMap id="BaseResultMap" type="com.deyi.entity.UnionPublic" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="merchid" property="merchid" jdbcType="VARCHAR" />
+    <result column="merchname" property="merchname" jdbcType="VARCHAR" />
+    <result column="mchid" property="mchid" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="audit" property="audit" jdbcType="CHAR" />
+    <result column="orgid" property="orgid" jdbcType="VARCHAR" />
+    <result column="orgname" property="orgname" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, merchid, mchid, merchname,
+    creator, createTime,audit,orgid,orgname
+  </sql>
+  <select id="getUnionPublicByMerchId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from union_public
+    where merchid = #{0}
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from union_public
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByMechId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from union_public
+    where merchid = #{merchid}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from union_public
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.deyi.entity.UnionPublic" >
+    insert into union_public (merchid,  merchname,
+      mchid, creator, 
+      createTime, audit,orgid,orgname)
+    values (#{merchid,jdbcType=VARCHAR},#{merchname,jdbcType=VARCHAR},#{mchid,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, 
+      SYSDATE(),#{audit,jdbcType=CHAR},#{orgid,jdbcType=VARCHAR},#{orgname,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.deyi.entity.UnionPublic" >
+    insert into union_public
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="merchid != null" >
+        merchid,
+      </if>
+      <if test="merchname != null" >
+        merchname,
+      </if>
+      <if test="mchid != null" >
+        mchid,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+      <if test="audit != null" >
+        audit,
+      </if>
+      <if test="orgid != null" >
+        orgid,
+      </if>
+      <if test="orgname != null" >
+        orgname,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="merchid != null" >
+        #{merchid,jdbcType=VARCHAR},
+      </if>
+      <if test="merchname != null" >
+        #{merchname,jdbcType=VARCHAR},
+      </if>
+      <if test="mchid != null" >
+        #{mchid,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="audit != null" >
+        #{audit,jdbcType=CHAR},
+      </if>
+      <if test="orgid != null" >
+        #{orgid,jdbcType=VARCHAR},
+      </if>
+      <if test="orgname != null" >
+        #{orgname,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.deyi.entity.UnionPublic" >
+    update union_public
+    <set >
+      <if test="merchid != null" >
+        merchid = #{merchid,jdbcType=VARCHAR},
+      </if>
+      <if test="merchname != null" >
+        merchname = #{merchname,jdbcType=VARCHAR},
+      </if>
+      <if test="mchid != null" >
+        mchid = #{mchid,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="audit != null" >
+        audit = #{audit,jdbcType=CHAR},
+      </if>
+      <if test="orgid != null" >
+        orgid = #{orgid,jdbcType=VARCHAR},
+      </if>
+      <if test="orgname != null" >
+        orgname = #{orgname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where merchid = #{merchid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.deyi.entity.UnionPublic" >
+    update union_public
+    set 
+    merchid = #{merchid,jdbcType=VARCHAR},
+    merchname = #{merchname,jdbcType=VARCHAR},
+      mchid = #{mchid,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=VARCHAR},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      orgid = #{orgid,jdbcType=VARCHAR},
+      orgname = #{orgname,jdbcType=VARCHAR},
+      audit = #{audit,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+    <select id="getUnionPublicByOrgId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from union_public
+    where orgid = #{0}
+  </select>
+  
+</mapper>

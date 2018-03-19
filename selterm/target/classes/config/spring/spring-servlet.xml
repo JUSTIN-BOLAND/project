@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns="http://www.springframework.org/schema/beans"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
+
+	<aop:aspectj-autoproxy />
+
+	<context:annotation-config />
+
+	<context:component-scan base-package="com.deyi.*" />
+	<!-- context:component-scan base-package="com.deyi.service" / -->
+
+	<context:property-placeholder location="classpath:config/sysconfig.properties" />
+
+	<bean  id="messageAdapter"
+		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" >
+		<property name="messageConverters">
+           <list>
+               <bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter"/>
+           </list>
+       </property>
+	</bean>
+
+	<bean id="exceptionMessageAdapter" class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerExceptionResolver">
+       <property name="messageConverters">
+           <list>
+               <bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter"/>
+           </list>
+       </property>
+   </bean>
+
+	<bean id="authorityInterceptor" class="com.deyi.util.AuthorityInterceptor" />
+
+	<bean id="springContextUtil" class="com.deyi.util.SpringContextUtil" />
+
+<!--	<bean id="orderService" class="com.deyi.service.impl.OrderServiceImpl"></bean>
+	<bean id="clerkService" class="com.deyi.service.impl.ClerkServiceImpl"></bean>-->
+
+
+
+	<bean id="handlerMapping"
+		class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
+		<property name="interceptors">
+			<list>
+				<ref bean="authorityInterceptor"/>
+			</list>
+		</property>
+	</bean>
+
+	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver" p:order="0">
+		<property name="mediaTypes">
+			<map>
+				<entry key="html" value="text/html" />
+			</map>
+		</property>
+
+		<property name="defaultViews">
+			<list>
+				<bean class="com.deyi.util.MappingJacksonJsonView" p:renderedAttributes="jsonData" />
+			</list>
+		</property>
+
+		<property name="viewResolvers">
+			<list>
+				<bean class="org.springframework.web.servlet.view.BeanNameViewResolver"
+					p:order="10" />
+				<bean
+					class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+					p:order="0" p:prefix="/WEB-INF/views/" p:suffix=".jsp"
+					p:viewClass="org.springframework.web.servlet.view.JstlView" />
+			</list>
+		</property>
+	</bean>
+
+<!-- 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>  -->
+
+
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"></bean>
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+		<property name="messageConverters">
+			<list>
+				<bean
+					class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- 支持上传文件 -->
+
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="UTF-8"></property>
+		<property name="maxUploadSize" value="-1"></property>
+		<!--     <property name="uploadTempDir" value="resources/img/merchant"></property> -->
+	</bean>
+
+
+	<mvc:resources cache-period="31556926" location="/man/" mapping="/man/**" />
+	<mvc:resources cache-period="31556926" location="/xingjpay/images/" mapping="/xingjpay/images/**" />
+
+
+		  <!-- 使用ehcache缓存
+    <bean id="ehCacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+        <property name="configLocation" value="classpath:config/spring/ehcache.xml" />
+        <property name="shared" value="true"></property>
+    </bean>-->
+</beans>

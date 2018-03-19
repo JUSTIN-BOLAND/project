@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.deyi.dao.InheritRecordSheetMapper" >
+
+	<cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
+  <resultMap id="BaseResultMap" type="com.deyi.entity.InheritRecordSheet" >
+    <id column="Id" property="id" jdbcType="BIGINT" />
+    <result column="rawId" property="rawid" jdbcType="BIGINT" />
+    <result column="rawName" property="rawname" jdbcType="VARCHAR" />
+    <result column="rawAccount" property="rawaccount" jdbcType="VARCHAR" />
+    <result column="rawRoleName" property="rawrolename" jdbcType="VARCHAR" />
+    <result column="inheritId" property="inheritid" jdbcType="BIGINT" />
+    <result column="inheritName" property="inheritname" jdbcType="VARCHAR" />
+    <result column="inheritAccount" property="inheritaccount" jdbcType="VARCHAR" />
+    <result column="inheritRoleName" property="inheritrolename" jdbcType="VARCHAR" />
+     <result column="inheritTime" property="inheritTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    Id, rawId, rawName, rawAccount, rawRoleName, inheritId, inheritName, inheritAccount, 
+    inheritRoleName,inheritTime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_inheritrecordsheet
+    where Id = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <select id="selectByRowId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_inheritrecordsheet
+    where rawId = #{id,jdbcType=BIGINT}
+  </select>
+  
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from sys_inheritrecordsheet
+    where Id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.deyi.entity.InheritRecordSheet" >
+    insert into sys_inheritrecordsheet (Id, rawId, rawName, 
+      rawAccount, rawRoleName, inheritId, 
+      inheritName, inheritAccount, inheritRoleName
+      )
+    values (#{id,jdbcType=BIGINT}, #{rawid,jdbcType=BIGINT}, #{rawname,jdbcType=VARCHAR}, 
+      #{rawaccount,jdbcType=VARCHAR}, #{rawrolename,jdbcType=VARCHAR}, #{inheritid,jdbcType=BIGINT}, 
+      #{inheritname,jdbcType=VARCHAR}, #{inheritaccount,jdbcType=VARCHAR}, #{inheritrolename,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.deyi.entity.InheritRecordSheet" >
+    insert into sys_inheritrecordsheet
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        Id,
+      </if>
+      <if test="rawid != null" >
+        rawId,
+      </if>
+      <if test="rawname != null" >
+        rawName,
+      </if>
+      <if test="rawaccount != null" >
+        rawAccount,
+      </if>
+      <if test="rawrolename != null" >
+        rawRoleName,
+      </if>
+      <if test="inheritid != null" >
+        inheritId,
+      </if>
+      <if test="inheritname != null" >
+        inheritName,
+      </if>
+      <if test="inheritaccount != null" >
+        inheritAccount,
+      </if>
+      <if test="inheritrolename != null" >
+        inheritRoleName,
+      </if>
+      <if test="inheritTime != null" >
+        inheritTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="rawid != null" >
+        #{rawid,jdbcType=BIGINT},
+      </if>
+      <if test="rawname != null" >
+        #{rawname,jdbcType=VARCHAR},
+      </if>
+      <if test="rawaccount != null" >
+        #{rawaccount,jdbcType=VARCHAR},
+      </if>
+      <if test="rawrolename != null" >
+        #{rawrolename,jdbcType=VARCHAR},
+      </if>
+      <if test="inheritid != null" >
+        #{inheritid,jdbcType=BIGINT},
+      </if>
+      <if test="inheritname != null" >
+        #{inheritname,jdbcType=VARCHAR},
+      </if>
+      <if test="inheritaccount != null" >
+        #{inheritaccount,jdbcType=VARCHAR},
+      </if>
+      <if test="inheritrolename != null" >
+        #{inheritrolename,jdbcType=VARCHAR},
+      </if>
+      <if test="inheritTime != null" >
+        #{inheritTime,jdbcType=TIMESTAMP},
+      </if>
+      
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.deyi.entity.InheritRecordSheet" >
+    update sys_inheritrecordsheet
+    <set >
+      <if test="rawid != null" >
+        rawId = #{rawid,jdbcType=BIGINT},
+      </if>
+      <if test="rawname != null" >
+        rawName = #{rawname,jdbcType=VARCHAR},
+      </if>
+      <if test="rawaccount != null" >
+        rawAccount = #{rawaccount,jdbcType=VARCHAR},
+      </if>
+      <if test="rawrolename != null" >
+        rawRoleName = #{rawrolename,jdbcType=VARCHAR},
+      </if>
+      <if test="inheritid != null" >
+        inheritId = #{inheritid,jdbcType=BIGINT},
+      </if>
+      <if test="inheritname != null" >
+        inheritName = #{inheritname,jdbcType=VARCHAR},
+      </if>
+      <if test="inheritaccount != null" >
+        inheritAccount = #{inheritaccount,jdbcType=VARCHAR},
+      </if>
+      <if test="inheritrolename != null" >
+        inheritRoleName = #{inheritrolename,jdbcType=VARCHAR},
+      </if>
+      <if test="inheritTime != null" >
+        inheritTime = #{inheritTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where Id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.deyi.entity.InheritRecordSheet" >
+    update sys_inheritrecordsheet
+    set rawId = #{rawid,jdbcType=BIGINT},
+      rawName = #{rawname,jdbcType=VARCHAR},
+      rawAccount = #{rawaccount,jdbcType=VARCHAR},
+      rawRoleName = #{rawrolename,jdbcType=VARCHAR},
+      inheritId = #{inheritid,jdbcType=BIGINT},
+      inheritName = #{inheritname,jdbcType=VARCHAR},
+      inheritAccount = #{inheritaccount,jdbcType=VARCHAR},
+      inheritRoleName = #{inheritrolename,jdbcType=VARCHAR}
+    where Id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="getInheritRecordSheets" parameterType="com.deyi.util.Page" resultType="com.deyi.entity.InheritRecordSheet"  useCache="false">
+  	select * FROM sys_inheritrecordsheet
+  	<where>
+  		<if test="params.rawname != null and params.rawname !=''">
+  			and rawName like CONCAT ('%',#{params.rawname},'%')
+  		</if>
+  		
+  		<if test="params.inheritaccount != null and params.inheritaccount !=''">
+  			and inheritAccount like CONCAT ('%',#{params.inheritaccount},'%')
+  		</if>
+  		
+  		<if test="params.inheritname != null and params.inheritname !=''">
+  			and inheritName like CONCAT('%',#{params.inheritname},'%') 
+  		</if>
+  	</where>
+  	 order by inheritTime desc
+  </select>
+  
+  <select id="queryInheritRecordSheet"   resultMap="BaseResultMap" >
+  	select * FROM sys_inheritrecordsheet
+  </select>
+	
+  <select id="queryinheritDataByuserids" resultType="java.lang.String" parameterType="java.lang.String">
+  	select rawAccount from sys_inheritrecordsheet where inheritAccount  in  (${inheritids})
+  </select>  
+</mapper>

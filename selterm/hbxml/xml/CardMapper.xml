@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.deyi.dao.CardMapper" >
+<cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
+  <resultMap id="BaseResultMap" type="com.deyi.entity.Card" > 
+   <result column="id" property="id" jdbcType="INTEGER" />
+   <result column="serviceType" property="serviceType" jdbcType="INTEGER" />
+   <result column="batchNo" property="batchNo" jdbcType="VARCHAR" />
+   <result column="cardNo" property="cardNo" jdbcType="VARCHAR" />
+   <result column="deviceName" property="deviceName" jdbcType="VARCHAR" />
+   <result column="passwd" property="passwd" jdbcType="VARCHAR" />
+   <result column="name" property="name" jdbcType="VARCHAR" />
+   <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+   <result column="balance" property="balance" jdbcType="DECIMAL" />
+   <result column="deposit" property="deposit" jdbcType="DECIMAL" />
+   <result column="recharge" property="recharge" jdbcType="DECIMAL" />
+   <result column="idCardNo" property="idCardNo" jdbcType="VARCHAR" />
+   <result column="memo" property="memo" jdbcType="VARCHAR" />
+   <result column="STATUS" property="STATUS" jdbcType="VARCHAR" />
+   <result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+   <result column="flag" property="flag" jdbcType="VARCHAR" />
+   <result column="creator" property="creator" jdbcType="VARCHAR" />
+
+</resultMap>
+  <sql id="Base_Column_List" >
+    id,serviceType,batchNo,cardNo,deviceName,passwd,name,mobile,balance,deposit,recharge,idCardNo,memo,STATUS,createTime,flag,creator
+</sql>
+<select id="getCard" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from t_card
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+<select id="getCards" parameterType="com.deyi.entity.Card" resultMap="BaseResultMap">
+  	 select
+    <include refid="Base_Column_List" />
+    from t_card
+    <where>  1=1  
+
+      <if test="id != null and id !=''" >
+           and id=#{id,jdbcType=INTEGER}
+      </if>
+      <if test="serviceType != null and serviceType !=''" >
+           and serviceType=#{serviceType,jdbcType=INTEGER}
+      </if>
+      <if test="batchNo != null and batchNo !=''" >
+           and batchNo=#{batchNo,jdbcType=VARCHAR}
+      </if>
+      <if test="cardNo != null and cardNo !=''" >
+           and cardNo=#{cardNo,jdbcType=VARCHAR}
+      </if>
+      <if test="deviceName != null and deviceName !=''" >
+           and deviceName=#{deviceName,jdbcType=VARCHAR}
+      </if>
+      <if test="passwd != null and passwd !=''" >
+           and passwd=#{passwd,jdbcType=VARCHAR}
+      </if>
+      <if test="name != null and name !=''" >
+           and name=#{name,jdbcType=VARCHAR}
+      </if>
+      <if test="mobile != null and mobile !=''" >
+           and mobile=#{mobile,jdbcType=VARCHAR}
+      </if>
+      <if test="balance != null and balance !=''" >
+           and balance=#{balance,jdbcType=DECIMAL}
+      </if>
+      <if test="deposit != null and deposit !=''" >
+           and deposit=#{deposit,jdbcType=DECIMAL}
+      </if>
+      <if test="recharge != null and recharge !=''" >
+           and recharge=#{recharge,jdbcType=DECIMAL}
+      </if>
+      <if test="idCardNo != null and idCardNo !=''" >
+           and idCardNo=#{idCardNo,jdbcType=VARCHAR}
+      </if>
+      <if test="memo != null and memo !=''" >
+           and memo=#{memo,jdbcType=VARCHAR}
+      </if>
+      <if test="STATUS != null and STATUS !=''" >
+           and STATUS=#{STATUS,jdbcType=VARCHAR}
+      </if>
+      <if test="createTime != null and createTime !=''" >
+           and createTime=#{createTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="flag != null and flag !=''" >
+           and flag=#{flag,jdbcType=VARCHAR}
+      </if>
+      <if test="creator != null and creator !=''" >
+           and creator=#{creator,jdbcType=VARCHAR}
+      </if> 
+   </where>
+  </select>
+<select id="getCardByCode" parameterType="com.deyi.entity.Card" resultMap="BaseResultMap">
+  	 select
+    <include refid="Base_Column_List" />
+    from t_card
+    <where>  1=1  
+
+      <if test="id != null and id !=''" >
+           and id=#{id,jdbcType=INTEGER}
+      </if>
+      <if test="serviceType != null and serviceType !=''" >
+           and serviceType=#{serviceType,jdbcType=INTEGER}
+      </if>
+      <if test="batchNo != null and batchNo !=''" >
+           and batchNo=#{batchNo,jdbcType=VARCHAR}
+      </if>
+      <if test="cardNo != null and cardNo !=''" >
+           and cardNo=#{cardNo,jdbcType=VARCHAR}
+      </if>
+      <if test="deviceName != null and deviceName !=''" >
+           and deviceName=#{deviceName,jdbcType=VARCHAR}
+      </if>
+      <if test="passwd != null and passwd !=''" >
+           and passwd=#{passwd,jdbcType=VARCHAR}
+      </if>
+      <if test="name != null and name !=''" >
+           and name=#{name,jdbcType=VARCHAR}
+      </if>
+      <if test="mobile != null and mobile !=''" >
+           and mobile=#{mobile,jdbcType=VARCHAR}
+      </if>
+      <if test="balance != null and balance !=''" >
+           and balance=#{balance,jdbcType=DECIMAL}
+      </if>
+      <if test="deposit != null and deposit !=''" >
+           and deposit=#{deposit,jdbcType=DECIMAL}
+      </if>
+      <if test="recharge != null and recharge !=''" >
+           and recharge=#{recharge,jdbcType=DECIMAL}
+      </if>
+      <if test="idCardNo != null and idCardNo !=''" >
+           and idCardNo=#{idCardNo,jdbcType=VARCHAR}
+      </if>
+      <if test="memo != null and memo !=''" >
+           and memo=#{memo,jdbcType=VARCHAR}
+      </if>
+      <if test="STATUS != null and STATUS !=''" >
+           and STATUS=#{STATUS,jdbcType=VARCHAR}
+      </if>
+      <if test="createTime != null and createTime !=''" >
+           and createTime=#{createTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="flag != null and flag !=''" >
+           and flag=#{flag,jdbcType=VARCHAR}
+      </if>
+      <if test="creator != null and creator !=''" >
+           and creator=#{creator,jdbcType=VARCHAR}
+      </if> 
+   </where>
+  </select>
+<select id="getPageCards" parameterType="com.deyi.util.Page" resultMap="BaseResultMap">
+  	 select
+    <include refid="Base_Column_List" />
+    from t_card
+    <where>  1=1  
+
+        <if test="params.serviceType != null and params.serviceType !=''" >
+          and serviceType=#{params.serviceType}
+      </if>
+        <if test="params.batchNo != null and params.batchNo !=''" >
+          and batchNo=#{params.batchNo}
+      </if>
+        <if test="params.cardNo != null and params.cardNo !=''" >
+          and cardNo=#{params.cardNo}
+      </if>
+        <if test="params.deviceName != null and params.deviceName !=''" >
+         and deviceName LIKE CONCAT('%','${params.deviceName}','%')
+      </if>
+        <if test="params.passwd != null and params.passwd !=''" >
+          and passwd=#{params.passwd}
+      </if>
+        <if test="params.name != null and params.name !=''" >
+         and name LIKE CONCAT('%','${params.name}','%')
+      </if>
+        <if test="params.mobile != null and params.mobile !=''" >
+          and mobile=#{params.mobile}
+      </if>
+        <if test="params.balance != null and params.balance !=''" >
+          and balance=#{params.balance}
+      </if>
+        <if test="params.deposit != null and params.deposit !=''" >
+          and deposit=#{params.deposit}
+      </if>
+        <if test="params.recharge != null and params.recharge !=''" >
+          and recharge=#{params.recharge}
+      </if>
+        <if test="params.idCardNo != null and params.idCardNo !=''" >
+          and idCardNo=#{params.idCardNo}
+      </if>
+        <if test="params.memo != null and params.memo !=''" >
+          and memo=#{params.memo}
+      </if>
+        <if test="params.STATUS != null and params.STATUS !=''" >
+          and STATUS=#{params.STATUS}
+      </if>
+        <if test="params.createTimeStart != null and params.createTimeStart !=''">
+          and createTime <![CDATA[>=]]> DATE_FORMAT(#{params.createTimeStart},'%Y-%m-%d 00:00:00')
+      </if>
+        <if test="params.createTimeEnd != null and params.createTimeEnd !=''">
+            and createTime <![CDATA[<=]]> DATE_FORMAT(#{params.createTimeEnd},'%Y-%m-%d 23:59:59')
+        </if>
+        <if test="params.flag != null and params.flag !=''" >
+          and flag=#{params.flag}
+      </if>
+        <if test="params.creator != null and params.creator !=''" >
+          and creator=#{params.creator}
+      </if> 
+   </where>
+  </select>
+  <delete id="delete" parameterType="java.lang.Integer" >
+    delete from t_card
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+ <insert id="insert" parameterType="com.deyi.entity.Card" useGeneratedKeys="true" keyColumn="id" keyProperty="id" >
+    insert into t_card 
+  <trim prefix="(" suffix=")" suffixOverrides="," >
+        <if test="id != null" >
+            id,
+      </if>
+        <if test="serviceType != null" >
+            serviceType,
+      </if>
+        <if test="batchNo != null" >
+            batchNo,
+      </if>
+        <if test="cardNo != null" >
+            cardNo,
+      </if>
+        <if test="deviceName != null" >
+            deviceName,
+      </if>
+        <if test="passwd != null" >
+            passwd,
+      </if>
+        <if test="name != null" >
+            name,
+      </if>
+        <if test="mobile != null" >
+            mobile,
+      </if>
+        <if test="balance != null" >
+            balance,
+      </if>
+        <if test="deposit != null" >
+            deposit,
+      </if>
+        <if test="recharge != null" >
+            recharge,
+      </if>
+        <if test="idCardNo != null" >
+            idCardNo,
+      </if>
+        <if test="memo != null" >
+            memo,
+      </if>
+        <if test="STATUS != null" >
+            STATUS,
+      </if>
+        <if test="createTime != null" >
+            createTime,
+      </if>
+        <if test="flag != null" >
+            flag,
+      </if>
+        <if test="creator != null" >
+            creator,
+      </if>
+    </trim> 
+  <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+            #{id,jdbcType=INTEGER},
+     </if>
+         <if test="serviceType != null" >
+            #{serviceType,jdbcType=INTEGER},
+     </if>
+         <if test="batchNo != null" >
+            #{batchNo,jdbcType=VARCHAR},
+     </if>
+         <if test="cardNo != null" >
+            #{cardNo,jdbcType=VARCHAR},
+     </if>
+         <if test="deviceName != null" >
+            #{deviceName,jdbcType=VARCHAR},
+     </if>
+      <if test="passwd != null" >
+            #{passwd,jdbcType=VARCHAR},
+     </if>
+         <if test="name != null" >
+            #{name,jdbcType=VARCHAR},
+     </if>
+         <if test="mobile != null" >
+            #{mobile,jdbcType=VARCHAR},
+     </if>
+         <if test="balance != null" >
+            #{balance,jdbcType=DECIMAL},
+     </if>
+         <if test="deposit != null" >
+            #{deposit,jdbcType=DECIMAL},
+     </if>
+      <if test="recharge != null" >
+            #{recharge,jdbcType=DECIMAL},
+     </if>
+         <if test="idCardNo != null" >
+            #{idCardNo,jdbcType=VARCHAR},
+     </if>
+         <if test="memo != null" >
+            #{memo,jdbcType=VARCHAR},
+     </if>
+         <if test="STATUS != null" >
+            #{STATUS,jdbcType=VARCHAR},
+     </if>
+         <if test="createTime != null" >
+            #{createTime,jdbcType=TIMESTAMP},
+     </if>
+      <if test="flag != null" >
+            #{flag,jdbcType=VARCHAR},
+     </if>
+         <if test="creator != null" >
+            #{creator,jdbcType=VARCHAR},
+     </if>
+    </trim>
+</insert> 
+
+<update id="update" parameterType="com.deyi.entity.Card" >
+   update t_card
+   <set >
+
+      <if test="id != null" >
+            id=#{id,jdbcType=INTEGER},
+     </if>
+      <if test="serviceType != null" >
+            serviceType=#{serviceType,jdbcType=INTEGER},
+     </if>
+      <if test="batchNo != null" >
+            batchNo=#{batchNo,jdbcType=VARCHAR},
+     </if>
+      <if test="cardNo != null" >
+            cardNo=#{cardNo,jdbcType=VARCHAR},
+     </if>
+      <if test="deviceName != null" >
+            deviceName=#{deviceName,jdbcType=VARCHAR},
+     </if>
+      <if test="passwd != null" >
+            passwd=#{passwd,jdbcType=VARCHAR},
+     </if>
+      <if test="name != null" >
+            name=#{name,jdbcType=VARCHAR},
+     </if>
+      <if test="mobile != null" >
+            mobile=#{mobile,jdbcType=VARCHAR},
+     </if>
+      <if test="balance != null" >
+            balance=#{balance,jdbcType=DECIMAL},
+     </if>
+      <if test="deposit != null" >
+            deposit=#{deposit,jdbcType=DECIMAL},
+     </if>
+      <if test="recharge != null" >
+            recharge=#{recharge,jdbcType=DECIMAL},
+     </if>
+      <if test="idCardNo != null" >
+            idCardNo=#{idCardNo,jdbcType=VARCHAR},
+     </if>
+      <if test="memo != null" >
+            memo=#{memo,jdbcType=VARCHAR},
+     </if>
+      <if test="STATUS != null" >
+            STATUS=#{STATUS,jdbcType=VARCHAR},
+     </if>
+      <if test="createTime != null" >
+            createTime=#{createTime,jdbcType=TIMESTAMP},
+     </if>
+      <if test="flag != null" >
+            flag=#{flag,jdbcType=VARCHAR},
+     </if>
+      <if test="creator != null" >
+            creator=#{creator,jdbcType=VARCHAR},
+     </if>
+   </set>
+   where id = #{id,jdbcType=INTEGER}
+</update>
+
+</mapper>

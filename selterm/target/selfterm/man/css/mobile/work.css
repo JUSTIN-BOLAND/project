@@ -1,0 +1,94 @@
+/* 上班、下班反馈 */
+.mui-bar{ background: #fff;}
+.mui-bar-tab .mui-tab-item.mui-active{ color:#4ab322 ; text-decoration: none;}
+.punch{height: 100%; padding-top: 50px; background: #fff; text-align: center;}
+.punch .location{ margin-bottom:10px; color: #4ab322;}
+.punch p{ color: #aeaeae;}
+.punch .check{ margin: 20px auto; width: 100px; height: 100px; border-radius: 50%; color: #fff; background: #4ab322;}
+.punch .check span{font-size: 100px; line-height: 100px;}
+.punch .punch-time{ color: #333;}
+.punch .punch-time strong{ font-size: 24px; line-height: 50px;}
+.punch .punch-time span{ font-size: 20px;}
+.red-text .location{ color: #fa5363;}
+.red-text .check{ background: #fa5363;}
+.red-text .mui-icon-extra-regist,
+.red-text .mui-tab-label{color: #fa5363;}
+
+.swiper-con { width:100%; height: 100%; margin: 0 auto; position: fixed;}
+.swiper-con .arrow-left,
+.swiper-con .arrow-right{ position: absolute;  top: 7px;width: 17px; height: 30px; z-index: 1000; color: #939393;}
+.swiper-con .arrow-left{left: 70px;}
+.swiper-con .arrow-right{ right: 70px;}
+.swiper-container { height: 100%; width: 100%;}
+.content-slide { padding: 20px; color: #fff;}
+.swiper-con .title { position: relative; width: 100%; z-index: 1000; font-size: 18px;background: #fff; height: 40px; line-height: 40px; text-align: center; color: #333;}
+.pagination { position: absolute; left: 0; text-align: center; bottom:5px; width: 100%;}
+.scroll{ margin:0 auto; width: 90%;overflow: scroll; height: 90%;}
+.scroll .ul-punch{ position: relative; margin-bottom: 0; margin-left: 6px; padding: 0 0 10px 15px; border-left:1px solid #bebfbf;}
+.scroll .ul-punch li{ margin-bottom: 10px; padding: 5px 10px; background: #fff; border-radius: 5px;}
+.scroll .ul-punch li:last-child{ margin-bottom: 0;}
+.scroll .ul-punch li p{ margin-bottom: 5px; color: #666; font-size: 14px;}
+.scroll .ul-punch li p span{ font-weight: bold; margin-right: 20px; font-size: 18px;}
+.scroll .ul-punch:first-child{ padding-top: 10px;}
+.scroll .ul-punch:last-child{ margin-bottom: 10px;}
+.scroll .ul-punch:before{ content: ''; position: absolute; left: -7px; z-index: 2000; display: block; width: 12px; height: 12px; border-radius: 50%; background: #bebfbf;}
+.scroll .ul-punch.active:before{ background: #56b7fa;}
+
+
+.setCon{ position: relative  }
+#seting{ position: absolute; top:-18%; right: 4%; color: #124960 }
+#seting a:before{ display:block; content:""; width:20px; height: 20px; margin: 0 auto; background: url("../../images/sign/icon/set.png") center top no-repeat; background-size:100% 100%  }
+#seting a{ color: #377898; font-size:12px }
+
+#his{position: absolute;top:82%;right:20%;color: #124960;border-radius:50%;}
+#his a:before{ display:block; content:""; width:50px; height: 50px; margin: 0 auto; background: url("../../images/sign/icon/his1.png") center top no-repeat; background-size:100% 100%  }
+#his a{ color: #377898; font-size:12px }
+
+#hisIndex{position: absolute;top:10%;right:5%;color: #124960;border-radius:50%;}
+#hisIndex a:before{ display:block; content:""; width:50px;    border-radius: 50%; height: 50px; margin: 0 auto; background: url("../../images/sign/icon/his1.png") center top no-repeat; background-size:100% 100%  }
+#hisIndex a{ color: #377898; font-size:12px }
+
+
+
+.setHeader header.mui-bar .mui-title{ color: #377898; }
+.setHeader .mui-icon-back:before, .mui-icon-left-nav:before { color: #377898; }
+.setHeader  header.mui-bar{ background: none!important; background-color: transparent; box-shadow:none  }
+.setHeader .ban-pic{ height: 28%; padding-top: 10%; }
+.setHeader .ban-pic .left-head-pic img{ width: 78%; height: 60%; }
+
+.setHeader .ban-pic .right-msg dl dd span{ width: 45px; }
+.setHeader .ban-pic .right-msg dl dd p{ width: auto; float: inherit; margin-left: 45px; }
+
+.setHeader .ban-pic .left-head-pic{ width: 30%;}
+.setHeader .ban-pic .right-msg{ width: 70% }
+
+.setHeader .mui-bar-nav~.mui-content{ padding-top: 0 }
+.setHeader .punch{ padding-top: 16%; }
+
+/*input*/
+.input_on{
+padding:2px 8px 0pt 3px;
+height:18px;
+border:1px solid #999;
+background-color:#FFFFCC;
+}
+.input_off{
+padding:2px 8px 0pt 3px;
+height:18px;
+border:1px solid #CCC;
+background-color:#FFF;
+}
+.input_move{
+padding:2px 8px 0pt 3px;
+height:18px;
+border:1px solid #999;
+background-color:#FFFFCC;
+}
+.input_out{
+/*height:16px;默认高度*/
+padding:2px 8px 0pt 3px;
+height:18px;
+border:1px solid #CCC;
+background-color:#FFF;
+}
+

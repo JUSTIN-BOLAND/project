@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.deyi.dao.BankMapper" >
+<cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
+  <resultMap id="BaseResultMap" type="com.deyi.entity.Bank" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="parent_bank_no" property="parentBankNo" jdbcType="INTEGER" />
+    <result column="parent_bank_name" property="parentBankName" jdbcType="VARCHAR" />
+    <result column="quick_union_bank_no" property="quickUnionBankNo" jdbcType="VARCHAR" />
+    <result column="bank_name" property="bankName" jdbcType="VARCHAR" />
+    <result column="union_bank_no" property="unionBankNo" jdbcType="VARCHAR" />
+    <result column="city_code" property="cityCode" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="post_code" property="postCode" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="city_id" property="cityId" jdbcType="VARCHAR" />
+    <result column="bankparent_id" property="bankparentId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, parent_bank_no, parent_bank_name, quick_union_bank_no, bank_name, union_bank_no,
+    city_code, address, post_code, status, city_id, bankparent_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from p_bank
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="getBankByCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from p_bank
+    where union_bank_no = #{unionBankNo}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from p_bank
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.deyi.entity.Bank" >
+    insert into p_bank (id, parent_bank_no, parent_bank_name,
+      quick_union_bank_no, bank_name, union_bank_no,
+      city_code, address, post_code,
+      status, city_id, bankparent_id
+      )
+    values (#{id,jdbcType=INTEGER}, #{parentBankNo,jdbcType=INTEGER}, #{parentBankName,jdbcType=VARCHAR},
+      #{quickUnionBankNo,jdbcType=VARCHAR}, #{bankName,jdbcType=VARCHAR}, #{unionBankNo,jdbcType=VARCHAR},
+      #{cityCode,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{postCode,jdbcType=VARCHAR},
+      #{status,jdbcType=VARCHAR}, #{cityId,jdbcType=VARCHAR}, #{bankparentId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.deyi.entity.Bank" >
+    insert into p_bank
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="parentBankNo != null" >
+        parent_bank_no,
+      </if>
+      <if test="parentBankName != null" >
+        parent_bank_name,
+      </if>
+      <if test="quickUnionBankNo != null" >
+        quick_union_bank_no,
+      </if>
+      <if test="bankName != null" >
+        bank_name,
+      </if>
+      <if test="unionBankNo != null" >
+        union_bank_no,
+      </if>
+      <if test="cityCode != null" >
+        city_code,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="postCode != null" >
+        post_code,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="cityId != null" >
+        city_id,
+      </if>
+      <if test="bankparentId != null" >
+        bankparent_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="parentBankNo != null" >
+        #{parentBankNo,jdbcType=INTEGER},
+      </if>
+      <if test="parentBankName != null" >
+        #{parentBankName,jdbcType=VARCHAR},
+      </if>
+      <if test="quickUnionBankNo != null" >
+        #{quickUnionBankNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bankName != null" >
+        #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="unionBankNo != null" >
+        #{unionBankNo,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null" >
+        #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="postCode != null" >
+        #{postCode,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="cityId != null" >
+        #{cityId,jdbcType=VARCHAR},
+      </if>
+      <if test="bankparentId != null" >
+        #{bankparentId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.deyi.entity.Bank" >
+    update p_bank
+    <set >
+      <if test="parentBankNo != null" >
+        parent_bank_no = #{parentBankNo,jdbcType=INTEGER},
+      </if>
+      <if test="parentBankName != null" >
+        parent_bank_name = #{parentBankName,jdbcType=VARCHAR},
+      </if>
+      <if test="quickUnionBankNo != null" >
+        quick_union_bank_no = #{quickUnionBankNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bankName != null" >
+        bank_name = #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="unionBankNo != null" >
+        union_bank_no = #{unionBankNo,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null" >
+        city_code = #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="postCode != null" >
+        post_code = #{postCode,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="cityId != null" >
+        city_id = #{cityId,jdbcType=VARCHAR},
+      </if>
+      <if test="bankparentId != null" >
+        bankparent_id = #{bankparentId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.deyi.entity.Bank" >
+    update p_bank
+    set parent_bank_no = #{parentBankNo,jdbcType=INTEGER},
+      parent_bank_name = #{parentBankName,jdbcType=VARCHAR},
+      quick_union_bank_no = #{quickUnionBankNo,jdbcType=VARCHAR},
+      bank_name = #{bankName,jdbcType=VARCHAR},
+      union_bank_no = #{unionBankNo,jdbcType=VARCHAR},
+      city_code = #{cityCode,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      post_code = #{postCode,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      city_id = #{cityId,jdbcType=VARCHAR},
+      bankparent_id = #{bankparentId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="getBankByCity" resultMap="BaseResultMap">
+  	SELECT * FROM p_bank WHERE city_id  =  #{cityid} AND STATUS = '1' AND bankparent_id =  #{bankid}
+  </select>
+
+  <select id="queryBybankno" resultMap="BaseResultMap" parameterType="java.lang.String">
+  	select * from p_bank where union_bank_no = #{bankno}
+  </select>
+</mapper>

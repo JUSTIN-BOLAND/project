@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deyi.dao.StoreDao">
+
+
+	<cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
+	<select id="getStoreById" resultType="com.deyi.entity.Store"
+		parameterType="java.lang.Integer">
+		select * from dis_store where id=#{0} and deletedStatus=0
+	</select>
+
+	<select id="getStoreIdsByMerId" resultType="string"
+		parameterType="java.lang.Integer">
+		select id from dis_store where merId=#{0} and deletedStatus=0
+	</select>
+
+	<select id="getStoresByPage" resultType="com.deyi.entity.Store"
+		parameterType="com.deyi.util.Page" useCache="false">
+		SELECT a.* ,b.creator ,b.creatorname FROM dis_store a LEFT JOIN dis_merchant b ON a.merId  = b.id
+		<where>
+			a.deletedStatus=0
+			<if test="params.merchantIds !=null and params.merchantIds !=''">
+				and a.merId in(${params.merchantIds})
+			</if>
+
+			<if test="params.merId !=null and params.merId !=''">
+				and a.merId = #{params.merId}
+			</if>
+
+			<if test="params.storeName !=null and params.storeName !=''">
+				and a.storeName like CONCAT('%',#{params.storeName},'%')
+			</if>
+
+			<if test="params.storeAdress !=null and params.storeAdress !=''">
+				and a.storeAdress like CONCAT('%',#{params.storeAdress},'%')
+			</if>
+			<if test="params.creatorname !=null and params.creatorname !=''">
+				and b.creatorname like CONCAT('%',#{params.creatorname},'%')
+			</if>
+		</where>
+
+		ORDER BY creattime DESC
+	</select>
+
+	<select id="getStores" resultType="com.deyi.entity.Store"
+		parameterType="com.deyi.entity.Store">
+		select * from dis_store
+		<where>
+			status = 1 and deletedStatus = 0
+			<if test="merId !=null and merId !=''">
+				and merId = #{merId}
+			</if>
+
+			<if test="storeName !=null and storeName !=''">
+				and storeName like CONCAT('%',#{storeName},'%')
+			</if>
+
+			<if test="storeAdress !=null and storeAdress !=''">
+				and storeAdress like CONCAT('%',#{storeAdress},'%')
+			</if>
+		</where>
+		ORDER BY creattime DESC
+	</select>
+
+	<insert id="addStore" parameterType="com.deyi.entity.Store" useGeneratedKeys="true" keyProperty="id">
+		insert into dis_store (storeCode,storeName,storeAdress,status,merId,merName)
+		values(#{storeCode},#{storeName},#{storeAdress},#{status},#{merId},#{merName})
+	</insert>
+
+	<update id="upadeStore" parameterType="com.deyi.entity.Store">
+		update dis_store
+		<set>
+			<if test="storeCode != null and storeCode !=''">
+				storeCode =#{storeCode},
+			</if>
+
+			<if test="storeName != null and storeName !=''">
+				storeName =#{storeName},
+			</if>
+
+			<if test="storeAdress != null and storeAdress !=''">
+				storeAdress =#{storeAdress},
+			</if>
+
+			<if test="status != null and status !=''">
+				status =#{status},
+			</if>
+
+			<if test="deletedStatus != null and deletedStatus !=''">
+				deletedStatus =#{deletedStatus},
+			</if>
+			<if test="macstatus != null and macstatus !=''">
+				macstatus =#{macstatus},
+			</if>
+			<if test="refundstatus != null and refundstatus !=''">
+				refundstatus =#{refundstatus},
+			</if>
+		</set>
+		<where>
+			id = #{id}
+		</where>
+
+	</update>
+	<update id="upadeStoreByCode" parameterType="com.deyi.entity.Store">
+		update dis_store
+		<set>
+
+			<if test="merId != null and merId !=''">
+				merId =#{merId},
+			</if>
+			<if test="merName != null and merName !=''">
+				merName =#{merName},
+			</if>
+			<if test="storeName != null and storeName !=''">
+				storeName =#{storeName},
+			</if>
+
+			<if test="storeAdress != null and storeAdress !=''">
+				storeAdress =#{storeAdress},
+			</if>
+
+			<if test="status != null and status !=''">
+				status =#{status},
+			</if>
+
+			<if test="deletedStatus != null and deletedStatus !=''">
+				deletedStatus =#{deletedStatus},
+			</if>
+			<if test="macstatus != null and macstatus !=''">
+				macstatus =#{macstatus},
+			</if>
+			<if test="refundstatus != null and refundstatus !=''">
+				refundstatus =#{refundstatus},
+			</if>
+		</set>
+		<where>
+			storeCode = #{storeCode}
+		</where>
+
+	</update>
+	<update id="upadeStoreByMerId" parameterType="com.deyi.entity.Store">
+		update dis_store
+		<set>
+
+			<if test="merName != null and merName !=''">
+				merName =#{merName},
+			</if>
+			<if test="storeName != null and storeName !=''">
+				storeName =#{storeName},
+			</if>
+
+			<if test="storeAdress != null and storeAdress !=''">
+				storeAdress =#{storeAdress},
+			</if>
+
+			<if test="status != null and status !=''">
+				status =#{status},
+			</if>
+
+			<if test="deletedStatus != null and deletedStatus !=''">
+				deletedStatus =#{deletedStatus},
+			</if>
+			<if test="macstatus != null and macstatus !=''">
+				macstatus =#{macstatus},
+			</if>
+			<if test="refundstatus != null and refundstatus !=''">
+				refundstatus =#{refundstatus},
+			</if>
+		</set>
+		<where>
+			merId = #{merId}
+		</where>
+
+	</update>
+	<delete id="deleteStore" parameterType="java.lang.String">
+		delete from dis_store where id = #{0}
+	</delete>
+
+    <select id="selectByMerchant" resultType="com.deyi.entity.Store"	parameterType="com.deyi.util.Page"  useCache="false">
+       select * from dis_store where merId = #{merId,jdbcType=VARCHAR} and  deletedStatus=0
+     </select>
+
+
+	<select id="selectByMerchantIds" parameterType="string" resultType="com.deyi.entity.Store">
+		select * from dis_store where merId in (${merids}) and  deletedStatus=0 ORDER BY creattime DESC
+	</select>
+
+	<select id="getStoreByCode" resultType="com.deyi.entity.Store" parameterType="java.lang.String">
+		select * from dis_store where storeCode=#{0} and deletedStatus=0
+	</select>
+	<select id="getStoreByName" parameterType="string" resultType="com.deyi.entity.Store">
+		select * from dis_store where storeName = #{storeName} and  deletedStatus=0
+	</select>
+
+	<select id="loadStoreFile" parameterType="string" >
+		LOAD DATA INFILE #{0} INTO TABLE dis_store FIELDS TERMINATED BY '\t' ENCLOSED BY '"' LINES TERMINATED BY '\n'
+	</select>
+
+	<select id="bankQueryStoreByCode" resultType="com.deyi.entity.Store" parameterType="java.lang.String">
+		select * from dis_store where storeCode=#{0} and deletedStatus=0
+	</select>
+
+</mapper>

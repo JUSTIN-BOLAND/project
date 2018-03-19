@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.deyi.dao.WorkTimeMapper" >
+	<cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
+
+  <resultMap id="BaseResultMap" type="com.deyi.entity.WorkTime" >
+    <id column="id" property="id" jdbcType="CHAR" />
+    <result column="storeId" property="storeid" jdbcType="BIGINT" />
+    <result column="loginName" property="loginname" jdbcType="VARCHAR" />
+    <result column="loginTime" property="logintime" jdbcType="TIMESTAMP" />
+    <result column="logoutTime" property="logouttime" jdbcType="TIMESTAMP" />
+    <result column="statisday" property="statisday" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, storeId, loginName, loginTime, logoutTime, statisday
+  </sql>
+  <select id="getWorkTimeByLoginname" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_work_time
+    where loginName = #{0} and statisday='0'
+  </select>
+  
+  <select id="getWorkTimeByStoreId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_work_time
+    where storeId = #{storeId} and statisday='0'
+  </select>
+  
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_work_time
+    where id = #{id,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from sys_work_time
+    where id = #{id,jdbcType=CHAR}
+  </delete>
+  <insert id="insertSelective" parameterType="com.deyi.entity.WorkTime" >
+    insert into sys_work_time
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+       <if test="id != null" >
+        id,
+       </if>
+      <if test="storeid != null" >
+        storeId,
+      </if>
+      <if test="loginname != null" >
+        loginName,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+    	<if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+       </if>
+      <if test="storeid != null" >
+        #{storeid,jdbcType=BIGINT},
+      </if>
+      <if test="loginname != null" >
+        #{loginname,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="update" parameterType="com.deyi.entity.WorkTime" >
+    update sys_work_time
+    <set >
+      <if test="logouttime != null" >
+        logoutTime = #{logouttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statisday != null" >
+        statisday = #{statisday,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=CHAR}
+  </update>
+</mapper>

@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.deyi.dao.RechargeMapper" >
+<cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
+  <resultMap id="BaseResultMap" type="com.deyi.entity.Recharge" > 
+   <result column="id" property="id" jdbcType="INTEGER" />
+   <result column="orderNo" property="orderNo" jdbcType="VARCHAR" />
+   <result column="dealerId" property="dealerId" jdbcType="INTEGER" />
+   <result column="deviceId" property="deviceId" jdbcType="INTEGER" />
+   <result column="payType" property="payType" jdbcType="INTEGER" />
+   <result column="outTradeNo" property="outTradeNo" jdbcType="VARCHAR" />
+   <result column="authCode" property="authCode" jdbcType="VARCHAR" />
+   <result column="buyerId" property="buyerId" jdbcType="VARCHAR" />
+   <result column="cardNo" property="cardNo" jdbcType="INTEGER" />
+   <result column="serviceType" property="serviceType" jdbcType="INTEGER" />
+   <result column="payAmount" property="payAmount" jdbcType="DECIMAL" />
+   <result column="actualAmount" property="actualAmount" jdbcType="DECIMAL" />
+   <result column="beforeAmount" property="beforeAmount" jdbcType="DECIMAL" />
+   <result column="afterAmount" property="afterAmount" jdbcType="DECIMAL" />
+   <result column="subMerchantId" property="subMerchantId" jdbcType="VARCHAR" />
+   <result column="status" property="status" jdbcType="VARCHAR" />
+   <result column="payStatus" property="payStatus" jdbcType="VARCHAR" />
+   <result column="payTime" property="payTime" jdbcType="TIMESTAMP" />
+   <result column="creatTime" property="creatTime" jdbcType="TIMESTAMP" />
+   <result column="operatorId" property="operatorId" jdbcType="VARCHAR" />
+   <result column="memo" property="memo" jdbcType="VARCHAR" />
+
+</resultMap>
+  <sql id="Base_Column_List" >
+    id,orderNo,dealerId,deviceId,payType,outTradeNo,authCode,buyerId,cardNo,serviceType,payAmount,actualAmount,beforeAmount,afterAmount,subMerchantId,status,payStatus,payTime,creatTime,operatorId,memo
+</sql>
+<select id="getRecharge" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from t_recharge
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+<select id="getRecharges" parameterType="com.deyi.entity.Recharge" resultMap="BaseResultMap">
+  	 select
+    <include refid="Base_Column_List" />
+    from t_recharge
+    <where>  1=1  
+
+      <if test="id != null and id !=''" >
+           and id=#{id,jdbcType=INTEGER}
+      </if>
+      <if test="orderNo != null and orderNo !=''" >
+           and orderNo=#{orderNo,jdbcType=VARCHAR}
+      </if>
+      <if test="dealerId != null and dealerId !=''" >
+           and dealerId=#{dealerId,jdbcType=INTEGER}
+      </if>
+      <if test="deviceId != null and deviceId !=''" >
+           and deviceId=#{deviceId,jdbcType=INTEGER}
+      </if>
+      <if test="payType != null and payType !=''" >
+           and payType=#{payType,jdbcType=INTEGER}
+      </if>
+      <if test="outTradeNo != null and outTradeNo !=''" >
+           and outTradeNo=#{outTradeNo,jdbcType=VARCHAR}
+      </if>
+      <if test="authCode != null and authCode !=''" >
+           and authCode=#{authCode,jdbcType=VARCHAR}
+      </if>
+      <if test="buyerId != null and buyerId !=''" >
+           and buyerId=#{buyerId,jdbcType=VARCHAR}
+      </if>
+      <if test="cardNo != null and cardNo !=''" >
+           and cardNo=#{cardNo,jdbcType=INTEGER}
+      </if>
+      <if test="serviceType != null and serviceType !=''" >
+           and serviceType=#{serviceType,jdbcType=INTEGER}
+      </if>
+      <if test="payAmount != null and payAmount !=''" >
+           and payAmount=#{payAmount,jdbcType=DECIMAL}
+      </if>
+      <if test="actualAmount != null and actualAmount !=''" >
+           and actualAmount=#{actualAmount,jdbcType=DECIMAL}
+      </if>
+      <if test="beforeAmount != null and beforeAmount !=''" >
+           and beforeAmount=#{beforeAmount,jdbcType=DECIMAL}
+      </if>
+      <if test="afterAmount != null and afterAmount !=''" >
+           and afterAmount=#{afterAmount,jdbcType=DECIMAL}
+      </if>
+      <if test="subMerchantId != null and subMerchantId !=''" >
+           and subMerchantId=#{subMerchantId,jdbcType=VARCHAR}
+      </if>
+      <if test="status != null and status !=''" >
+           and status=#{status,jdbcType=VARCHAR}
+      </if>
+      <if test="payStatus != null and payStatus !=''" >
+           and payStatus=#{payStatus,jdbcType=VARCHAR}
+      </if>
+      <if test="payTime != null and payTime !=''" >
+           and payTime=#{payTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="creatTime != null and creatTime !=''" >
+           and creatTime=#{creatTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="operatorId != null and operatorId !=''" >
+           and operatorId=#{operatorId,jdbcType=VARCHAR}
+      </if>
+      <if test="memo != null and memo !=''" >
+           and memo=#{memo,jdbcType=VARCHAR}
+      </if> 
+   </where>
+  </select>
+<select id="getRechargeByCode" parameterType="com.deyi.entity.Recharge" resultMap="BaseResultMap">
+  	 select
+    <include refid="Base_Column_List" />
+    from t_recharge
+    <where>  1=1  
+
+      <if test="id != null and id !=''" >
+           and id=#{id,jdbcType=INTEGER}
+      </if>
+      <if test="orderNo != null and orderNo !=''" >
+           and orderNo=#{orderNo,jdbcType=VARCHAR}
+      </if>
+      <if test="dealerId != null and dealerId !=''" >
+           and dealerId=#{dealerId,jdbcType=INTEGER}
+      </if>
+      <if test="deviceId != null and deviceId !=''" >
+           and deviceId=#{deviceId,jdbcType=INTEGER}
+      </if>
+      <if test="payType != null and payType !=''" >
+           and payType=#{payType,jdbcType=INTEGER}
+      </if>
+      <if test="outTradeNo != null and outTradeNo !=''" >
+           and outTradeNo=#{outTradeNo,jdbcType=VARCHAR}
+      </if>
+      <if test="authCode != null and authCode !=''" >
+           and authCode=#{authCode,jdbcType=VARCHAR}
+      </if>
+      <if test="buyerId != null and buyerId !=''" >
+           and buyerId=#{buyerId,jdbcType=VARCHAR}
+      </if>
+      <if test="cardNo != null and cardNo !=''" >
+           and cardNo=#{cardNo,jdbcType=INTEGER}
+      </if>
+      <if test="serviceType != null and serviceType !=''" >
+           and serviceType=#{serviceType,jdbcType=INTEGER}
+      </if>
+      <if test="payAmount != null and payAmount !=''" >
+           and payAmount=#{payAmount,jdbcType=DECIMAL}
+      </if>
+      <if test="actualAmount != null and actualAmount !=''" >
+           and actualAmount=#{actualAmount,jdbcType=DECIMAL}
+      </if>
+      <if test="beforeAmount != null and beforeAmount !=''" >
+           and beforeAmount=#{beforeAmount,jdbcType=DECIMAL}
+      </if>
+      <if test="afterAmount != null and afterAmount !=''" >
+           and afterAmount=#{afterAmount,jdbcType=DECIMAL}
+      </if>
+      <if test="subMerchantId != null and subMerchantId !=''" >
+           and subMerchantId=#{subMerchantId,jdbcType=VARCHAR}
+      </if>
+      <if test="status != null and status !=''" >
+           and status=#{status,jdbcType=VARCHAR}
+      </if>
+      <if test="payStatus != null and payStatus !=''" >
+           and payStatus=#{payStatus,jdbcType=VARCHAR}
+      </if>
+      <if test="payTime != null and payTime !=''" >
+           and payTime=#{payTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="creatTime != null and creatTime !=''" >
+           and creatTime=#{creatTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="operatorId != null and operatorId !=''" >
+           and operatorId=#{operatorId,jdbcType=VARCHAR}
+      </if>
+      <if test="memo != null and memo !=''" >
+           and memo=#{memo,jdbcType=VARCHAR}
+      </if> 
+   </where>
+  </select>
+<select id="getPageRecharges" parameterType="com.deyi.util.Page" resultMap="BaseResultMap">
+  	 select
+    <include refid="Base_Column_List" />
+    from t_recharge
+    <where>  1=1  
+
+        <if test="params.orderNo != null and params.orderNo !=''" >
+          and orderNo=#{params.orderNo}
+      </if>
+        <if test="params.dealerId != null and params.dealerId !=''" >
+          and dealerId=#{params.dealerId}
+      </if>
+        <if test="params.deviceId != null and params.deviceId !=''" >
+          and deviceId=#{params.deviceId}
+      </if>
+        <if test="params.payType != null and params.payType !=''" >
+          and payType=#{params.payType}
+      </if>
+        <if test="params.outTradeNo != null and params.outTradeNo !=''" >
+          and outTradeNo=#{params.outTradeNo}
+      </if>
+        <if test="params.authCode != null and params.authCode !=''" >
+          and authCode=#{params.authCode}
+      </if>
+        <if test="params.buyerId != null and params.buyerId !=''" >
+          and buyerId=#{params.buyerId}
+      </if>
+        <if test="params.cardNo != null and params.cardNo !=''" >
+          and cardNo=#{params.cardNo}
+      </if>
+        <if test="params.serviceType != null and params.serviceType !=''" >
+          and serviceType=#{params.serviceType}
+      </if>
+        <if test="params.payAmount != null and params.payAmount !=''" >
+          and payAmount=#{params.payAmount}
+      </if>
+        <if test="params.actualAmount != null and params.actualAmount !=''" >
+          and actualAmount=#{params.actualAmount}
+      </if>
+        <if test="params.beforeAmount != null and params.beforeAmount !=''" >
+          and beforeAmount=#{params.beforeAmount}
+      </if>
+        <if test="params.afterAmount != null and params.afterAmount !=''" >
+          and afterAmount=#{params.afterAmount}
+      </if>
+        <if test="params.subMerchantId != null and params.subMerchantId !=''" >
+          and subMerchantId=#{params.subMerchantId}
+      </if>
+        <if test="params.status != null and params.status !=''" >
+          and status=#{params.status}
+      </if>
+        <if test="params.payStatus != null and params.payStatus !=''" >
+          and payStatus=#{params.payStatus}
+      </if>
+        <if test="params.payTimeStart != null and params.payTimeStart !=''">
+          and payTime <![CDATA[>=]]> DATE_FORMAT(#{params.payTimeStart},'%Y-%m-%d 00:00:00')
+      </if>
+        <if test="params.payTimeEnd != null and params.payTimeEnd !=''">
+            and payTime <![CDATA[<=]]> DATE_FORMAT(#{params.payTimeEnd},'%Y-%m-%d 23:59:59')
+        </if>
+        <if test="params.creatTimeStart != null and params.creatTimeStart !=''">
+          and creatTime <![CDATA[>=]]> DATE_FORMAT(#{params.creatTimeStart},'%Y-%m-%d 00:00:00')
+      </if>
+        <if test="params.creatTimeEnd != null and params.creatTimeEnd !=''">
+            and creatTime <![CDATA[<=]]> DATE_FORMAT(#{params.creatTimeEnd},'%Y-%m-%d 23:59:59')
+        </if>
+        <if test="params.operatorId != null and params.operatorId !=''" >
+          and operatorId=#{params.operatorId}
+      </if>
+        <if test="params
+null 
+   </where>
+  </select>
+  <delete id="delete" parameterType="java.lang.Integer" >
+    delete from t_recharge
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+ <insert id="insert" parameterType="com.deyi.entity.Recharge" useGeneratedKeys="true" keyColumn="id" keyProperty="id" >
+    insert into t_recharge 
+  <trim prefix="(" suffix=")" suffixOverrides="," >
+        <if test="id != null" >
+            id,
+      </if>
+        <if test="orderNo != null" >
+            orderNo,
+      </if>
+        <if test="dealerId != null" >
+            dealerId,
+      </if>
+        <if test="deviceId != null" >
+            deviceId,
+      </if>
+        <if test="payType != null" >
+            payType,
+      </if>
+        <if test="outTradeNo != null" >
+            outTradeNo,
+      </if>
+        <if test="authCode != null" >
+            authCode,
+      </if>
+        <if test="buyerId != null" >
+            buyerId,
+      </if>
+        <if test="cardNo != null" >
+            cardNo,
+      </if>
+        <if test="serviceType != null" >
+            serviceType,
+      </if>
+        <if test="payAmount != null" >
+            payAmount,
+      </if>
+        <if test="actualAmount != null" >
+            actualAmount,
+      </if>
+        <if test="beforeAmount != null" >
+            beforeAmount,
+      </if>
+        <if test="afterAmount != null" >
+            afterAmount,
+      </if>
+        <if test="subMerchantId != null" >
+            subMerchantId,
+      </if>
+        <if test="status != null" >
+            status,
+      </if>
+        <if test="payStatus != null" >
+            payStatus,
+      </if>
+        <if test="payTime != null" >
+            payTime,
+      </if>
+        <if test="creatTime != null" >
+            creatTime,
+      </if>
+        <if test="operatorId != null" >
+            operatorId,
+      </if>
+        <if test="memo != null" >
+            memo,
+      </if>
+    </trim> 
+  <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+            #{id,jdbcType=INTEGER},
+     </if>
+         <if test="orderNo != null" >
+            #{orderNo,jdbcType=VARCHAR},
+     </if>
+         <if test="dealerId != null" >
+            #{dealerId,jdbcType=INTEGER},
+     </if>
+         <if test="deviceId != null" >
+            #{deviceId,jdbcType=INTEGER},
+     </if>
+         <if test="payType != null" >
+            #{payType,jdbcType=INTEGER},
+     </if>
+      <if test="outTradeNo != null" >
+            #{outTradeNo,jdbcType=VARCHAR},
+     </if>
+         <if test="authCode != null" >
+            #{authCode,jdbcType=VARCHAR},
+     </if>
+         <if test="buyerId != null" >
+            #{buyerId,jdbcType=VARCHAR},
+     </if>
+         <if test="cardNo != null" >
+            #{cardNo,jdbcType=INTEGER},
+     </if>
+         <if test="serviceType != null" >
+            #{serviceType,jdbcType=INTEGER},
+     </if>
+      <if test="payAmount != null" >
+            #{payAmount,jdbcType=DECIMAL},
+     </if>
+         <if test="actualAmount != null" >
+            #{actualAmount,jdbcType=DECIMAL},
+     </if>
+         <if test="beforeAmount != null" >
+            #{beforeAmount,jdbcType=DECIMAL},
+     </if>
+         <if test="afterAmount != null" >
+            #{afterAmount,jdbcType=DECIMAL},
+     </if>
+         <if test="subMerchantId != null" >
+            #{subMerchantId,jdbcType=VARCHAR},
+     </if>
+      <if test="status != null" >
+            #{status,jdbcType=VARCHAR},
+     </if>
+         <if test="payStatus != null" >
+            #{payStatus,jdbcType=VARCHAR},
+     </if>
+         <if test="payTime != null" >
+            #{payTime,jdbcType=TIMESTAMP},
+     </if>
+         <if test="creatTime != null" >
+            #{creatTime,jdbcType=TIMESTAMP},
+     </if>
+         <if test="operatorId != null" >
+            #{operatorId,jdbcType=VARCHAR},
+     </if>
+      <if test="memo != null" >
+            #{memo,jdbcType=VARCHAR},
+     </if>
+    </trim>
+</insert> 
+
+<update id="update" parameterType="com.deyi.entity.Recharge" >
+   update t_recharge
+   <set >
+
+      <if test="id != null" >
+            id=#{id,jdbcType=INTEGER},
+     </if>
+      <if test="orderNo != null" >
+            orderNo=#{orderNo,jdbcType=VARCHAR},
+     </if>
+      <if test="dealerId != null" >
+            dealerId=#{dealerId,jdbcType=INTEGER},
+     </if>
+      <if test="deviceId != null" >
+            deviceId=#{deviceId,jdbcType=INTEGER},
+     </if>
+      <if test="payType != null" >
+            payType=#{payType,jdbcType=INTEGER},
+     </if>
+      <if test="outTradeNo != null" >
+            outTradeNo=#{outTradeNo,jdbcType=VARCHAR},
+     </if>
+      <if test="authCode != null" >
+            authCode=#{authCode,jdbcType=VARCHAR},
+     </if>
+      <if test="buyerId != null" >
+            buyerId=#{buyerId,jdbcType=VARCHAR},
+     </if>
+      <if test="cardNo != null" >
+            cardNo=#{cardNo,jdbcType=INTEGER},
+     </if>
+      <if test="serviceType != null" >
+            serviceType=#{serviceType,jdbcType=INTEGER},
+     </if>
+      <if test="payAmount != null" >
+            payAmount=#{payAmount,jdbcType=DECIMAL},
+     </if>
+      <if test="actualAmount != null" >
+            actualAmount=#{actualAmount,jdbcType=DECIMAL},
+     </if>
+      <if test="beforeAmount != null" >
+            beforeAmount=#{beforeAmount,jdbcType=DECIMAL},
+     </if>
+      <if test="afterAmount != null" >
+            afterAmount=#{afterAmount,jdbcType=DECIMAL},
+     </if>
+      <if test="subMerchantId != null" >
+            subMerchantId=#{subMerchantId,jdbcType=VARCHAR},
+     </if>
+      <if test="status != null" >
+            status=#{status,jdbcType=VARCHAR},
+     </if>
+      <if test="payStatus != null" >
+            payStatus=#{payStatus,jdbcType=VARCHAR},
+     </if>
+      <if test="payTime != null" >
+            payTime=#{payTime,jdbcType=TIMESTAMP},
+     </if>
+      <if test="creatTime != null" >
+            creatTime=#{creatTime,jdbcType=TIMESTAMP},
+     </if>
+      <if test="operatorId != null" >
+            operatorId=#{operatorId,jdbcType=VARCHAR},
+     </if>
+      <if test="memo != null" >
+            memo=#{memo,jdbcType=VARCHAR},
+     </if>
+   </set>
+   where id = #{id,jdbcType=INTEGER}
+</update>
+
+</mapper>

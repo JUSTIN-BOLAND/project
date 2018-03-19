@@ -1,0 +1,62 @@
+/* Html4.01 reset styles */
+body { font-family:"Microsoft Yahei"; font-size:14px; }
+button { border:none; cursor:pointer; }
+a:link, a:visited { text-decoration:none; outline:none; }
+a:hover, a:focus, a:active { text-decoration:underline; }
+a, abbr, acronym, address, applet, article, aside, audio, b, blockquote, big, body, center, canvas, caption, cite, code, datalist, dd, del, details, dfn, dl, div, dt, em, embed, fieldset, figcaption, figure, font, footer, form, h1, h2, h3, h4, h5, h6, header, html, i, iframe, img, ins, kbd, keygen, label, legend, li, meter, nav, menu, object, ol, output, p, pre, progress, q, s, samp, section, small, span, source, strike, strong, sub, sup, table, tbody, tfoot, thead, th, tr, tt, u, ul, var { margin:0; padding:0; }
+em, cite, address, optgroup { font-style:normal; }
+kbd, samp, code { font-family:"monospace"; }
+img, input, button, select, textarea { vertical-align:middle; }
+ul, ol { list-style:none; }
+img, fieldset { border:0; }
+abbr, acronym { border-bottom:1px dotted black; cursor:help; }
+table { border-collapse:collapse; border-spacing:0; }
+legend, hr { overflow:hidden; position:absolute; left:0; top:0; }
+legend, hr, caption { visibility:hidden; width:0; height:0; font-size:0; line-height:0; }
+
+/* Html5 reset styles */
+article, aside, audio, canvas, datalist, details, embed, figcaption, figure, footer, header, hgroup, keygen, meter, nav, output, progress, section, source, video { display: block; }
+mark, rp, rt, ruby, summary, time { display:inline; }
+
+/* Html5 reset [input] Chrome_cookie */
+input:-webkit-autofill { -webkit-box-shadow: 0 0 0 1000px #fff inset; }
+input, a { outline:none; }
+
+/* old easyui reset */
+input { border:0!important; }
+input[type='checkbox'],
+input[type='radis'] { height: auto!important; line-height:1!important; width: auto!important; padding:0; border:0!important;}
+
+
+/*
+editMember.html
+setting.html
+ */
+
+.mui-editmember-list { padding:4px 8px;}
+.mui-editmember-list .mui-table-view { background:transparent!important;}
+.mui-editmember-list .mui-table-view-cell { border-radius:4px; border-left:8px solid #40a6f9; background: #fff; margin-bottom:8px!important; }
+.mui-editmember-list .mui-table-view-cell a { border-bottom:1px solid #e7e7e7;}
+.mui-editmember-list .mui-table-view-cell a.bottom-top-none { border-bottom:0;}
+.mui-editmember-list .mui-table-view-cell input[type="text"] { font-size: 14px; border:0; margin:16px 0 0 0; }
+
+.team-icon{background: url("../../images/sign/icon/ico_team.png") no-repeat; }
+.member-icon{ background: url("../../images/sign/icon/ico_member.png") no-repeat; }
+.lead-icon{ background: url("../../images/sign/icon/ico_lead.png") no-repeat; }
+.date-icon { background: url("../../images/sign/icon/ico_date.png") no-repeat; }
+.location-icon { background: url("../../images/sign/icon/ico_location.png") no-repeat; }
+.time-icon{ background: url("../../images/sign/icon/ico_time.png") no-repeat; }
+.range-icon{ background: url("../../images/sign/icon/range.png") no-repeat; }
+.office-icon{ background: url("../../images/sign/office.png") no-repeat; }
+
+.date-icon,
+.location-icon,
+.time-icon,
+.team-icon,
+.member-icon,
+.range-icon,
+.office-icon,
+.lead-icon {display: inline-block; position: relative; top:4px; background-size: 100%; background-position: 50% 50%;margin:0 14px 0 8px;  width: 20px; height:20px;}
+
+.setting-item { padding-top: 12px; padding-left:4px;}
+.setting-item.text-right input { background-color: #56b7fa; padding:3px 8px;}

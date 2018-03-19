@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.deyi.dao.DeviceMapper" >
+<cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
+  <resultMap id="BaseResultMap" type="com.deyi.entity.Device" > 
+   <result column="id" property="id" jdbcType="INTEGER" />
+   <result column="deviceType" property="deviceType" jdbcType="INTEGER" />
+   <result column="dealerId" property="dealerId" jdbcType="VARCHAR" />
+   <result column="deviceCode" property="deviceCode" jdbcType="VARCHAR" />
+   <result column="deviceName" property="deviceName" jdbcType="VARCHAR" />
+   <result column="dayMaxCount" property="dayMaxCount" jdbcType="INTEGER" />
+   <result column="monthMaxCount" property="monthMaxCount" jdbcType="INTEGER" />
+   <result column="installAddress" property="installAddress" jdbcType="VARCHAR" />
+   <result column="machineStatus" property="machineStatus" jdbcType="VARCHAR" />
+   <result column="memo" property="memo" jdbcType="VARCHAR" />
+   <result column="status" property="status" jdbcType="VARCHAR" />
+   <result column="creator" property="creator" jdbcType="VARCHAR" />
+   <result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+   <result column="flag" property="flag" jdbcType="VARCHAR" />
+      <result column="qrCode" property="qrCode" jdbcType="VARCHAR" />
+      <result column="hints" property="hints" jdbcType="VARCHAR" />
+      <result column="qrUrl" property="qrUrl" jdbcType="VARCHAR" />
+</resultMap>
+  <sql id="Base_Column_List" >
+    id,deviceType,dealerId,deviceCode,deviceName,dayMaxCount,monthMaxCount,
+    installAddress,machineStatus,memo,status,creator,createTime,flag,qrCode,hints,qrUrl
+</sql>
+<select id="getDevice" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from t_device
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="getDevices" parameterType="com.deyi.entity.Device" resultType="com.deyi.entity.Device">
+
+      SELECT
+      a.id, a.deviceType,a.dealerId,deviceCode,deviceName,a.dayMaxCount,a.monthMaxCount,installAddress,
+      CASE IFNULL(a.machineStatus,'0')
+      WHEN '0' THEN '在线空闲'
+      WHEN '1' THEN '异常离线'
+      WHEN '2' THEN '正在使用'
+      END machineStatus,
+      c.dealerName AS memo,
+      CASE  a.status WHEN '0' THEN '在用' ELSE '启用' END STATUS,
+      c.series AS  creator,a.createTime,b.name AS flag,a.qrCode,
+      d.planName,a.hints,a.qrUrl
+      FROM t_device a
+      LEFT JOIN t_dic_device_type b  ON a.deviceType=b.code
+      LEFT JOIN t_dealer c ON a.dealerId = c.id
+      LEFT JOIN (SELECT e.planId,f.planName FROM t_device_plan e INNER JOIN t_recharge_plan f ON e.planId = f.id) d ON a.id = d.planId
+
+      <where>
+          1=1
+
+          <if test="id != null and id !=''" >
+                and id=#{id,jdbcType=INTEGER}
+          </if>
+          <if test="deviceType != null and deviceType !=''" >
+                and deviceType=#{deviceType,jdbcType=INTEGER}
+          </if>
+          <if test="dealerId != null and dealerId !=''" >
+                and dealerId=#{dealerId,jdbcType=VARCHAR}
+          </if>
+          <if test="deviceCode != null and deviceCode !=''" >
+                and deviceCode=#{deviceCode,jdbcType=VARCHAR}
+          </if>
+          <if test="deviceName != null and deviceName !=''" >
+                and deviceName=#{deviceName,jdbcType=VARCHAR}
+          </if>
+
+          <if test="machineStatus != null and machineStatus !=''" >
+                and machineStatus=#{machineStatus,jdbcType=VARCHAR}
+          </if>
+          <if test="memo != null and memo !=''" >
+                and memo=#{memo,jdbcType=VARCHAR}
+          </if>
+          <if test="status != null and status !=''" >
+                and status=#{status,jdbcType=VARCHAR}
+          </if>
+          <if test="creator != null and creator !=''" >
+                and creator=#{creator,jdbcType=VARCHAR}
+          </if>
+          <if test="createTime != null and createTime !=''" >
+                and createTime=#{createTime,jdbcType=TIMESTAMP}
+          </if>
+          <if test="flag != null and flag !=''" >
+                and flag=#{flag,jdbcType=VARCHAR}
+          </if>
+   </where>
+  </select>
+    <select id="getDeviceByCode" parameterType="com.deyi.entity.Device" resultMap="BaseResultMap">
+  	 select
+    <include refid="Base_Column_List" />
+    from t_device
+    <where>  1=1  
+
+  <if test="id != null and id !=''" >
+        and id=#{id,jdbcType=INTEGER}
+  </if>
+  <if test="deviceType != null and deviceType !=''" >
+        and deviceType=#{deviceType,jdbcType=INTEGER}
+  </if>
+  <if test="dealerId != null and dealerId !=''" >
+        and dealerId=#{dealerId,jdbcType=VARCHAR}
+  </if>
+  <if test="deviceCode != null and deviceCode !=''" >
+        and deviceCode=#{deviceCode,jdbcType=VARCHAR}
+  </if>
+  <if test="deviceName != null and deviceName !=''" >
+        and deviceName=#{deviceName,jdbcType=VARCHAR}
+  </if>
+
+  <if test="machineStatus != null and machineStatus !=''" >
+        and machineStatus=#{machineStatus,jdbcType=VARCHAR}
+  </if>
+  <if test="memo != null and memo !=''" >
+        and deviceName!=#{memo,jdbcType=VARCHAR}
+  </if>
+        <if test="hints != null and hints !=''" >
+            and deviceCode!=#{hints,jdbcType=VARCHAR}
+        </if>
+  <if test="status != null and status !=''" >
+        and status=#{status,jdbcType=VARCHAR}
+  </if>
+  <if test="creator != null and creator !=''" >
+        and creator=#{creator,jdbcType=VARCHAR}
+  </if>
+  <if test="createTime != null and createTime !=''" >
+        and createTime=#{createTime,jdbcType=TIMESTAMP}
+  </if>
+  <if test="flag != null and flag !=''" >
+        and flag=#{flag,jdbcType=VARCHAR}
+  </if> 
+   </where>
+  </select>
+    <select id="getPageDevices" parameterType="com.deyi.util.Page" resultMap="BaseResultMap">
+        SELECT
+        a.id, a.deviceType,a.dealerId,deviceCode,deviceName,a.dayMaxCount,a.monthMaxCount,installAddress,
+        CASE IFNULL(a.machineStatus,'0')
+        WHEN '0' THEN '在线空闲'
+        WHEN '1' THEN '异常离线'
+        WHEN '2' THEN '正在使用'
+        END machineStatus, c.dealerName AS memo,a.status,c.series as  creator,
+        DATE_FORMAT( a.createTime,'%Y-%m-%d %h:%i:%s') as createTime,
+        b.name AS flag,a.qrCode,a.hints,a.qrUrl
+        FROM t_device a
+        LEFT JOIN t_dic_device_type b  ON a.deviceType=b.code
+        LEFT JOIN t_dealer c ON a.dealerId = c.id
+
+        <where>  1=1
+
+  <if test="params.deviceType != null and params.deviceType !=''" >
+              and deviceType=#{params.deviceType}
+  </if>
+  <if test="params.dealerId != null and params.dealerId !=''" >
+              and dealerId=#{params.dealerId}
+  </if>
+  <if test="params.deviceCode != null and params.deviceCode !=''" >
+              and deviceCode=#{params.deviceCode}
+  </if>
+  <if test="params.deviceName != null and params.deviceName !=''" >
+              and deviceName LIKE CONCAT('%','${params.deviceName}','%')
+  </if>
+  <if test="params.dayMaxCount != null and params.dayMaxCount !=''" >
+              and dayMaxCount=#{params.dayMaxCount}
+  </if>
+  <if test="params.monthMaxCount != null and params.monthMaxCount !=''" >
+              and monthMaxCount=#{params.monthMaxCount}
+  </if>
+  <if test="params.installAddress != null and params.installAddress !=''" >
+              and installAddress=#{params.installAddress}
+  </if>
+  <if test="params.machineStatus != null and params.machineStatus !=''" >
+              and machineStatus=#{params.machineStatus}
+  </if>
+  <if test="params.memo != null and params.memo !=''" >
+              and memo=#{params.memo}
+  </if>
+  <if test="params.status != null and params.status !=''" >
+              and status=#{params.status}
+  </if>
+  <if test="params.creator != null and params.creator !=''" >
+              and creator=#{params.creator}
+  </if>
+  <if test="params.createTimeStart != null and params.createTimeStart !=''">
+    and createTime <![CDATA[>=]]> DATE_FORMAT(#{params.createTimeStart},'%Y-%m-%d 00:00:00')
+</if>
+<if test="params.createTimeEnd != null and params.createTimeEnd !=''">
+ 	  and createTime <![CDATA[<=]]> DATE_FORMAT(#{params.createTimeEnd},'%Y-%m-%d 23:59:59')
+</if>
+  <if test="params.flag != null and params.flag !=''" >
+              and flag=#{params.flag}
+  </if> 
+   </where>
+  </select>
+  <delete id="delete" parameterType="java.lang.Integer" >
+    delete from t_device
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+ <insert id="insert" parameterType="com.deyi.entity.Device" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+    insert into t_device 
+ <trim prefix="(" suffix=")" suffixOverrides="," >
+  <if test="id != null" >
+        id,
+  </if>
+  <if test="deviceType != null" >
+        deviceType,
+  </if>
+  <if test="dealerId != null" >
+        dealerId,
+  </if>
+  <if test="deviceCode != null" >
+        deviceCode,
+  </if>
+  <if test="deviceName != null" >
+        deviceName,
+  </if>
+  <if test="dayMaxCount != null" >
+        dayMaxCount,
+  </if>
+  <if test="monthMaxCount != null" >
+        monthMaxCount,
+  </if>
+  <if test="installAddress != null" >
+        installAddress,
+  </if>
+  <if test="machineStatus != null" >
+        machineStatus,
+  </if>
+  <if test="memo != null" >
+        memo,
+  </if>
+  <if test="status != null" >
+        status,
+  </if>
+  <if test="creator != null" >
+        creator,
+  </if>
+  <if test="createTime != null" >
+        createTime,
+  </if>
+  <if test="flag != null" >
+        flag,
+  </if>
+     <if test="hints != null" >
+     hints,
+ </if>
+     <if test="qrCode != null" >
+         qrCode,
+     </if>
+     <if test="qrUrl != null" >
+         qrUrl,
+     </if>
+ </trim>
+<trim prefix="values (" suffix=")" suffixOverrides="," >
+  <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+  </if>
+  <if test="deviceType != null" >
+        #{deviceType,jdbcType=INTEGER},
+  </if>
+  <if test="dealerId != null" >
+        #{dealerId,jdbcType=VARCHAR},
+  </if>
+  <if test="deviceCode != null" >
+        #{deviceCode,jdbcType=VARCHAR},
+  </if>
+  <if test="deviceName != null" >
+        #{deviceName,jdbcType=VARCHAR},
+  </if>
+  <if test="dayMaxCount != null" >
+        #{dayMaxCount,jdbcType=INTEGER},
+  </if>
+  <if test="monthMaxCount != null" >
+        #{monthMaxCount,jdbcType=INTEGER},
+  </if>
+  <if test="installAddress != null" >
+        #{installAddress,jdbcType=VARCHAR},
+  </if>
+  <if test="machineStatus != null" >
+        #{machineStatus,jdbcType=VARCHAR},
+  </if>
+  <if test="memo != null" >
+        #{memo,jdbcType=VARCHAR},
+  </if>
+  <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+  </if>
+  <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+  </if>
+  <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+  </if>
+  <if test="flag != null" >
+        #{flag,jdbcType=VARCHAR},
+  </if>
+     <if test="hints != null" >
+         #{hints,jdbcType=VARCHAR},
+     </if>
+    <if test="qrCode != null" >
+        #{qrCode,jdbcType=VARCHAR},
+    </if>
+    <if test="qrUrl != null" >
+        #{qrUrl,jdbcType=VARCHAR},
+    </if>
+</trim>
+
+</insert>
+
+    <update id="update" parameterType="com.deyi.entity.Device" >
+        update t_device
+        <set >
+
+
+            <if test="deviceType != null" >
+                deviceType=#{deviceType,jdbcType=INTEGER},
+            </if>
+            <if test="dealerId != null" >
+                dealerId=#{dealerId,jdbcType=VARCHAR},
+            </if>
+            <if test="deviceCode != null" >
+                deviceCode=#{deviceCode,jdbcType=VARCHAR},
+            </if>
+            <if test="deviceName != null" >
+                deviceName=#{deviceName,jdbcType=VARCHAR},
+            </if>
+            <if test="dayMaxCount != null" >
+                dayMaxCount=#{dayMaxCount,jdbcType=INTEGER},
+            </if>
+            <if test="monthMaxCount != null" >
+                monthMaxCount=#{monthMaxCount,jdbcType=INTEGER},
+            </if>
+            <if test="installAddress != null" >
+                installAddress=#{installAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="machineStatus != null" >
+                machineStatus=#{machineStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="memo != null" >
+                memo=#{memo,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null" >
+                status=#{status,jdbcType=VARCHAR},
+            </if>
+            <if test="creator != null" >
+                creator=#{creator,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null" >
+                createTime=#{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="flag != null" >
+                flag=#{flag,jdbcType=VARCHAR},
+            </if>
+            <if test="qrCode != null" >
+                qrCode=#{qrCode,jdbcType=VARCHAR},
+            </if>
+            <if test="hints != null" >
+                hints = #{hints,jdbcType=VARCHAR},
+            </if>
+            <if test="qrCode != null" >
+                qrCode = #{qrCode,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

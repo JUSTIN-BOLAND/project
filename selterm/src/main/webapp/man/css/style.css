@@ -1,0 +1,26 @@
+/* CSS Document */
+@charset"utf-8";
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, th, td, tr, button ,input{padding:0; margin:0;-webkit-font-smoothing: antialiased;}
+body{font-size:14px; color:#666666;font-family:"微软雅黑",Arial, Helvetica, sans-serif; center top no-repeat; }
+img{border:none;}
+a{ text-decoration:none;}
+a,ul,li{list-style:none;}
+i,em{ font-style:normal;}
+.fl{ float:left;}
+.fr{ float:right;}
+
+.center{ width:960px; margin:0 auto; position:relative;}
+.cont{ width:250px; height:auto; overflow:hidden; position:absolute; top:270px; right:50px;}
+.con_sr{ width:236px; height:15px; background:none; border:#c6c6c6 solid 1px; margin-bottom:15px; padding:10px 5px;}
+.con_yzk{ width:248px; height:35px; margin-bottom:32px;}
+.con_yz{ width:140px; height:15px; background:none; border:#c6c6c6 solid 1px; padding:10px 5px;}
+.button{ width:250px; height:35px; display:block; background:#ea9e53; line-height:35px; color:#fff; text-align:center;}
+.foot{width:1000px; text-align:center; line-height:20px; color:#a3a3a3; position:fixed; bottom:20px;}
+
+#top {
+    background: no-repeat scroll 0% 0% transparent;
+    height: 65px;
+	margin: 0px auto;
+	padding: 0px;
+	font-size: 12px;
+}

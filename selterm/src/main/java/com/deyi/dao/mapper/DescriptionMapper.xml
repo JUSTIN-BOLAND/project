@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.deyi.dao.DescriptionMapper" >
+
+<cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
+
+  <resultMap id="BaseResultMap" type="com.deyi.entity.Description" >
+    <id column="versionCode" property="versioncode" jdbcType="INTEGER" />
+    <result column="versionName" property="versionname" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="platform" property="platform" jdbcType="INTEGER" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="updateTime" property="updatetime"  />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    versionCode, versionName, description, platform, url, updateTime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_description
+    where versionCode = #{versioncode,jdbcType=INTEGER}
+  </select>
+  <!-- 返回最新版本号  -->
+  <select id="selectByPrimaryId" resultMap="BaseResultMap" >
+  	SELECT <include refid="Base_Column_List" /> FROM sys_description WHERE versionCode= (SELECT MAX(versionCode) FROM sys_description);
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sys_description
+    where versionCode = #{versioncode,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.deyi.entity.Description" >
+    insert into sys_description (versionCode, versionName, description, 
+      platform, url, updateTime
+      )
+    values (#{versioncode,jdbcType=INTEGER}, #{versionname,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{platform,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, #{updatetime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.deyi.entity.Description" >
+    insert into sys_description
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="versioncode != null" >
+        versionCode,
+      </if>
+      <if test="versionname != null" >
+        versionName,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="platform != null" >
+        platform,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="updatetime != null" >
+        updateTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="versioncode != null" >
+        #{versioncode,jdbcType=INTEGER},
+      </if>
+      <if test="versionname != null" >
+        #{versionname,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="platform != null" >
+        #{platform,jdbcType=INTEGER},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null" >
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.deyi.entity.Description" >
+    update sys_description
+    <set >
+      <if test="versionname != null" >
+        versionName = #{versionname,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="platform != null" >
+        platform = #{platform,jdbcType=INTEGER},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null" >
+        updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where versionCode = #{versioncode,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.deyi.entity.Description" >
+    update sys_description
+    set versionName = #{versionname,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      platform = #{platform,jdbcType=INTEGER},
+      url = #{url,jdbcType=VARCHAR},
+      updateTime = #{updatetime,jdbcType=TIMESTAMP}
+    where versionCode = #{versioncode,jdbcType=INTEGER}
+  </update>
+</mapper>

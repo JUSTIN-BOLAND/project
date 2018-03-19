@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.deyi.dao.IndustryTypeMapper" >
+
+	<cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
+
+  <resultMap id="BaseResultMap" type="com.deyi.entity.IndustryType" >
+    <result column="oneid" property="oneid" jdbcType="VARCHAR" />
+    <result column="onename" property="onename" jdbcType="VARCHAR" />
+    <result column="twoid" property="twoid" jdbcType="VARCHAR" />
+    <result column="twoname" property="twoname" jdbcType="VARCHAR" />
+    <result column="threeid" property="threeid" jdbcType="VARCHAR" />
+    <result column="threename" property="threename" jdbcType="VARCHAR" />
+    <result column="typecode" property="typecode" jdbcType="VARCHAR" />
+    <result column="rate" property="rate" jdbcType="VARCHAR" />
+    <result column="cycle" property="cycle" jdbcType="VARCHAR" />
+  </resultMap>
+  <insert id="insert" parameterType="com.deyi.entity.IndustryType" >
+    insert into p_industry_type (oneid, onename, twoid, 
+      twoname, threeid, threename, 
+      typecode, rate, cycle
+      )
+    values (#{oneid,jdbcType=VARCHAR}, #{onename,jdbcType=VARCHAR}, #{twoid,jdbcType=VARCHAR}, 
+      #{twoname,jdbcType=VARCHAR}, #{threeid,jdbcType=VARCHAR}, #{threename,jdbcType=VARCHAR}, 
+      #{typecode,jdbcType=VARCHAR}, #{rate,jdbcType=VARCHAR}, #{cycle,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.deyi.entity.IndustryType" >
+    insert into p_industry_type
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="oneid != null" >
+        oneid,
+      </if>
+      <if test="onename != null" >
+        onename,
+      </if>
+      <if test="twoid != null" >
+        twoid,
+      </if>
+      <if test="twoname != null" >
+        twoname,
+      </if>
+      <if test="threeid != null" >
+        threeid,
+      </if>
+      <if test="threename != null" >
+        threename,
+      </if>
+      <if test="typecode != null" >
+        typecode,
+      </if>
+      <if test="rate != null" >
+        rate,
+      </if>
+      <if test="cycle != null" >
+        cycle,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="oneid != null" >
+        #{oneid,jdbcType=VARCHAR},
+      </if>
+      <if test="onename != null" >
+        #{onename,jdbcType=VARCHAR},
+      </if>
+      <if test="twoid != null" >
+        #{twoid,jdbcType=VARCHAR},
+      </if>
+      <if test="twoname != null" >
+        #{twoname,jdbcType=VARCHAR},
+      </if>
+      <if test="threeid != null" >
+        #{threeid,jdbcType=VARCHAR},
+      </if>
+      <if test="threename != null" >
+        #{threename,jdbcType=VARCHAR},
+      </if>
+      <if test="typecode != null" >
+        #{typecode,jdbcType=VARCHAR},
+      </if>
+      <if test="rate != null" >
+        #{rate,jdbcType=VARCHAR},
+      </if>
+      <if test="cycle != null" >
+        #{cycle,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+    <select id="oneindustrytype"  resultType="com.deyi.vo.TypeVo">
+  	SELECT oneid id,onename name FROM p_industry_type GROUP BY oneid
+  </select>
+  <select id="twoindustrytype" parameterType="java.lang.String" resultType="com.deyi.vo.TypeVo">
+  	SELECT twoid id,twoname name FROM p_industry_type WHERE oneid  = #{id} GROUP BY twoid
+  </select>
+  <select id="threeindustrytype" parameterType="java.lang.String" resultType="com.deyi.vo.TypeVo">
+  	SELECT threeid id,threename name,typecode code FROM p_industry_type WHERE twoid  = #{id} GROUP BY threeid
+  </select>
+  
+  <select id="getbyid" resultMap="BaseResultMap" parameterType="java.lang.String">
+  	SELECT * FROM p_industry_type WHERE threeid = #{id}
+  </select>
+  
+  
+  <select id="querybytypecode" parameterType="java.lang.String" resultMap="BaseResultMap">
+  	select * from p_industry_type WHERE typecode = #{typecode}
+  </select>
+</mapper>

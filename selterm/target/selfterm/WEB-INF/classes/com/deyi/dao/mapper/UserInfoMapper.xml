@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.deyi.dao.UserDao" >
+
+	<cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
+  <resultMap id="BaseResultMap" type="com.deyi.entity.UserInfo" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="roleId" property="roleid" jdbcType="VARCHAR" />
+    <result column="roleName" property="rolename" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="CHAR" />
+    <result column="creatTime" property="type" jdbcType="TIMESTAMP" />
+    <result column="remark" property="type" jdbcType="VARCHAR" />
+    <result column="loginTime" property="loginTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, roleId, roleName,  password, type,loginTime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from sys_user
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from sys_user
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByRoleId" parameterType="java.lang.String" >
+    delete from sys_user
+    where roleId = #{roleId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.deyi.entity.UserInfo" >
+    insert into sys_user (id, roleId, roleName,password, type)
+    values (#{id,jdbcType=VARCHAR},
+    		#{roleid,jdbcType=VARCHAR},
+    		#{rolename,jdbcType=VARCHAR},
+       		#{password,jdbcType=VARCHAR},
+     		#{type,jdbcType=CHAR})
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.deyi.entity.UserInfo" >
+    update sys_user
+    <set >
+      <if test="roleid != null" >
+        roleId = #{roleid,jdbcType=VARCHAR},
+      </if>
+      <if test="rolename != null" >
+        roleName = #{rolename,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=CHAR},
+      </if>
+      <if test="loginTime != null" >
+        loginTime = #{loginTime}
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <select id="getUserPassword" parameterType="string" resultType="com.deyi.entity.UserInfo">
+    	select * from sys_user where id=#{0} and password=#{1}
+  </select>
+
+
+  <select id="getAccountPassword" parameterType="java.lang.String" resultType="com.deyi.entity.UserInfo">
+    	select * from sys_user where id=#{loginName} and password=#{passwd}
+   </select>
+    <select id="getUserById" parameterType="java.lang.String" resultType="com.deyi.entity.UserInfo" >
+        select * from sys_user where id = #{id}
+    </select>
+    <select id="getUserInfoList" parameterType="com.deyi.util.Page" resultType="com.deyi.vo.UserVo" useCache="false">
+  		select * from (SELECT id,roleName rolename,creattime,remark,
+       (CASE type
+         WHEN 1 THEN
+          (select orgAccount from dis_org where orgAccount = t.id)
+         when 2 then
+          (select accountName from dis_salesman where accountName = t.id)
+         WHEN 3 THEN
+          (select merAccount from dis_merchant where merAccount = t.id)
+					WHEN 4 THEN
+          (select accountName from dis_clerk where accountName = t.id)
+       end) account,
+				(CASE type
+         WHEN 1 THEN
+          (select contactTel from dis_org where orgAccount = t.id)
+         when 2 then
+          (select contact from dis_salesman where accountName = t.id)
+         WHEN 3 THEN
+          (select contactTel from dis_merchant where merAccount = t.id)
+					WHEN 4 THEN
+          (select phone from dis_clerk where accountName = t.id)
+       end) contact,
+			(CASE type
+         WHEN 1 THEN
+          (select contactPerson from dis_org where orgAccount = t.id)
+         when 2 then
+          (select saleName from dis_salesman where accountName = t.id)
+         WHEN 3 THEN
+          (select contactPerson from dis_merchant where merAccount = t.id)
+					WHEN 4 THEN
+          (select clerkName from dis_clerk where accountName = t.id)
+      	 end) contactperson
+  		FROM sys_user t) f
+  		<where>
+  			1=1
+  			<if test="params.account != null and params.account !=''">
+  				and account like CONCAT('%','${params.account}','%')
+  			</if>
+  			<if test="params.contact != null and params.contact !=''">
+  				and contact = #{params.contact}
+  			</if>
+  		</where>
+  		order by id desc
+  	</select>
+</mapper>

@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.deyi.dao.PayLogMapper" >
+<cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
+  <resultMap id="BaseResultMap" type="com.deyi.entity.PayLog" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="work_type" property="workType" jdbcType="INTEGER" />
+    <result column="sub_work_type" property="subWorkType" jdbcType="INTEGER" />
+    <result column="marchant_id" property="marchantId" jdbcType="VARCHAR" />
+    <result column="out_trade_no" property="outTradeNo" jdbcType="VARCHAR" />
+    <result column="buyer_id" property="buyerId" jdbcType="VARCHAR" />
+    <result column="subject" property="subject" jdbcType="VARCHAR" />
+
+    <result column="total_amount" property="totalAmount" jdbcType="VARCHAR" />
+    <result column="discountable_amount" property="discountableAmount" jdbcType="VARCHAR" />
+    <result column="undiscountable_amount" property="undiscountableAmount" jdbcType="VARCHAR" />
+    <result column="body" property="body" jdbcType="VARCHAR" />
+    <result column="store_id" property="storeId" jdbcType="VARCHAR" />
+    <result column="sub_merchant_id" property="subMerchantId" jdbcType="VARCHAR" />
+
+    <result column="pay_status" property="payStatus" jdbcType="VARCHAR" />
+    <result column="creat_time" property="creatTime" jdbcType="TIMESTAMP" />
+    <result column="operator_id" property="operatorId" jdbcType="VARCHAR" />
+    <result column="memo" property="memo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id,work_type,sub_work_type,marchant_id,out_trade_no,auth_code,buyer_id,SUBJECT,total_amount,
+    discountable_amount,undiscountable_amount,body,store_id,sub_merchant_id,pay_status,creat_time,operator_id,memo
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from t_pay_log
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_pay_log
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.deyi.entity.PayLog" >
+    insert into t_pay_log (id,work_type,sub_work_type,marchant_id,out_trade_no,auth_code,buyer_id,SUBJECT,total_amount,
+    discountable_amount,undiscountable_amount,body,store_id,sub_merchant_id,pay_status,creat_time,operator_id,memo)
+    values (#{id,jdbcType=INTEGER}, #{workType,jdbcType=INTEGER}, #{subWorkType,jdbcType=INTEGER},
+      #{marchantId,jdbcType=VARCHAR},#{outTradeNo,jdbcType=VARCHAR},#{buyerId,jdbcType=VARCHAR},#{subject,jdbcType=VARCHAR},
+      #{totalAmount,jdbcType=VARCHAR},#{discountableAmount,jdbcType=VARCHAR},#{undiscountableAmount,jdbcType=VARCHAR},#{body,jdbcType=VARCHAR}
+      ,#{storeId,jdbcType=VARCHAR},#{subMerchantId,jdbcType=VARCHAR},#{payStatus,jdbcType=VARCHAR},#{creatTime,jdbcType=TIMESTAMP},#{operatorId,jdbcType=VARCHAR},
+      ,#{memo,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.deyi.entity.PayLog" >
+    insert into t_pay_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="cityCode != null" >
+        city_code,
+      </if>
+      <if test="cityName != null" >
+        city_name,
+      </if>
+      <if test="provinceId != null" >
+        province_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="workType != null" >
+        #{workType,jdbcType=INTEGER},
+      </if>
+      <if test="subWorkType != null" >
+        #{subWorkType,jdbcType=INTEGER},
+      </if>
+      <if test="marchantId != null" >
+        #{marchantId,jdbcType=VARCHAR},
+      </if>
+      <if test="outTradeNo != null" >
+        #{outTradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerId != null" >
+        #{buyerId,jdbcType=INTEGER},
+      </if>
+      <if test="subject != null" >
+        #{subject,jdbcType=VARCHAR},
+      </if>
+      <if test="totalAmount != null" >
+        #{totalAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="discountableAmount != null" >
+        #{discountableAmount,jdbcType=INTEGER},
+      </if>
+      <if test="undiscountableAmount != null" >
+        #{undiscountableAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="body != null" >
+        #{body,jdbcType=VARCHAR},
+      </if>
+      <if test="storeId != null" >
+        #{storeId,jdbcType=INTEGER},
+      </if>
+      <if test="subMerchantId != null" >
+        #{subMerchantId,jdbcType=VARCHAR},
+      </if>
+      <if test="payStatus != null" >
+        #{payStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="creatTime != null" >
+        #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+
+
+      <if test="operatorId != null" >
+        #{operatorId,jdbcType=INTEGER},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=VARCHAR},
+      </if>
+
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.deyi.entity.PayLog" >
+    update t_pay_log
+    <set >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="workType != null" >
+        #{workType,jdbcType=INTEGER},
+      </if>
+      <if test="subWorkType != null" >
+        #{subWorkType,jdbcType=INTEGER},
+      </if>
+      <if test="marchantId != null" >
+        #{marchantId,jdbcType=VARCHAR},
+      </if>
+      <if test="outTradeNo != null" >
+        #{outTradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerId != null" >
+        #{buyerId,jdbcType=INTEGER},
+      </if>
+      <if test="subject != null" >
+        #{subject,jdbcType=VARCHAR},
+      </if>
+      <if test="totalAmount != null" >
+        #{totalAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="discountableAmount != null" >
+        #{discountableAmount,jdbcType=INTEGER},
+      </if>
+      <if test="undiscountableAmount != null" >
+        #{undiscountableAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="body != null" >
+        #{body,jdbcType=VARCHAR},
+      </if>
+      <if test="storeId != null" >
+        #{storeId,jdbcType=INTEGER},
+      </if>
+      <if test="subMerchantId != null" >
+        #{subMerchantId,jdbcType=VARCHAR},
+      </if>
+      <if test="payStatus != null" >
+        #{payStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="creatTime != null" >
+        #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+
+
+      <if test="operatorId != null" >
+        #{operatorId,jdbcType=INTEGER},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.deyi.entity.PayLog" >
+    update t_pay_log
+    set  id = #{id,jdbcType=INTEGER},
+        work_type= #{workType,jdbcType=INTEGER},
+        sub_work_type = #{subWorkType,jdbcType=INTEGER},
+        marchant_id = #{marchantId,jdbcType=VARCHAR},
+
+        out_trade_no = #{outTradeNo,jdbcType=VARCHAR},
+        buyer_id = #{buyerId,jdbcType=INTEGER},
+
+        subject = #{subject,jdbcType=VARCHAR},
+
+        total_amount = #{totalAmount,jdbcType=VARCHAR},
+
+        discountable_amount = #{discountableAmount,jdbcType=INTEGER},
+
+        undiscountable_amount = #{undiscountableAmount,jdbcType=VARCHAR},
+
+        body = #{body,jdbcType=VARCHAR},
+
+        store_id = #{storeId,jdbcType=INTEGER},
+
+        subMerchant_id = #{subMerchantId,jdbcType=VARCHAR},
+
+        pay_status = #{payStatus,jdbcType=VARCHAR},
+
+        creat_time = #{creatTime,jdbcType=TIMESTAMP},
+
+        operator_dd = #{operatorId,jdbcType=INTEGER},
+
+        memo = #{memo,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="getPayLog" parameterType="java.lang.String" resultMap="BaseResultMap">
+  	 select
+    <include refid="Base_Column_List" />
+    from t_pay_log
+    where
+    work_type  = #{workType} and sub_work_type = #{subWorkType}
+  </select>
+</mapper>

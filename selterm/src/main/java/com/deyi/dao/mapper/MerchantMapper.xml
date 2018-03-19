@@ -1,0 +1,1172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.deyi.dao.MerchantDao" >
+	<cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
+
+  <resultMap id="BaseResultMap" type="com.deyi.entity.Merchant" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="org_id" property="orgId" jdbcType="BIGINT" />
+    <result column="orgName" property="orgName" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="contactPerson" property="contactperson" jdbcType="VARCHAR" />
+    <result column="contactTel" property="contacttel" jdbcType="VARCHAR" />
+    <result column="areaId" property="areaid" jdbcType="INTEGER" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="merType" property="mertype" jdbcType="CHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="CHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="creatorName" property="creatorname" jdbcType="VARCHAR" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="merAccount" property="meraccount" jdbcType="VARCHAR" />
+    <result column="identYesCard" property="identyescard" jdbcType="VARCHAR" />
+    <result column="identNoCard" property="identnocard" jdbcType="VARCHAR" />
+    <result column="bankYesCard" property="bankyescard" jdbcType="VARCHAR" />
+    <result column="bankNoCard" property="banknocard" jdbcType="VARCHAR" />
+    <result column="storeSopra" property="storesopra" jdbcType="VARCHAR" />
+    <result column="storeInterior" property="storeinterior" jdbcType="VARCHAR" />
+    <result column="storeInterior1" property="storeinterior1" jdbcType="VARCHAR" />
+    <result column="storeInterior2" property="storeinterior2" jdbcType="VARCHAR" />
+    <result column="busLicense" property="buslicense" jdbcType="VARCHAR" />
+    <result column="org" property="org" jdbcType="VARCHAR" />
+    <result column="taxAdministr" property="taxadministr" jdbcType="VARCHAR" />
+    <result column="merchantPermit" property="merchantPermit" jdbcType="VARCHAR" />
+    <result column="rate" property="rate" jdbcType="DECIMAL" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="sb_merchant_type" property="sb_merchant_type" jdbcType="VARCHAR" />
+    <result column="audit" property="audit" jdbcType="CHAR" />
+    <result column="wx_appid" property="appid" jdbcType="VARCHAR" />
+    <result column="wx_appsecret" property="appsecret" jdbcType="VARCHAR" />
+    <result column="sb_status" property="sb_status" jdbcType="VARCHAR" />
+    <result column="merchantLogo" property="merchantLogo" jdbcType="VARCHAR" />
+    <result column="merchant_rate" property="merchant_rate" jdbcType="VARCHAR" />
+    <result column="ali_merchant_id" property="aliMerchantId" jdbcType="VARCHAR" />
+    <result column="merchant_ali_account" property="merchantAliAccount" jdbcType="VARCHAR" />
+    <result column="reject_reason" property="rejectReason" jdbcType="VARCHAR" />
+    <result column="settle_status" property="settleStatus" jdbcType="VARCHAR" />
+
+
+  </resultMap>
+  <resultMap id="BankResultMap" type="com.deyi.vo.bank.BankMerchantVo" >
+    <result column="merType" property="mertype" jdbcType="CHAR" />
+  	<result column="code" property="merCode" jdbcType="VARCHAR" />
+	<result column="name" property="merchantName" jdbcType="VARCHAR" />
+	<result column="merchant_alias" property="merchantAlias" jdbcType="VARCHAR" />
+	<result column="merchant_company" property="merchantCompany" jdbcType="VARCHAR" />
+	<result column="merchant_person" property="merchantPerson" jdbcType="VARCHAR" />
+	<result column="merchant_email" property="merchantEmail" jdbcType="VARCHAR" />
+	<result column="merchant_phone" property="merchantPhone" jdbcType="VARCHAR" />
+	<result column="account_name" property="accountName" jdbcType="VARCHAR" />
+	<result column="account_no" property="accountNo" jdbcType="VARCHAR" />
+	<result column="bank_no" property="bankNo" jdbcType="VARCHAR" />
+	<result column="account_phone" property="accountPhone" jdbcType="VARCHAR" />
+	<result column="merchant_id_no" property="idNo" jdbcType="VARCHAR" />
+	<result column="account_type" property="accountType" jdbcType="VARCHAR" />
+	<result column="merchant_rate" property="merchant_rate" jdbcType="VARCHAR" />
+	<result column="merchant_province_code" property="provinceCode" jdbcType="VARCHAR" />
+	<result column="merchant_city_code" property="cityCode" jdbcType="VARCHAR" />
+    <result column="merchant_district_code" property="districtCode" jdbcType="VARCHAR" />
+	<result column="business_code" property="businessCode" jdbcType="VARCHAR" />
+	<result column="merchant_address" property="merchantAddress" jdbcType="VARCHAR" />
+	<result column="remark" property="remark" jdbcType="VARCHAR" />
+	<result column="identYesCard" property="identYesCard" jdbcType="VARCHAR" />
+	<result column="identNoCard" property="identNoCard" jdbcType="VARCHAR" />
+	<result column="bankYesCard" property="bankYesCard" jdbcType="VARCHAR" />
+	<result column="busLicense" property="busLicense" jdbcType="VARCHAR" />
+	<result column="img_license" property="imgLicense" jdbcType="VARCHAR" />
+	<result column="img_other" property="imgOther" jdbcType="VARCHAR" />
+	<result column="storeSopra" property="storeSopra" jdbcType="VARCHAR" />
+	<result column="storeInterior" property="storeInterior" jdbcType="VARCHAR" />
+    <result column="ali_merchant_id" property="aliMerchantId" jdbcType="VARCHAR" />
+    <result column="merchant_blicense_no" property="merchantBlicenseNo" jdbcType="VARCHAR" />
+    <result column="longitude" property="longitude" jdbcType="VARCHAR" />
+    <result column="latitude" property="latitude" jdbcType="VARCHAR" />
+    <result column="reject_reason" property="rejectReason" jdbcType="VARCHAR" />
+    <result column="settle_status" property="settleStatus" jdbcType="VARCHAR" />
+
+    <result column="ali_merchant_id" property="aliMerchantId" jdbcType="VARCHAR" />
+    <result column="settle_status" property="settleStatus" jdbcType="VARCHAR" />
+
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, code, org_id, orgName, name, contactPerson, contactTel, areaId, address, merType,
+    remark, status, creator, creatorName, createTime, merAccount, identYesCard, identNoCard,
+    bankYesCard, bankNoCard, storeSopra, storeInterior,storeInterior1,storeInterior2, busLicense, org, taxAdministr,merchantPermit,
+    rate,deletedStatus,email,audit,sb_merchant_type,wx_appid,wx_appsecret,sb_status,merchantLogo,ali_merchant_id,merchant_ali_account,
+    reject_reason,settle_status,merchant_rate
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    *
+    from dis_merchant
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="getMerchantByCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    *
+    from dis_merchant
+    where code = #{merCode,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from dis_merchant
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.deyi.entity.Merchant" >
+    insert into dis_merchant (id, code, org_id,
+      orgName, name, contactPerson,
+      contactTel, areaId, address,
+      merType, remark, status,
+      creator, creatorName, createTime,
+      merAccount, identYesCard, identNoCard,
+      bankYesCard, bankNoCard, storeSopra,
+      storeInterior, busLicense, org,
+      taxAdministr, rate,merchantLogo,ali_merchant_id,merchant_ali_account,reject_reason,merchant_rate)
+    values (#{id,jdbcType=BIGINT}, #{code,jdbcType=VARCHAR}, #{orgId,jdbcType=BIGINT},
+      #{orgName,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{contactperson,jdbcType=VARCHAR},
+      #{contacttel,jdbcType=VARCHAR}, #{areaid,jdbcType=INTEGER}, #{address,jdbcType=VARCHAR},
+      #{mertype,jdbcType=CHAR}, #{remark,jdbcType=VARCHAR}, #{status,jdbcType=CHAR},
+      #{creator,jdbcType=VARCHAR}, #{creatorname,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP},
+      #{meraccount,jdbcType=VARCHAR}, #{identyescard,jdbcType=VARCHAR}, #{identnocard,jdbcType=VARCHAR},
+      #{bankyescard,jdbcType=VARCHAR}, #{banknocard,jdbcType=VARCHAR}, #{storesopra,jdbcType=VARCHAR},
+      #{storeinterior,jdbcType=VARCHAR}, #{buslicense,jdbcType=VARCHAR}, #{org,jdbcType=VARCHAR},
+      #{taxadministr,jdbcType=VARCHAR}, #{rate,jdbcType=DECIMAL},#{merchantLogo,jdbcType=VARCHAR},
+      #{aliMerchantId,jdbcType=VARCHAR},#{merchantAliAccount,jdbcType=VARCHAR},#{rejectReason,jdbcType=VARCHAR},
+      ,#{merchant_rate,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.deyi.entity.Merchant" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+    insert into dis_merchant
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      code,
+      <!-- <if test="code != null" >
+        code,
+      </if> -->
+      <if test="orgId != null" >
+        org_id,
+      </if>
+      <if test="orgName != null" >
+        orgName,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="contactperson != null" >
+        contactPerson,
+      </if>
+      <if test="contacttel != null" >
+        contactTel,
+      </if>
+      <if test="areaid != null" >
+        areaId,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="mertype != null" >
+        merType,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="creatorname != null" >
+        creatorName,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+      <if test="meraccount != null" >
+        merAccount,
+      </if>
+      <if test="identyescard != null" >
+        identYesCard,
+      </if>
+      <if test="identnocard != null" >
+        identNoCard,
+      </if>
+      <if test="bankyescard != null" >
+        bankYesCard,
+      </if>
+      <if test="banknocard != null" >
+        bankNoCard,
+      </if>
+      <if test="storesopra != null" >
+        storeSopra,
+      </if>
+      <if test="storeinterior != null" >
+        storeInterior,
+      </if>
+      <if test="storeinterior1 != null" >
+        storeinterior1,
+      </if>
+       <if test="storeinterior2 != null" >
+        storeinterior2,
+      </if>
+      <if test="buslicense != null" >
+        busLicense,
+      </if>
+      <if test="org != null" >
+        org,
+      </if>
+      <if test="taxadministr != null" >
+        taxAdministr,
+      </if>
+       <if test="merchantPermit != null" >
+        merchantPermit,
+      </if>
+      <if test="rate != null" >
+        rate,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="audit != null" >
+        audit,
+      </if>
+      <if test="appid != null" >
+        wx_appid,
+      </if>
+      <if test="appsecret != null" >
+        wx_appsecret,
+      </if>
+      <if test="sb_merchant_type != null" >
+        sb_merchant_type,
+      </if>
+      <if test="merchantLogo != null" >
+        merchantLogo,
+      </if>
+      <if test="merchant_rate != null" >
+        merchant_rate,
+      </if>
+      <if test="aliMerchantId != null" >
+        ali_merchant_id,
+      </if>
+
+      <if test="merchantAliAccount != null" >
+        merchant_ali_account,
+      </if>
+      <if test="rejectReason != null" >
+        reject_reason,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      CONCAT('GBM',DATE_FORMAT(NOW(),'%Y%m%d'),FLOOR(RAND()*1000)),
+      <!-- <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if> -->
+      <if test="orgId != null" >
+        #{orgId,jdbcType=BIGINT},
+      </if>
+      <if test="orgName != null" >
+        #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="contactperson != null" >
+        #{contactperson,jdbcType=VARCHAR},
+      </if>
+      <if test="contacttel != null" >
+        #{contacttel,jdbcType=VARCHAR},
+      </if>
+      <if test="areaid != null" >
+        #{areaid,jdbcType=INTEGER},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="mertype != null" >
+        #{mertype,jdbcType=CHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorname != null" >
+        #{creatorname,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="meraccount != null" >
+        #{meraccount,jdbcType=VARCHAR},
+      </if>
+      <if test="identyescard != null" >
+        #{identyescard,jdbcType=VARCHAR},
+      </if>
+      <if test="identnocard != null" >
+        #{identnocard,jdbcType=VARCHAR},
+      </if>
+      <if test="bankyescard != null" >
+        #{bankyescard,jdbcType=VARCHAR},
+      </if>
+      <if test="banknocard != null" >
+        #{banknocard,jdbcType=VARCHAR},
+      </if>
+      <if test="storesopra != null" >
+        #{storesopra,jdbcType=VARCHAR},
+      </if>
+      <if test="storeinterior != null" >
+        #{storeinterior,jdbcType=VARCHAR},
+      </if>
+       <if test="storeinterior1 != null" >
+        #{storeinterior1,jdbcType=VARCHAR},
+      </if>
+       <if test="storeinterior2 != null" >
+        #{storeinterior2,jdbcType=VARCHAR},
+      </if>
+      <if test="buslicense != null" >
+        #{buslicense,jdbcType=VARCHAR},
+      </if>
+      <if test="org != null" >
+        #{org,jdbcType=VARCHAR},
+      </if>
+      <if test="taxadministr != null" >
+        #{taxadministr,jdbcType=VARCHAR},
+      </if>
+       <if test="merchantPermit != null" >
+        #{merchantPermit,jdbcType=VARCHAR},
+      </if>
+      <if test="rate != null" >
+        #{rate,jdbcType=DECIMAL},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+        <if test="audit != null" >
+        #{audit,jdbcType=CHAR},
+      </if>
+        <if test="appid != null" >
+        #{appid,jdbcType=VARCHAR},
+      </if>
+        <if test="appsecret != null" >
+        #{appsecret,jdbcType=VARCHAR},
+      </if>
+        <if test="sb_merchant_type != null" >
+        #{sb_merchant_type,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantLogo != null" >
+        #{merchantLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchant_rate != null" >
+        #{merchant_rate,jdbcType=VARCHAR},
+      </if>
+
+      <if test="aliMerchantId != null" >
+      #{aliMerchantId,jdbcType=VARCHAR},
+    </if>
+      <if test="merchantAliAccount != null" >
+        #{merchantAliAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="rejectReason != null" >
+        #{rejectReason,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.deyi.entity.Merchant" >
+    update dis_merchant
+    <set >
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null" >
+        org_id = #{orgId,jdbcType=BIGINT},
+      </if>
+      <if test="orgName != null" >
+        orgName = #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="contactperson != null" >
+        contactPerson = #{contactperson,jdbcType=VARCHAR},
+      </if>
+      <if test="contacttel != null" >
+        contactTel = #{contacttel,jdbcType=VARCHAR},
+      </if>
+      <if test="areaid != null" >
+        areaId = #{areaid,jdbcType=INTEGER},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="mertype != null" >
+        merType = #{mertype,jdbcType=CHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=CHAR},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorname != null" >
+        creatorName = #{creatorname,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="meraccount != null" >
+        merAccount = #{meraccount,jdbcType=VARCHAR},
+      </if>
+      <if test="identyescard != null" >
+        identYesCard = #{identyescard,jdbcType=VARCHAR},
+      </if>
+      <if test="identnocard != null" >
+        identNoCard = #{identnocard,jdbcType=VARCHAR},
+      </if>
+      <if test="bankyescard != null" >
+        bankYesCard = #{bankyescard,jdbcType=VARCHAR},
+      </if>
+      <if test="banknocard != null" >
+        bankNoCard = #{banknocard,jdbcType=VARCHAR},
+      </if>
+      <if test="storesopra != null" >
+        storeSopra = #{storesopra,jdbcType=VARCHAR},
+      </if>
+      <if test="storeinterior != null" >
+        storeInterior = #{storeinterior,jdbcType=VARCHAR},
+      </if>
+      <if test="storeinterior1 != null" >
+        storeInterior1 = #{storeinterior1,jdbcType=VARCHAR},
+      </if>
+      <if test="storeinterior2 != null" >
+        storeInterior2 = #{storeinterior2,jdbcType=VARCHAR},
+      </if>
+      <if test="buslicense != null" >
+        busLicense = #{buslicense,jdbcType=VARCHAR},
+      </if>
+      <if test="org != null" >
+        org = #{org,jdbcType=VARCHAR},
+      </if>
+      <if test="taxadministr != null" >
+        taxAdministr = #{taxadministr,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantPermit != null" >
+        merchantPermit = #{merchantPermit,jdbcType=VARCHAR},
+      </if>
+      <if test="rate != null" >
+        rate = #{rate,jdbcType=DECIMAL},
+      </if>
+      <if test="deletedStatus != null" >
+        deletedStatus = #{deletedStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="audit != null" >
+        audit = #{audit,jdbcType=CHAR},
+      </if>
+      <if test="appid != null" >
+        wx_appid = #{appid,jdbcType=VARCHAR},
+      </if>
+      <if test="appsecret != null" >
+        wx_appsecret = #{appsecret,jdbcType=VARCHAR},
+      </if>
+      <if test="sb_status != null" >
+        sb_status = #{sb_status,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantLogo != null" >
+        merchantLogo = #{merchantLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchant_rate != null" >
+        merchant_rate = #{merchant_rate,jdbcType=VARCHAR},
+      </if>
+      <if test="aliMerchantId != null" >
+        ali_merchant_id = #{aliMerchantId,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantAliAccount != null" >
+      merchant_ali_account = #{merchantAliAccount,jdbcType=VARCHAR},
+    </if>
+      <if test="rejectReason != null" >
+        reject_reason = #{rejectReason,jdbcType=VARCHAR},
+      </if>
+      <if test="settleStatus != null" >
+        settle_status = #{settleStatus,jdbcType=VARCHAR},
+      </if>
+
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+
+  </update>
+
+  <update id="updateByCode" parameterType="com.deyi.entity.Merchant" >
+    update dis_merchant
+    <set >
+
+      <if test="orgId != null" >
+        org_id = #{orgId,jdbcType=BIGINT},
+      </if>
+      <if test="orgName != null" >
+        orgName = #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="contactperson != null" >
+        contactPerson = #{contactperson,jdbcType=VARCHAR},
+      </if>
+      <if test="contacttel != null" >
+        contactTel = #{contacttel,jdbcType=VARCHAR},
+      </if>
+      <if test="areaid != null" >
+        areaId = #{areaid,jdbcType=INTEGER},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="mertype != null" >
+        merType = #{mertype,jdbcType=CHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=CHAR},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorname != null" >
+        creatorName = #{creatorname,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="meraccount != null" >
+        merAccount = #{meraccount,jdbcType=VARCHAR},
+      </if>
+      <if test="identyescard != null" >
+        identYesCard = #{identyescard,jdbcType=VARCHAR},
+      </if>
+      <if test="identnocard != null" >
+        identNoCard = #{identnocard,jdbcType=VARCHAR},
+      </if>
+      <if test="bankyescard != null" >
+        bankYesCard = #{bankyescard,jdbcType=VARCHAR},
+      </if>
+      <if test="banknocard != null" >
+        bankNoCard = #{banknocard,jdbcType=VARCHAR},
+      </if>
+      <if test="storesopra != null" >
+        storeSopra = #{storesopra,jdbcType=VARCHAR},
+      </if>
+      <if test="storeinterior != null" >
+        storeInterior = #{storeinterior,jdbcType=VARCHAR},
+      </if>
+      <if test="storeinterior1 != null" >
+        storeInterior1 = #{storeinterior1,jdbcType=VARCHAR},
+      </if>
+      <if test="storeinterior2 != null" >
+        storeInterior2 = #{storeinterior2,jdbcType=VARCHAR},
+      </if>
+      <if test="buslicense != null" >
+        busLicense = #{buslicense,jdbcType=VARCHAR},
+      </if>
+      <if test="org != null" >
+        org = #{org,jdbcType=VARCHAR},
+      </if>
+      <if test="taxadministr != null" >
+        taxAdministr = #{taxadministr,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantPermit != null" >
+        merchantPermit = #{merchantPermit,jdbcType=VARCHAR},
+      </if>
+      <if test="rate != null" >
+        rate = #{rate,jdbcType=DECIMAL},
+      </if>
+      <if test="deletedStatus != null" >
+        deletedStatus = #{deletedStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="audit != null" >
+        audit = #{audit,jdbcType=CHAR},
+      </if>
+      <if test="appid != null" >
+        wx_appid = #{appid,jdbcType=VARCHAR},
+      </if>
+      <if test="appsecret != null" >
+        wx_appsecret = #{appsecret,jdbcType=VARCHAR},
+      </if>
+      <if test="sb_status != null" >
+        sb_status = #{sb_status,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantLogo != null" >
+        merchantLogo = #{merchantLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchant_rate != null" >
+        merchant_rate = #{merchant_rate,jdbcType=VARCHAR},
+      </if>
+      <if test="aliMerchantId != null" >
+        ali_merchant_id = #{aliMerchantId,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantAliAccount != null" >
+        merchant_ali_account = #{merchantAliAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="rejectReason != null" >
+        reject_reason = #{rejectReason,jdbcType=VARCHAR},
+      </if>
+
+    </set>
+    where  code = #{code,jdbcType=VARCHAR}
+
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.deyi.entity.Merchant" >
+    update dis_merchant
+    set code = #{code,jdbcType=VARCHAR},
+      org_id = #{orgId,jdbcType=BIGINT},
+      orgName = #{orgName,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      contactPerson = #{contactperson,jdbcType=VARCHAR},
+      contactTel = #{contacttel,jdbcType=VARCHAR},
+      areaId = #{areaid,jdbcType=INTEGER},
+      address = #{address,jdbcType=VARCHAR},
+      merType = #{mertype,jdbcType=CHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      status = #{status,jdbcType=CHAR},
+      creator = #{creator,jdbcType=VARCHAR},
+      creatorName = #{creatorname,jdbcType=VARCHAR},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      merAccount = #{meraccount,jdbcType=VARCHAR},
+      identYesCard = #{identyescard,jdbcType=VARCHAR},
+      identNoCard = #{identnocard,jdbcType=VARCHAR},
+      bankYesCard = #{bankyescard,jdbcType=VARCHAR},
+      bankNoCard = #{banknocard,jdbcType=VARCHAR},
+      storeSopra = #{storesopra,jdbcType=VARCHAR},
+      storeInterior = #{storeinterior,jdbcType=VARCHAR},
+      busLicense = #{buslicense,jdbcType=VARCHAR},
+      org = #{org,jdbcType=VARCHAR},
+      taxAdministr = #{taxadministr,jdbcType=VARCHAR},
+      rate = #{rate,jdbcType=DECIMAL},
+      merchantLogo = #{merchantLogo,jdbcType=VARCHAR},
+      ali_merchant_id = #{aliMerchantId,jdbcType=VARCHAR},
+      merchant_ali_account = #{merchantAliAccount,jdbcType=VARCHAR},
+      reject_reason = #{rejectReason,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="getMerchantByMerAccount" parameterType="string" resultMap="BaseResultMap">
+    	select * from dis_merchant  where merAccount = #{0} and deletedStatus = 0
+  </select>
+
+
+  <select id="getMerchants" parameterType="com.deyi.entity.Merchant" resultType="com.deyi.entity.Merchant">
+    	select * from dis_merchant where deletedStatus = 0
+  </select>
+  <!-- 机构用户商户 -->
+  <select id="getMerchantList1" parameterType="com.deyi.util.Page" resultType="com.deyi.entity.Merchant" useCache="false">
+  		select * FROM dis_merchant
+  		<where>
+
+  			org_id in(${params.orgIds})
+  			<if test="params.code != null and params.code !=''">
+
+  				and code like CONCAT('%','${params.code}','%')
+  			</if>
+  			<if test="params.name != null and params.name !=''">
+
+  				and name like CONCAT('%','${params.name}','%')
+  			</if>
+  			and deletedStatus = 0
+  			and merType = 1
+  		</where>
+  		order by id desc
+  	</select>
+
+
+  	<select id="getMerchantListTwo" parameterType="com.deyi.util.Page" resultType="com.deyi.entity.Merchant" useCache="false">
+  		select * FROM dis_merchant
+  		<where>
+  			id in (${params.merchantids})
+  			<if test="params.code != null and params.code !=''">
+  				and code like CONCAT('%','${params.code}','%')
+  			</if>
+  			<if test="params.name != null and params.name !=''">
+  				and name like CONCAT('%','${params.name}','%')
+  			</if>
+  			and deletedStatus = 0
+  			and merType = 2
+  		</where>
+  		order by id desc
+  	</select>
+
+  	  <!-- 业务员二清商户 -->
+  <select id="getMerchantListTwo2" parameterType="com.deyi.util.Page" resultType="com.deyi.entity.Merchant" useCache="false">
+		select * from dis_merchant
+  		<where>
+  			1=1 and id in (${params.merchantids})
+
+  			<if test="params.merchantids != null">
+  				and id in (${params.merchantids})
+  			</if>
+
+  			<if test="params.code != null and params.code !=''">
+  				and code like CONCAT('%','${params.code}','%')
+  			</if>
+  			<if test="params.name != null and params.name !=''">
+  				and name like CONCAT('%','${params.name}','%')
+  			</if>
+  			    and deletedStatus = 0
+  			    and merType = 2
+  		</where>
+  		Union
+  		select * from dis_merchant
+  		<where>
+  			id in (${params.merchantids}) and creator=#{params.creator}
+  			<if test="params.code != null and params.code !=''">
+  				and code like CONCAT('%','${params.code}','%')
+
+
+  			</if>
+  			<if test="params.name != null and params.name !=''">
+  				and name like CONCAT('%','${params.name}','%')
+  			</if>
+  			    and deletedStatus = 0
+  			    and merType = 2
+  		</where>
+
+  		ORDER BY createtime   DESC
+  	</select>
+
+  <!-- 业务员商户 -->
+  <select id="getMerchantList2" parameterType="com.deyi.util.Page" resultType="com.deyi.entity.Merchant" useCache="false">
+  		SELECT * FROM dis_merchant a
+  		<where>
+  			1=1
+  			<if test="params.code != null and params.code !=''">
+  				and a.code like CONCAT('%','${params.code}','%')
+  			</if>
+  			<if test="params.orgName != null and params.orgName !=''">
+  				and a.orgName like CONCAT('%','${params.orgName}','%')
+  			</if>
+  			<if test="params.name != null and params.name !=''">
+  				and a.name like CONCAT('%','${params.name}','%')
+  			</if>
+  			<if test="params.creator != null and params.creator !=''">
+  				and a.creator like CONCAT('%','${params.creator}','%')
+  			</if>
+  			<if test="params.meraccount != null and params.meraccount !=''">
+  				and a.merAccount like CONCAT('%','${params.meraccount}','%')
+  			</if>
+  			<if test="params.mertype != null and params.mertype !=''">
+  				and a.mertype = #{params.mertype}
+  			</if>
+  			<if test="params.merchant_type != null and params.merchant_type !=''">
+  				and a.merchant_type = #{params.merchant_type}
+  			</if>
+  			<if test="params.sb_merchant_type != null and params.sb_merchant_type !=''">
+  				and a.sb_merchant_type = #{params.sb_merchant_type}
+  			</if>
+  			    and a.deletedStatus = 0
+  		</where>
+  		ORDER BY a.createtime   DESC
+  	</select>
+
+
+  	<!-- 机构用户商户 -->
+    <select id="getMerchantList3" parameterType="string" resultType="com.deyi.entity.Merchant">
+  		select * FROM dis_merchant
+  		<where>
+  			org_id in(${orgIds})
+
+  			and deletedStatus = 0
+  		</where>
+  	</select>
+
+  <!-- 业务员商户 -->
+  <select id="getMerchantList4" parameterType="com.deyi.entity.Merchant" resultType="com.deyi.entity.Merchant">
+		select * from dis_merchant
+  		<where>
+  			org_id in(${orgIds})
+  			and deletedStatus = 0
+  		</where>
+  		Union
+  		select * from dis_merchant
+  		<where>
+  			org_id=#{orgId} and creator=#{creator}
+  			and deletedStatus = 0
+  		</where>
+  	</select>
+
+  	 <select id="selectByOrg" parameterType="com.deyi.util.Page" resultType="com.deyi.entity.Merchant" useCache="false">
+  	  select id from dis_merchant where org_Id = #{orgId,jdbcType=VARCHAR} and deletedStatus = 0
+  	 </select>
+
+
+  	 <select id ="getMerchantListByCreatorIds" parameterType="java.lang.String" resultMap="BaseResultMap">
+<!--   	 	select * from dis_merchant where creator in (${usesrids}) and status = '1' and deletedStatus = 0 -->
+  	 	select * from dis_merchant where creator in (${usesrids})  and deletedStatus = 0
+  	 </select>
+
+
+  	 <select id="getmerChantBysaleman" parameterType="com.deyi.util.Page" resultMap="BaseResultMap" useCache="false">
+  	 	select <include refid="Base_Column_List"/> from dis_merchant
+  	 	<where>
+  	 		id in (${params.merchantids})
+  	 		<if test="params.creatorname != null and params.creatorname !=''">
+  	 			and creatorname like CONCAT('%','${params.creatorname}','%')
+  	 		</if>
+  	 		<if test="params.querystarttime != null and params.querystarttime !=''">
+				and createTime <![CDATA[>=]]> #{params.querystarttime}
+			</if>
+			<if test="params.queryendtime != null and params.queryendtime !=''">
+				and createTime <![CDATA[<=]]> #{params.queryendtime}
+			</if>
+			<if test="params.mertype != null and params.mertype !=''">
+				and merType = #{params.mertype}
+			</if>
+  	 		and deletedStatus = 0
+  	 	</where>
+  	 	ORDER BY createtime   DESC
+  	 </select>
+
+  	 <select id="querymerChantCount" parameterType="com.deyi.entity.Merchant" resultType="java.lang.Integer">
+  	 	select count(*) from dis_merchant
+  	 	<where>
+  	 		id in (${merchantids})
+  	 		<if test="creatorname != null and creatorname !=''">
+  	 			and creatorname like CONCAT('%','${creatorname}','%')
+  	 		</if>
+  	 		<if test="querystarttime != null and querystarttime !=''">
+				and createTime <![CDATA[>=]]> #{querystarttime}
+			</if>
+			<if test="queryendtime != null and queryendtime !=''">
+				and createTime <![CDATA[<=]]> #{queryendtime}
+			</if>
+			<if test="mertype != null and mertype !=''">
+				and merType = #{mertype}
+			</if>
+          <if test="name != null and name !=''">
+            and name = #{name}
+          </if>
+
+
+  	 		and deletedStatus = 0
+  	 		and status = '1'
+  	 	</where>
+  	 </select>
+
+
+  	 <select id="selectByCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+  	 	select
+    	*
+    	from dis_merchant
+    	where code = #{id,jdbcType=BIGINT}
+  	 </select>
+    <select id="getCntByName" parameterType="java.lang.String" resultType="java.lang.Integer">
+      select
+      count(1)
+      from dis_merchant
+      where name = #{name,jdbcType=VARCHAR}
+    </select>
+
+  	 <select id="queryMerchantTwoids" resultType="java.lang.String">
+  	 	select id from dis_merchant where merType= #{mertype} and deletedStatus = 0
+  	 </select>
+
+  	 <select id="bankQueryMerDetail" resultMap="BankResultMap" parameterType="java.lang.String" >
+  	 	select
+  	 	  merType,
+		  code,
+		  name,
+		  merchant_alias,
+		  merchant_company,
+		  merchant_person,
+		  merchant_email,
+		  merchant_phone,
+		  account_name,
+		  account_no,
+		  bank_no,
+		  account_phone,
+		  merchant_id_no,
+		  account_type,
+		  merchant_rate,
+		  merchant_province_code,
+		  merchant_city_code,
+		  merchant_district_code,
+		  business_code,
+		  merchant_address,
+		  remark,
+		  identYesCard,
+		  identNoCard,
+		  bankYesCard,
+		  busLicense,
+		  img_license,
+		  img_other,
+		  storeSopra,
+		  storeInterior,
+		  ali_merchant_id,
+		  longitude,
+	      latitude,
+          reject_reason
+		from
+		  dis_merchant a,
+		  oth_merchant b
+		where a.id = b.merId
+	    and code = #{merCode,jdbcType=VARCHAR}
+	  </select>
+  <insert id="insertMerchant" parameterType="com.deyi.entity.Merchant" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+    insert into dis_merchant
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+     <if test="code != null" >
+        code,
+      </if>
+      <if test="orgId != null" >
+        org_id,
+      </if>
+      <if test="orgName != null" >
+        orgName,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="contactperson != null" >
+        contactPerson,
+      </if>
+      <if test="contacttel != null" >
+        contactTel,
+      </if>
+      <if test="areaid != null" >
+        areaId,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="mertype != null" >
+        merType,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="creatorname != null" >
+        creatorName,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+      <if test="meraccount != null" >
+        merAccount,
+      </if>
+      <if test="identyescard != null" >
+        identYesCard,
+      </if>
+      <if test="identnocard != null" >
+        identNoCard,
+      </if>
+      <if test="bankyescard != null" >
+        bankYesCard,
+      </if>
+      <if test="banknocard != null" >
+        bankNoCard,
+      </if>
+      <if test="storesopra != null" >
+        storeSopra,
+      </if>
+      <if test="storeinterior != null" >
+        storeInterior,
+      </if>
+      <if test="storeinterior1 != null" >
+        storeinterior1,
+      </if>
+      <if test="storeinterior2 != null" >
+        storeinterior2,
+      </if>
+      <if test="buslicense != null" >
+        busLicense,
+      </if>
+      <if test="org != null" >
+        org,
+      </if>
+      <if test="taxadministr != null" >
+        taxAdministr,
+      </if>
+      <if test="merchantPermit != null" >
+        merchantPermit,
+      </if>
+      <if test="rate != null" >
+        rate,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="audit != null" >
+        audit,
+      </if>
+      <if test="appid != null" >
+        wx_appid,
+      </if>
+      <if test="appsecret != null" >
+        wx_appsecret,
+      </if>
+      <if test="sb_merchant_type != null" >
+        sb_merchant_type,
+      </if>
+      <if test="merchantLogo != null" >
+        merchantLogo,
+      </if>
+      <if test="merchant_rate != null" >
+        merchant_rate,
+      </if>
+      <if test="aliMerchantId != null" >
+        ali_merchant_id,
+      </if>
+
+      <if test="merchantAliAccount != null" >
+        merchant_ali_account,
+      </if>
+      <if test="rejectReason != null" >
+        reject_reason,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+
+       <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null" >
+        #{orgId,jdbcType=BIGINT},
+      </if>
+      <if test="orgName != null" >
+        #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="contactperson != null" >
+        #{contactperson,jdbcType=VARCHAR},
+      </if>
+      <if test="contacttel != null" >
+        #{contacttel,jdbcType=VARCHAR},
+      </if>
+      <if test="areaid != null" >
+        #{areaid,jdbcType=INTEGER},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="mertype != null" >
+        #{mertype,jdbcType=CHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorname != null" >
+        #{creatorname,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="meraccount != null" >
+        #{meraccount,jdbcType=VARCHAR},
+      </if>
+      <if test="identyescard != null" >
+        #{identyescard,jdbcType=VARCHAR},
+      </if>
+      <if test="identnocard != null" >
+        #{identnocard,jdbcType=VARCHAR},
+      </if>
+      <if test="bankyescard != null" >
+        #{bankyescard,jdbcType=VARCHAR},
+      </if>
+      <if test="banknocard != null" >
+        #{banknocard,jdbcType=VARCHAR},
+      </if>
+      <if test="storesopra != null" >
+        #{storesopra,jdbcType=VARCHAR},
+      </if>
+      <if test="storeinterior != null" >
+        #{storeinterior,jdbcType=VARCHAR},
+      </if>
+      <if test="storeinterior1 != null" >
+        #{storeinterior1,jdbcType=VARCHAR},
+      </if>
+      <if test="storeinterior2 != null" >
+        #{storeinterior2,jdbcType=VARCHAR},
+      </if>
+      <if test="buslicense != null" >
+        #{buslicense,jdbcType=VARCHAR},
+      </if>
+      <if test="org != null" >
+        #{org,jdbcType=VARCHAR},
+      </if>
+      <if test="taxadministr != null" >
+        #{taxadministr,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantPermit != null" >
+        #{merchantPermit,jdbcType=VARCHAR},
+      </if>
+      <if test="rate != null" >
+        #{rate,jdbcType=DECIMAL},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="audit != null" >
+        #{audit,jdbcType=CHAR},
+      </if>
+      <if test="appid != null" >
+        #{appid,jdbcType=VARCHAR},
+      </if>
+      <if test="appsecret != null" >
+        #{appsecret,jdbcType=VARCHAR},
+      </if>
+      <if test="sb_merchant_type != null" >
+        #{sb_merchant_type,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantLogo != null" >
+        #{merchantLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchant_rate != null" >
+        #{merchant_rate,jdbcType=VARCHAR},
+      </if>
+
+      <if test="aliMerchantId != null" >
+        #{aliMerchantId,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantAliAccount != null" >
+        #{merchantAliAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="rejectReason != null" >
+        #{rejectReason,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

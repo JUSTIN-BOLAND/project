@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.deyi.dao.PayAdvertMapper" >
+  <resultMap id="BaseResultMap" type="com.deyi.entity.PayAdvert" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="advname" property="advname" jdbcType="VARCHAR" />
+    <result column="mername" property="mername" jdbcType="VARCHAR" />
+    <result column="merid" property="merid" jdbcType="INTEGER" />
+    <result column="advimage" property="advimage" jdbcType="VARCHAR" />
+    <result column="advlink" property="advlink" jdbcType="VARCHAR" />
+    <result column="advplace" property="advplace" jdbcType="VARCHAR" />
+    <result column="starttime" property="starttime" jdbcType="TIMESTAMP" />
+    <result column="endtime" property="endtime" jdbcType="TIMESTAMP" />
+    <result column="pushstatus" property="pushstatus" jdbcType="CHAR" />
+    <result column="deletestatus" property="deletestatus" jdbcType="CHAR" />
+    <result column="auditstatus" property="auditstatus" jdbcType="CHAR" />
+    <result column="clicknum" property="clicknum" jdbcType="INTEGER" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="createor" property="createor" jdbcType="VARCHAR" />
+    <result column="createname" property="createname" jdbcType="VARCHAR" />
+    <result column="storeName" property="storeName" jdbcType="VARCHAR" />
+    <result column="storeId" property="storeId" jdbcType="INTEGER" />
+    <result column="promulgator" property="promulgator" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, advname, mername, merid, advimage, advlink, advplace, starttime, endtime, pushstatus, 
+    deletestatus, auditstatus, clicknum, createtime, createor,createname,storeName,storeId,promulgator
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sta_advert
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="queryPayAdvByMerId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sta_advert
+    where merid = #{id,jdbcType=INTEGER}  and advplace = 1 and  starttime &lt; NOW() AND endtime > NOW()  and deletestatus = 0 and pushstatus = 1 and auditstatus =1 ORDER BY createtime DESC LIMIT 0,1
+  </select>
+  <select id="queryPayCompleteAdvByMerId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sta_advert
+    where merid = #{id,jdbcType=INTEGER}  and advplace = 2 and  starttime &lt; NOW() AND endtime > NOW() and deletestatus = 0 and pushstatus = 1 and auditstatus =1 ORDER BY createtime DESC LIMIT 0,1
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sta_advert
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.deyi.entity.PayAdvert" >
+    insert into sta_advert (id, advname, mername, 
+      merid, advimage, advlink, 
+      advplace, starttime, endtime, 
+      pushstatus, deletestatus, auditstatus, 
+      clicknum, createtime, createor,createname,storeName,storeId,promulgator
+      )
+    values (#{id,jdbcType=INTEGER}, #{advname,jdbcType=VARCHAR}, #{mername,jdbcType=VARCHAR}, 
+      #{merid,jdbcType=INTEGER}, #{advimage,jdbcType=VARCHAR}, #{advlink,jdbcType=VARCHAR}, 
+      #{advplace,jdbcType=VARCHAR}, #{starttime,jdbcType=TIMESTAMP}, #{endtime,jdbcType=TIMESTAMP}, 
+      #{pushstatus,jdbcType=CHAR}, #{deletestatus,jdbcType=CHAR}, #{auditstatus,jdbcType=CHAR}, 
+      #{clicknum,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, #{createor,jdbcType=VARCHAR},#{createname,jdbcType=VARCHAR},
+      #{storeName,jdbcType=VARCHAR}, #{storeId,jdbcType=INTEGER},#{promulgator,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.deyi.entity.PayAdvert" >
+    insert into sta_advert
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="advname != null" >
+        advname,
+      </if>
+      <if test="mername != null" >
+        mername,
+      </if>
+      <if test="merid != null" >
+        merid,
+      </if>
+      <if test="advimage != null" >
+        advimage,
+      </if>
+      <if test="advlink != null" >
+        advlink,
+      </if>
+      <if test="advplace != null" >
+        advplace,
+      </if>
+      <if test="starttime != null" >
+        starttime,
+      </if>
+      <if test="endtime != null" >
+        endtime,
+      </if>
+      <if test="pushstatus != null" >
+        pushstatus,
+      </if>
+      <if test="deletestatus != null" >
+        deletestatus,
+      </if>
+      <if test="auditstatus != null" >
+        auditstatus,
+      </if>
+      <if test="clicknum != null" >
+        clicknum,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+      <if test="createor != null" >
+        createor,
+      </if>
+      <if test="createname != null" >
+        createname,
+      </if>
+      <if test="storeName != null" >
+        storeName,
+      </if>
+      <if test="storeId != null" >
+        storeId,
+      </if>
+      <if test="promulgator != null" >
+        promulgator,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="advname != null" >
+        #{advname,jdbcType=VARCHAR},
+      </if>
+      <if test="mername != null" >
+        #{mername,jdbcType=VARCHAR},
+      </if>
+      <if test="merid != null" >
+        #{merid,jdbcType=INTEGER},
+      </if>
+      <if test="advimage != null" >
+        #{advimage,jdbcType=VARCHAR},
+      </if>
+      <if test="advlink != null" >
+        #{advlink,jdbcType=VARCHAR},
+      </if>
+      <if test="advplace != null" >
+        #{advplace,jdbcType=VARCHAR},
+      </if>
+      <if test="starttime != null" >
+        #{starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null" >
+        #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pushstatus != null" >
+        #{pushstatus,jdbcType=CHAR},
+      </if>
+      <if test="deletestatus != null" >
+        #{deletestatus,jdbcType=CHAR},
+      </if>
+      <if test="auditstatus != null" >
+        #{auditstatus,jdbcType=CHAR},
+      </if>
+      <if test="clicknum != null" >
+        #{clicknum,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createor != null" >
+        #{createor,jdbcType=VARCHAR},
+      </if>
+      <if test="createname != null" >
+        #{createname,jdbcType=VARCHAR},
+      </if>
+      <if test="storeName != null" >
+        #{storeName,jdbcType=VARCHAR},
+      </if>
+      <if test="storeId != null" >
+        #{storeId,jdbcType=INTEGER},
+      </if>
+      <if test="promulgator != null" >
+        #{promulgator,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.deyi.entity.PayAdvert" >
+    update sta_advert
+    <set >
+      <if test="advname != null" >
+        advname = #{advname,jdbcType=VARCHAR},
+      </if>
+      <if test="mername != null" >
+        mername = #{mername,jdbcType=VARCHAR},
+      </if>
+      <if test="merid != null" >
+        merid = #{merid,jdbcType=INTEGER},
+      </if>
+      <if test="advimage != null" >
+        advimage = #{advimage,jdbcType=VARCHAR},
+      </if>
+      <if test="advlink != null" >
+        advlink = #{advlink,jdbcType=VARCHAR},
+      </if>
+      <if test="advplace != null" >
+        advplace = #{advplace,jdbcType=VARCHAR},
+      </if>
+      <if test="starttime != null" >
+        starttime = #{starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null" >
+        endtime = #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pushstatus != null" >
+        pushstatus = #{pushstatus,jdbcType=CHAR},
+      </if>
+      <if test="deletestatus != null" >
+        deletestatus = #{deletestatus,jdbcType=CHAR},
+      </if>
+      <if test="auditstatus != null" >
+        auditstatus = #{auditstatus,jdbcType=CHAR},
+      </if>
+      <if test="clicknum != null" >
+        clicknum = #{clicknum,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createor != null" >
+        createor = #{createor,jdbcType=VARCHAR},
+      </if>
+      <if test="createname != null" >
+        createor = #{createname,jdbcType=VARCHAR},
+      </if>
+      <if test="storeName != null" >
+        storeName = #{storeName,jdbcType=VARCHAR},
+      </if>
+      <if test="storeId != null" >
+        storeId = #{storeId,jdbcType=INTEGER},
+      </if>
+      <if test="promulgator != null" >
+        promulgator = #{promulgator,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.deyi.entity.PayAdvert" >
+    update sta_advert
+    set advname = #{advname,jdbcType=VARCHAR},
+      mername = #{mername,jdbcType=VARCHAR},
+      merid = #{merid,jdbcType=INTEGER},
+      advimage = #{advimage,jdbcType=VARCHAR},
+      advlink = #{advlink,jdbcType=VARCHAR},
+      advplace = #{advplace,jdbcType=VARCHAR},
+      starttime = #{starttime,jdbcType=TIMESTAMP},
+      endtime = #{endtime,jdbcType=TIMESTAMP},
+      pushstatus = #{pushstatus,jdbcType=CHAR},
+      deletestatus = #{deletestatus,jdbcType=CHAR},
+      auditstatus = #{auditstatus,jdbcType=CHAR},
+      clicknum = #{clicknum,jdbcType=INTEGER},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      createor = #{createor,jdbcType=VARCHAR},
+      createname = #{createname,jdbcType=VARCHAR},
+      storeName = #{storeName,jdbcType=VARCHAR},
+      storeId = #{storeId,jdbcType=INTEGER},
+      promulgator = #{promulgator,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  
+  <select id="queryByPage" parameterType="com.deyi.util.Page" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List" /> from sta_advert
+  	<where>
+  		and merid in (${params.merids})
+  		<if test="params.auditstatus != null and params.auditstatus != ''">
+  			and auditstatus = #{params.auditstatus}
+  		</if>
+  		<if test="params.deletestatus != null and params.deletestatus != ''">
+  			and deletestatus = #{params.deletestatus}
+  		</if>
+  		<if test="params.advplace != null and params.advplace != ''">
+  			and advplace = #{params.advplace}
+  		</if>
+  		<if test="params.pushstatus != null and params.pushstatus != ''">
+  			and pushstatus = #{params.pushstatus}
+  		</if>
+  		<if test="params.advname != null and params.advname != ''">
+  			and advname like concat('%',#{params.advname},'%')
+  		</if>
+  		<if test="params.mername != null and params.mername != ''">
+  			and mername like concat('%',#{params.mername},'%')
+  		</if>
+  		<if test="params.createname != null and params.createname != ''">
+  			and createname like concat('%',#{params.createname},'%')
+  		</if>
+  		<if test="params.createor != null and params.createor != ''">
+  			and createor like concat('%',#{params.createor},'%')
+  		</if>
+  		<if test="params.starttime != null and params.starttime != ''">
+  			and createtime &gt; #{params.starttime} 
+  		</if>
+  		<if test="params.endtime != null and params.endtime != ''">
+  			and createtime &lt; #{params.endtime} 
+  		</if>
+  	</where>
+  	
+  	order by createtime desc
+  </select>
+  
+  
+  <update id="clickTheAdv" parameterType="java.lang.Integer">
+  	update sta_advert set clicknum = clicknum + 1  where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  
+  <!--  查询广告统计 -->
+  <select id="queryAdvertCollect" parameterType="com.deyi.util.Page" resultType="com.deyi.vo.AdvertCollect">
+  	SELECT merid,mername,COUNT(merid) sumAdvert,SUM(advplace =1)successAdvert,SUM(advplace =2) completeAdvert FROM sta_advert  
+  	
+  	<where>
+  		merid in (${params.merids}) and deletestatus = 0
+  		<if test="params.starttime != null and params.starttime != ''">
+  			and createtime &gt; #{params.starttime} 
+  		</if>
+  		<if test="params.endtime != null and params.endtime != ''">
+  			and createtime &lt; #{params.endtime} 
+  		</if>
+  		<if test="params.mername != null and params.mername != ''">
+  			and mername like concat('%',#{params.mername},'%')
+  		</if>
+  	</where>
+  	
+  	 GROUP BY merid
+  </select>
+</mapper>

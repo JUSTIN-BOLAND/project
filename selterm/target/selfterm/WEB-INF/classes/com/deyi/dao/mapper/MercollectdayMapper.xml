@@ -1,0 +1,528 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.deyi.dao.MercollectdayDao">
+
+<!-- 	<cache type="org.mybatis.caches.ehcache.LoggingEhcache"/> -->
+	<resultMap id="BaseResultMap" type="com.deyi.entity.Mercollectday">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="mer_id" property="mer_id" jdbcType="INTEGER" />
+		<result column="mer_code" property="mer_code" jdbcType="VARCHAR" />
+		<result column="mer_name" property="mer_name" jdbcType="VARCHAR" />
+		<result column="org_id" property="org_id" jdbcType="BIGINT" />
+		<result column="wxcount" property="wxcount" jdbcType="INTEGER" />
+		<result column="alicount" property="alicount" jdbcType="INTEGER" />
+		<result column="unioncount" property="unioncount" jdbcType="INTEGER" />
+		<result column="alipaymoney" property="alipaymoney" jdbcType="DECIMAL" />
+		<result column="wxpaymoney" property="wxpaymoney" jdbcType="DECIMAL" />
+		<result column="unionpaymoney" property="unionpaymoney" jdbcType="DECIMAL" />
+		<result column="summoney" property="summoney" jdbcType="DECIMAL" />
+		<result column="ratemoney" property="ratemoney" jdbcType="DECIMAL" />
+		<result column="sumrefundmoney" property="sumrefundmoney"
+			jdbcType="DECIMAL" />
+		<result column="starttime" property="starttime" jdbcType="TIMESTAMP" />
+		<result column="endtime" property="endtime" jdbcType="TIMESTAMP" />
+		<result column="creattime" property="creattime" jdbcType="TIMESTAMP" />
+
+		<result column="alirefundMoney" property="alirefundMoney" jdbcType="DECIMAL"/>
+		<result column="wxrefundMoney" property="wxrefundMoney" jdbcType="DECIMAL"/>
+		<result column="unionrefundMoney" property="unionrefundMoney" jdbcType="DECIMAL"/>
+	</resultMap>
+	<sql id="Base_Column_List">
+		id,mer_id,mer_name, wxcount, alicount, unioncount, alipaymoney,
+		wxpaymoney, unionpaymoney,summoney,ratemoney, sumrefundmoney,
+		starttime,
+		endtime, creattime,alirefundMoney,wxrefundMoney,unionrefundMoney
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from sta_mer_collectday
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		sta_mer_collectday
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.deyi.entity.Mercollectday">
+		insert into sta_mer_collectday
+		(id,mer_id,mer_name wxcount, alicount,
+		alipaymoney, wxpaymoney,
+		summoney,
+		sumrefundmoney, starttime, endtime,
+		creattime,alirefundMoney,wxrefundMoney)
+		values
+		(#{id,jdbcType=INTEGER},#{mer_id,jdbcType=INTEGER},#{mer_name,jdbcType=VARCHAR},
+		#{wxcount,jdbcType=INTEGER}, #{alicount,jdbcType=INTEGER},
+		#{alipaymoney,jdbcType=DECIMAL}, #{wxpaymoney,jdbcType=DECIMAL},
+		#{summoney,jdbcType=DECIMAL},
+		#{sumrefundmoney,jdbcType=DECIMAL},
+		#{starttime,jdbcType=TIMESTAMP}, #{endtime,jdbcType=TIMESTAMP},
+		#{creattime,jdbcType=TIMESTAMP},#{alirefundMoney,jdbcType=DECIMAL},
+		#{wxrefundMoney,jdbcType=DECIMAL})
+	</insert>
+	<insert id="insertSelective" parameterType="com.deyi.entity.Mercollectday">
+		insert into sta_mer_collectday
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="mer_id != null">
+				mer_id,
+			</if>
+			<if test="mer_code != null">
+				mer_code,
+			</if>
+			<if test="mer_name != null">
+				mer_name,
+			</if>
+			<if test="org_id != null">
+				org_id,
+			</if>
+
+			<if test="wxcount != null">
+				wxcount,
+			</if>
+			<if test="alicount != null">
+				alicount,
+			</if>
+			<if test="unioncount != null">
+				unioncount,
+			</if>
+			<if test="alipaymoney != null">
+				alipaymoney,
+			</if>
+			<if test="wxpaymoney != null">
+				wxpaymoney,
+			</if>
+			<if test="unionpaymoney != null">
+				unionpaymoney,
+			</if>
+			<if test="summoney != null">
+				summoney,
+			</if>
+			<if test="ratemoney != null">
+				ratemoney,
+			</if>
+			<if test="sumrefundmoney != null">
+				sumrefundmoney,
+			</if>
+			<if test="starttime != null">
+				starttime,
+			</if>
+			<if test="endtime != null">
+				endtime,
+			</if>
+			<if test="creattime != null">
+				creattime,
+			</if>
+			<if test="alirefundMoney != null">
+				alirefundMoney,
+			</if>
+			<if test="wxrefundMoney != null">
+				wxrefundMoney,
+			</if>
+			<if test="unionrefundMoney != null">
+				unionrefundMoney,
+			</if>
+			<if test="mertype != null">
+				mertype,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="mer_id != null">
+				#{mer_id,jdbcType=INTEGER},
+			</if>
+			<if test="mer_code != null">
+				#{mer_code,jdbcType=VARCHAR},
+			</if>
+			<if test="mer_name != null">
+				#{mer_name,jdbcType=VARCHAR},
+			</if>
+			<if test="org_id != null">
+				#{org_id,jdbcType=BIGINT},
+			</if>
+			<if test="wxcount != null">
+				#{wxcount,jdbcType=INTEGER},
+			</if>
+			<if test="alicount != null">
+				#{alicount,jdbcType=INTEGER},
+			</if>
+			<if test="unioncount != null">
+				#{unioncount,jdbcType=INTEGER},
+			</if>
+			<if test="alipaymoney != null">
+				#{alipaymoney,jdbcType=DECIMAL},
+			</if>
+			<if test="wxpaymoney != null">
+				#{wxpaymoney,jdbcType=DECIMAL},
+			</if>
+			<if test="unionpaymoney != null">
+				#{unionpaymoney,jdbcType=DECIMAL},
+			</if>
+			<if test="summoney != null">
+				#{summoney,jdbcType=DECIMAL},
+			</if>
+			<if test="ratemoney != null">
+				#{ratemoney,jdbcType=DECIMAL},
+			</if>
+			<if test="sumrefundmoney != null">
+				#{sumrefundmoney,jdbcType=DECIMAL},
+			</if>
+			<if test="starttime != null">
+				#{starttime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="endtime != null">
+				#{endtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="creattime != null">
+				#{creattime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="alirefundMoney != null">
+				#{alirefundMoney,jdbcType=DECIMAL},
+			</if>
+			<if test="wxrefundMoney != null">
+				#{wxrefundMoney,jdbcType=DECIMAL},
+			</if>
+			<if test="unionrefundMoney != null">
+				#{unionrefundMoney,jdbcType=DECIMAL},
+			</if>
+			<if test="mertype != null">
+				#{mertype,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.deyi.entity.Mercollectday">
+		update sta_mer_collectday
+		<set>
+			<if test="mer_id != null">
+				mer_id = #{wxcount,jdbcType=INTEGER},
+			</if>
+			<if test="mer_name != null">
+				mer_name = #{wxcount,jdbcType=VARCHAR},
+			</if>
+			<if test="wxcount != null">
+				wxcount = #{wxcount,jdbcType=INTEGER},
+			</if>
+			<if test="alicount != null">
+				alicount = #{alicount,jdbcType=INTEGER},
+			</if>
+			<if test="alipaymoney != null">
+				alipaymoney = #{alipaymoney,jdbcType=DECIMAL},
+			</if>
+			<if test="wxpaymoney != null">
+				wxpaymoney = #{wxpaymoney,jdbcType=DECIMAL},
+			</if>
+			<if test="summoney != null">
+				summoney = #{summoney,jdbcType=DECIMAL},
+			</if>
+			<if test="sumrefundmoney != null">
+				sumrefundmoney = #{sumrefundmoney,jdbcType=DECIMAL},
+			</if>
+			<if test="starttime != null">
+				starttime = #{starttime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="endtime != null">
+				endtime = #{endtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="creattime != null">
+				creattime = #{creattime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.deyi.entity.Mercollectday">
+		update
+		sta_mer_collectday
+		set mer_id = #{mer_id,jdbcType=INTEGER},
+		mer_id =
+		#{mer_id,jdbcType=VARCHAR},
+		wxcount = #{wxcount,jdbcType=INTEGER},
+		alicount = #{alicount,jdbcType=INTEGER},
+		alipaymoney =
+		#{alipaymoney,jdbcType=DECIMAL},
+		wxpaymoney =
+		#{wxpaymoney,jdbcType=DECIMAL},
+		summoney =
+		#{summoney,jdbcType=DECIMAL},
+		sumrefundmoney =
+		#{sumrefundmoney,jdbcType=DECIMAL},
+		starttime =
+		#{starttime,jdbcType=TIMESTAMP},
+		endtime =
+		#{endtime,jdbcType=TIMESTAMP},
+		creattime =
+		#{creattime,jdbcType=TIMESTAMP}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+
+
+	<select id="queryYesterdayDataCount" parameterType="java.lang.String"
+		resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM sta_mer_collectday WHERE
+		TO_DAYS(NOW()) -
+		TO_DAYS(starttime) = #{day} and mer_id = #{mer_id}
+	</select>
+
+
+	<select id="getMerchantPaymentStatistic" parameterType="com.deyi.util.Page"
+		resultType="com.deyi.vo.MercollectdayVo" useCache="false">
+		select
+		<include refid="Base_Column_List" />
+		from sta_mer_collectday
+
+		<where>
+			1=1
+			<if test="params.merchantIds != null">
+				and mer_id in(${params.merchantIds})
+			</if>
+			<!-- <if test="params.mer_id != null and params.mer_id !=''"> -->
+			<!-- and mer_id = #{params.mer_id} -->
+			<!-- </if> -->
+			<if test="params.querystarttime !=null and params.querystarttime !=''">
+				and endtime <![CDATA[>=]]>
+				#{params.querystarttime}
+			</if>
+
+			<if test="params.queryendtime !=null and params.queryendtime !=''">
+				and endtime <![CDATA[<=]]>
+				#{params.queryendtime}
+			</if>
+
+			<if test="params.mer_name!=null ">
+				and mer_name like CONCAT('%',#{params.mer_name},'%')
+			</if>
+
+			<if test="params.mertype !=null and params.mertype !=''">
+				and mertype =  #{params.mertype}
+			</if>
+			<if test="params.mer_code !=null and params.mer_code !=''">
+				and mer_code =  #{params.mer_code}
+			</if>
+		</where>
+	</select>
+
+
+	<select id="getExcelMerStatisticList" parameterType="com.deyi.vo.MercollectdayVo"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from sta_mer_collectday
+		<where>
+			1=1
+			<if test="merchantIds != null and merchantIds !=''">
+				and mer_id in (${merchantIds})
+			</if>
+			<if test="querystarttime !=null and querystarttime !=''">
+				and endtime <![CDATA[>=]]> #{querystarttime}
+			</if>
+
+			<if test="queryendtime !=null and queryendtime !=''">
+				and endtime <![CDATA[<=]]> #{queryendtime}
+			</if>
+
+			<if test="mer_name!=null and mer_name !=''">
+				and mer_name like CONCAT('%',#{mer_name},'%')
+			</if>
+		</where>
+		ORDER BY starttime DESC, summoney DESC
+	</select>
+
+	<select id="queryCollectDay" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		SELECT distinct
+		  a.id MER_ID,
+		  a.code MER_CODE,
+		  a.name MER_NAME,
+		  a.org_id ORG_ID,
+		  IFNULL(c.wxcount, 0) wxcount,
+		  IFNULL(b.alicount, 0) alicount,
+		  IFNULL(e.unioncount, 0) unioncount,
+		  IFNULL(b.alipaymoney, 0) alipaymoney,
+		  IFNULL(e.unionpaymoney, 0) unionpaymoney,
+		  IFNULL(c.wxpaymoney, 0) wxpaymoney,
+		  IFNULL(d.summoney, 0) summoney,
+		  IFNULL(d.ratemoney, 0)  ratemoney,
+		  IFNULL(d.sumrefundmoney, 0) sumrefundmoney,
+		  IFNULL(b.alirefundMoney, 0) alirefundMoney,
+		  IFNULL(c.wxrefundMoney, 0) wxrefundMoney,
+		  IFNULL(e.unionrefundMoney, 0) unionrefundMoney
+		FROM
+		  dis_merchant a
+		  LEFT JOIN
+		    (SELECT
+		      merId,
+		      COUNT(orderNo) alicount,
+		      SUM(payMoney) alipaymoney,
+		      SUM(refundMoney) alirefundMoney
+		    FROM
+		      sta_order
+		    WHERE payType = 1
+		      AND TO_DAYS(NOW()) - TO_DAYS(payTime) = #{i} AND payStatus = 2
+		    GROUP BY merId) b
+		    ON a.code = b.merId
+		  LEFT JOIN
+		    (SELECT
+		      merId,
+		      COUNT(orderNo) wxcount,
+		      SUM(payMoney) wxpaymoney,
+		      SUM(refundMoney) wxrefundMoney
+		    FROM
+		      sta_order
+		    WHERE payType = 2
+		      AND TO_DAYS(NOW()) - TO_DAYS(payTime) = #{i} AND payStatus = 2 GROUP BY merId) c
+		      ON a.code = c.merId
+		      LEFT JOIN
+		        (SELECT
+		          merId,
+		          COUNT(orderNo) unioncount,
+		          SUM(payMoney) unionpaymoney,
+		          SUM(refundMoney) unionrefundMoney
+		        FROM
+		          sta_order
+		        WHERE payType = 3
+		          AND TO_DAYS(NOW()) - TO_DAYS(payTime) = #{i} AND payStatus = 2 GROUP BY merId) e
+		          ON a.code = e.merId
+		          LEFT JOIN
+		            (SELECT
+		              merId,
+		              SUM( CASE when  payStatus='2' AND orderStatus='3' THEN 0 ELSE ratemoney END ) ratemoney,
+		              SUM(payMoney) summoney,
+		              SUM(refundMoney) sumrefundmoney
+		            FROM
+		              sta_order
+		            WHERE TO_DAYS(NOW()) - TO_DAYS(payTime) = #{i} AND payStatus = 2 GROUP BY merId) d   ON a.code = d.merId
+	</select>
+
+
+	<select id="getMerCollertdays" resultMap="BaseResultMap"
+		parameterType="com.deyi.vo.MercollectdayVo">
+		select
+		<include refid="Base_Column_List" />
+		from sta_mer_collectday
+		where mer_id = #{merId,jdbcType=INTEGER}
+		order
+		by starttime asc
+
+	</select>
+
+
+
+	<select id="getMercollertCondtion" resultMap="BaseResultMap">
+		select starttime, sum(wxcount)as wxcount ,sum(alicount) as alicount,sum(unioncount) as unioncount,
+		sum(alirefundMoney) alirefundMoney,sum(wxrefundMoney) wxrefundMoney,sum(unionrefundMoney) unionrefundMoney,
+		sum(summoney) as summoney,sum(alipaymoney) as alipaymoney,sum(unionpaymoney) as unionpaymoney,sum(wxpaymoney) as wxpaymoney
+		from sta_mer_collectday
+
+		<where>
+		<!-- mer_id in (${merchantIds}) -->
+		1=1
+		<if test="querystarttime != null and querystarttime !=''">
+			and starttime <![CDATA[>=]]>
+			#{querystarttime}
+		</if>
+		<if test="queryendtime != null and queryendtime !=''">
+			and starttime <![CDATA[<=]]> #{queryendtime}
+		</if>
+
+		</where>
+		group by starttime order by starttime asc
+	</select>
+
+
+	<select id="querymerbymonth" parameterType="com.deyi.util.Page"
+		resultType="com.deyi.vo.MercollectdayVo" useCache="false">
+	SELECT mer_id,mer_name,	sum(alirefundMoney) alirefundMoney,sum(wxrefundMoney) wxrefundMoney,sum(unionrefundMoney) unionrefundMoney,
+	SUM(wxcount)wxcount,SUM(alicount)alicount,SUM(unioncount) unioncount,SUM(alipaymoney)alipaymoney,SUM(wxpaymoney)wxpaymoney,SUM(unionpaymoney)unionpaymoney,SUM(summoney)summoney,SUM(sumrefundmoney)sumrefundmoney
+	  FROM sta_mer_collectday
+	  <where>
+	    mer_id in(${params.merchantIds})  and
+	  	DATE_FORMAT(starttime,'%Y-%m') = #{params.querystarttime}
+	  </where>
+		GROUP BY mer_id,mer_name
+	</select>
+	<select id="querymerserialbyday" parameterType="com.deyi.util.Page"
+		resultType="com.deyi.vo.MercollectdayVo" useCache="false">
+		SELECT
+		<if test="params.flag == 1">
+			starttime,
+		</if>
+		<if test="params.flag == 2">
+			 DATE_FORMAT(starttime,'%Y-%m') month,
+		</if>
+		IFNULL(SUM(alirefundMoney),0) alirefundMoney,IFNULL( SUM(wxrefundMoney),0) wxrefundMoney,
+		SUM(wxcount)wxcount,SUM(alicount)alicount,SUM(alipaymoney)alipaymoney,SUM(wxpaymoney)wxpaymoney,SUM(summoney)summoney,SUM(sumrefundmoney)sumrefundmoney
+		FROM sta_mer_collectday
+	  <where>
+	    mer_id in(${params.merchantIds})
+		<if test="params.querystarttime !=null and params.querystarttime !=''">
+			and endtime <![CDATA[>=]]> #{params.querystarttime}
+		</if>
+
+		<if test="params.queryendtime !=null and params.queryendtime !=''">
+			and starttime <![CDATA[<=]]> #{params.queryendtime}
+		</if>
+<!-- 		<if test="params.month != null and params.month != ''"> -->
+<!-- 			and DATE_FORMAT(starttime,'%Y-%m') = #{params.month} -->
+<!-- 		</if>	  	 -->
+	  </where>
+	 	<if test="params.flag == 1">
+			GROUP BY starttime
+			order by starttime DESC
+		</if>
+		<if test="params.flag == 2">
+			GROUP BY  month
+			order by starttime DESC
+		</if>
+	</select>
+
+	<select id="querymerchantsum" resultType="com.deyi.vo.MercollectdayVo" parameterType="com.deyi.vo.MercollectdayVo">
+	SELECT  SUM(wxcount)AS wxcount ,SUM(alicount) AS alicount,SUM(unioncount) AS unioncount,SUM(sumrefundmoney) sumrefundmoney,
+	SUM(alirefundMoney) alirefundMoney,SUM(wxrefundMoney) wxrefundMoney,SUM(unionrefundMoney) unionrefundMoney,
+	SUM(summoney) AS summoney,SUM(alipaymoney) AS alipaymoney,SUM(wxpaymoney) AS wxpaymoney ,SUM(unionpaymoney) AS unionpaymoney,
+	SUM(ratemoney) AS sumratemoney
+	FROM sta_mer_collectday
+	<where>
+			1=1
+			<if test="merchantIds != null">
+				and mer_id in(${merchantIds})
+			</if>
+			<!-- <if test="mer_id != null and mer_id !=''"> -->
+			<!-- and mer_id = #{mer_id} -->
+			<!-- </if> -->
+			<if test="querystarttime !=null and querystarttime !=''">
+				and endtime <![CDATA[>=]]>
+				#{querystarttime}
+			</if>
+
+			<if test="queryendtime !=null and queryendtime !=''">
+				and endtime <![CDATA[<=]]>
+				#{queryendtime}
+			</if>
+
+			<if test="mer_name!=null ">
+				and mer_name like CONCAT('%',#{mer_name},'%')
+			</if>
+		</where>
+	</select>
+
+
+		<select id="querymerbymonthsum" parameterType="com.deyi.vo.MercollectdayVo"
+		resultType="com.deyi.vo.MercollectdayVo">
+		  SELECT 	SUM(alirefundMoney) alirefundMoney,SUM(wxrefundMoney) wxrefundMoney,SUM(unionrefundMoney) unionrefundMoney,
+	SUM(wxcount)wxcount,SUM(alicount)alicount,SUM(unioncount) unioncount,SUM(alipaymoney)alipaymoney,SUM(wxpaymoney)wxpaymoney,SUM(unionpaymoney) unionpaymoney,SUM(summoney)summoney,SUM(sumrefundmoney)sumrefundmoney
+	FROM (
+	SELECT mer_id,mer_name,	sum(alirefundMoney) alirefundMoney,sum(wxrefundMoney) wxrefundMoney,SUM(unionrefundMoney) unionrefundMoney,
+	SUM(wxcount)wxcount,SUM(alicount)alicount,SUM(unioncount) unioncount,SUM(alipaymoney)alipaymoney,SUM(wxpaymoney)wxpaymoney,SUM(unionpaymoney) unionpaymoney,SUM(summoney)summoney,SUM(sumrefundmoney)sumrefundmoney
+	  FROM sta_mer_collectday
+	  <where>
+	    mer_id in(${merchantIds})  and
+	  	DATE_FORMAT(starttime,'%Y-%m') = #{querystarttime}
+	  </where>
+		GROUP BY mer_id,mer_name
+		) A
+	</select>
+</mapper>
